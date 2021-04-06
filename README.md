@@ -51,14 +51,18 @@ It should contain the following User Stories:
 ### Teamwork
 
 The following team is working on a project:
-* Maxim Korsunov – Frontend developer, UI/UX designer
-* Alexander Krivonosov – Frontend developer
-* Matvey Plevako – Backend developer
-* Andrey Feygelman – Backend developer
+* [Maxim Korsunov](https://github.com/VanishMax) – Frontend developer, UI/UX designer
+* [Alexander Krivonosov](https://github.com/GneyHabub) – Frontend developer
+* [Matvey Plevako](https://github.com/matveyplevako) – Backend developer
+* [Andrey Feygelman](https://github.com/Andrey862) – Backend developer
 
 As a team, we use SCRUM framework for flexible development. The project
 repo uses Git Flow methodology to fix the main branch only for
 production releases, and keep the main work in the DEV branch.
+
+Merges into the DEV and Master should be possible only after the Pull
+Request is created and passed all CI and CD checks, and the code is
+reviewed by the members of the SCRUM team.
 
 ### Technical requirements
 
