@@ -1,21 +1,82 @@
 # IU MAP-S21 project Les Frais
 
-## Context
+## Project objective
 
-Les Frais is an expense tracker that supports following features:
-* Keep track of expenses and incomes
-* Import your data from .XLS files
-* Create expense templates and expense categories
-* View statistics
-* Work with different currencies
-* Switch interface language
-* Etc
+The purpose of this project is to develop a web application, an 
+expense tracker called «Les Frais» (hereinafter referred to as the
+Service) for the general use of people on the Internet.
 
-Full list of features along with the project requirements is kept in 
-Google Docs: https://docs.google.com/document/d/1tj2DJ6ph22alcwzRf5BPMwOntzRsW8FGKxhWrfH_mAk/edit?usp=sharing
+Main objectives of the Service are the control and accounting
+of incomes and expenses, view statistics on all transactions in any
+language and currency.
 
-Project participants: 
-* Maxim Korsunov
-* Alexander Krivonosov
-* Matvey Plevako
-* Andrey Feygelman
+## Initial product backlog
+
+### User Stories
+
+The backlog consists of the User Stories written to show
+the main functionality of the Services. They are all kept
+in the [GitHub issues](https://github.com/IU-MAP/project-les-frais/issues?q=is%3Aissue+is%3Aopen+label%3A%22User+Story%22):
+
+* [Authorization and registration](https://github.com/IU-MAP/project-les-frais/issues/8)
+* [Transactions](https://github.com/IU-MAP/project-les-frais/issues/17)
+* [Data import](https://github.com/IU-MAP/project-les-frais/issues/12)
+* [Categories](https://github.com/IU-MAP/project-les-frais/issues/18)
+* [Switch default currency](https://github.com/IU-MAP/project-les-frais/issues/25)
+* [Expense templates](https://github.com/IU-MAP/project-les-frais/issues/29)
+* [Interface language switch](https://github.com/IU-MAP/project-les-frais/issues/22)
+* [Search transactions](https://github.com/IU-MAP/project-les-frais/issues/34)
+* [Statistics](https://github.com/IU-MAP/project-les-frais/issues/39)
+
+### Release plan
+
+***V1.0.0*** is going to be released after the 4th sprint. 
+It should contain the following User Stories:
+* Backlog planning – Sprint 0
+* Authorization and registration – Sprint 1
+* Interface language switch – Sprint 1
+* Transactions – Sprint 2
+* Categories – Sprint 3
+* Expense templates – Sprint 3
+* Data import (incomplete) – Sprint 3
+
+***V2.0.0*** is going to be released after the 7th sprint:
+* Data import – Sprint 4
+* Search transactions – Sprint 4
+* Statistics – Sprint 5
+* Switch default currency – Sprint 6
+
+## Development
+
+### Teamwork
+
+The following team is working on a project:
+* Maxim Korsunov – Frontend developer, UI/UX designer
+* Alexander Krivonosov – Frontend developer
+* Matvey Plevako – Backend developer
+* Andrey Feygelman – Backend developer
+
+As a team, we use SCRUM framework for flexible development. The project
+repo uses Git Flow methodology to fix the main branch only for
+production releases, and keep the main work in the DEV branch.
+
+### Technical requirements
+
+![Uml](./readme/uml.png)
+
+**Server-side requirements**:
+* Backend has to be implemented in the latest version of Python language.
+* Backend has to use Django framework.
+* Database has to be PostgreSQL.
+* All calculations performed by the server-side must be 
+  accurate and tested using unit and integration tests.
+
+![UI](./readme/ui.png)
+
+**Web-app requirements**:
+* Web application has to be implemented in the Vue 3 framework of JavaScript language, SPA mode.
+* The quality has to be assured by unit component testing and with end-to-end tests of the whole Service.
+* Application must support accessible UI and UX across all mobile and desktop devices.
+* Application must be performant in terms of time and memory, do not utilize heavy memory resources and load in less than a second showing 90% of Lighthouse audit test passing.
+
+All the designs are kept in the Figma project: https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais
