@@ -1,13 +1,25 @@
 <template>
   <header>
-    <router-link :to="{name: 'home'}" class="logo">
-      <img src="/les-frais.png" alt="expenses">
+    <router-link
+      :to="{name: 'home'}"
+      class="logo"
+    >
+      <img
+        src="/les-frais.png"
+        alt="expenses"
+      >
     </router-link>
     <nav>
-      <router-link :to="{name: 'home'}" class="btn">
+      <router-link
+        :to="{name: 'home'}"
+        class="btn"
+      >
         Log In
       </router-link>
-      <router-link :to="{name: 'home'}" class="btn">
+      <router-link
+        :to="{name: 'home'}"
+        class="btn"
+      >
         Settings
       </router-link>
     </nav>
