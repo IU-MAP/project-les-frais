@@ -15,8 +15,8 @@ defaults:
     working-directory: frontend
 
 jobs:
-  build:
-    name: Node build
+  lint:
+    name: Check code quality
     runs-on: ubuntu-20.04
     steps:
       - uses: actions/checkout@master
@@ -36,11 +36,56 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Build the application
-        run: npm run build
+      - name: Lint the code
+        run: npm run lint
 
-      - name: Perform Unit testing
+  unit_testing:
+    name: Unit Testing
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Node
+        uses: actions/setup-node@master
+        with:
+          node-version: '12'
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint the code
         run: npm run test:unit
+
+  e2e_testing:
+    name: End-to-End testing
+    runs-on: ubuntu-20.04
+    steps:
+      - uses: actions/checkout@master
+      - name: Install Node
+        uses: actions/setup-node@master
+        with:
+          node-version: '12'
+
+      - name: Cache dependencies
+        uses: actions/cache@v2
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build the app
+        run: npm run build
 
       - name: Perform End-to-End testing
         run: npm run test:e2e
