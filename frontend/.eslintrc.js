@@ -3,11 +3,13 @@ module.exports = {
     browser: true,
     es2021: true,
     jest: true,
+    'cypress/globals': true,
   },
   extends: [
     'plugin:vue/vue3-recommended',
     '@vue/typescript',
     'airbnb-base',
+    'plugin:cypress/recommended',
   ],
   parser: '@typescript-eslint/parser',
   parserOptions: {
@@ -20,6 +22,7 @@ module.exports = {
   plugins: [
     'vue',
     '@typescript-eslint',
+    'cypress',
   ],
   overrides: [
     {
