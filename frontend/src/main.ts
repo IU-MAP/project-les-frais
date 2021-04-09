@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import maska from 'maska';
 import App from './app.vue';
 import router from './router';
 
@@ -8,4 +9,7 @@ import './assets/styles/breakpoints.css';
 import './assets/styles/ui.css';
 import './assets/styles/typography.css';
 
-createApp(App).use(router).mount('#app');
+createApp(App)
+  .use(router)
+  .use(maska)
+  .mount('#app');
