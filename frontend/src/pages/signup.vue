@@ -3,13 +3,42 @@
     <div class="card">
       <h1>Signup</h1>
 
-      <form>
-        <input v-model="name" type="text">
+      <form @submit.prevent="submit">
+        <FormInput
+          v-model:value="email"
+          type="email"
+          placeholder="Email"
+          label-text="Email"
+          required
+        >
+          <template #after>
+            <div class="form-input_icon">
+              <AtSignIcon />
+            </div>
+          </template>
+        </FormInput>
+
+        <FormInput
+          v-model:value="password"
+          type="password"
+          placeholder="********"
+          label-text="Password"
+          required
+        />
+
+        <FormInput
+          v-model:value="confirm"
+          type="password"
+          placeholder="********"
+          label-text="Confirm password"
+          required
+        />
+
         <Button look="submit">Submit</Button>
       </form>
 
       <p>
-        No, i have an account.
+        I have an account.
         <router-link :to="{name: 'login'}" class="text-regular text-link">Log in</router-link>
       </p>
     </div>
@@ -18,11 +47,29 @@
 
 <script lang="ts">
 import '../assets/styles/pages/auth.css';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import Button from '../components/button/index.vue';
+import AtSignIcon from '../assets/icons/at-sign.svg?component';
+import FormInput from '../components/form-input/index.vue';
 
 export default defineComponent({
   name: 'SignupPage',
-  components: { Button },
+  components: {FormInput, Button, AtSignIcon },
+  setup () {
+    const email = ref<string>('');
+    const password = ref<string>('');
+    const confirm = ref<string>('');
+
+    const submit = () => {
+      // console.log(name.value);
+    };
+
+    return {
+      email,
+      password,
+      confirm,
+      submit,
+    };
+  },
 });
 </script>

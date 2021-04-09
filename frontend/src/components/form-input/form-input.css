@@ -1,3 +1,68 @@
 .form-input {
+  display: block;
+  width: 100%;
+}
 
+.form-input .form-input_label {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.1rem;
+  font: var(--font-small);
+  color: var(--color-font-main);
+}
+
+.form-input .form-input_wrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.5rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-button);
+  box-shadow: var(--shadow-button-active);
+}
+
+.form-input .form-input_input {
+  flex-grow: 1;
+  height: 100%;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  font: var(--font-regular);
+  color: var(--color-font-main);
+}
+
+.form-input .form-input_input:focus {
+  outline: none;
+}
+
+.form-input.error .form-input_wrapper {
+  border: 1px solid var(--color-error);
+}
+
+.form-input.error .form-input_input:not(:focus) {
+  color: var(--color-error);
+}
+
+.form-input .form-input_error {
+  margin-top: 0.1rem;
+  font: var(--font-small);
+  color: var(--color-error);
+}
+
+.form-input .form-input_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.25rem;
+  height: 100%;
+  border-left: 1px solid var(--color-border);
+}
+
+.form-input .form-input_input:-webkit-autofill,
+.form-input .form-input_input:-webkit-autofill:hover,
+.form-input .form-input_input:-webkit-autofill:focus {
+  -webkit-text-fill-color: black;
+  -webkit-box-shadow: var(--shadow-button-active);
+  border-radius: var(--border-radius-button);
 }

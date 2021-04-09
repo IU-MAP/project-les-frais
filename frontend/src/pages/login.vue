@@ -4,12 +4,33 @@
       <h1>Login</h1>
 
       <form @submit.prevent="submit">
-        <FormInput v-model:value="name" placeholder="Email" label-text="Email" />
+        <FormInput
+          v-model:value="email"
+          type="email"
+          placeholder="Email"
+          label-text="Email"
+          required
+        >
+          <template #after>
+            <div class="form-input_icon">
+              <AtSignIcon />
+            </div>
+          </template>
+        </FormInput>
+
+        <FormInput
+          v-model:value="password"
+          type="password"
+          placeholder="********"
+          label-text="Password"
+          required
+        />
+
         <Button look="submit">Submit</Button>
       </form>
 
       <p>
-        No, i don't have an account.
+        I don't have an account.
         <router-link :to="{name: 'signup'}" class="text-regular text-link">Sign up</router-link>
       </p>
     </div>
@@ -21,19 +42,26 @@ import '../assets/styles/pages/auth.css';
 import { defineComponent, ref } from 'vue';
 import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
+import AtSignIcon from '../assets/icons/at-sign.svg?component';
 
 export default defineComponent({
   name: 'LoginPage',
-  components: { FormInput, Button },
+  components: {
+    FormInput,
+    Button,
+    AtSignIcon,
+  },
   setup () {
-    const name = ref<string>('');
+    const email = ref<string>('');
+    const password = ref<string>('');
 
     const submit = () => {
       // console.log(name.value);
     };
 
     return {
-      name,
+      email,
+      password,
       submit,
     };
   },

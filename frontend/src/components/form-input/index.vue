@@ -1,29 +1,32 @@
 <template>
-  <div class="form-input">
-    <label v-if="!noLabel" :for="id" :class="labelClass">
+  <div :class="{error}" class="form-input">
+    <label v-if="!noLabel" :for="id" class="form-input_label">
       <slot name="label">{{ labelText }}</slot>
     </label>
 
-    <slot name="before" />
+    <div class="form-input_wrapper">
+      <slot name="before" />
 
-    <input
-      :id="id"
-      v-model="val"
-      v-maska="mask"
-      :type="type"
-      :class="inputClass"
-      :required="required"
-      :disabled="disabled"
-      :placeholder="placeholder"
-      :autocomplete="autocomplete"
-      v-bind="inputAttrs"
-      @focusin="$emit('focusin', $event)"
-      @focusout="$emit('focusout', $event)"
-      @input="input"
-    >
+      <input
+        :id="id"
+        v-model="val"
+        v-maska="mask"
+        :type="type"
+        :class="'form-input_input'"
+        :required="required"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        :autocomplete="autocomplete"
+        v-bind="inputAttrs"
+        @focusin="$emit('focusin', $event)"
+        @focusout="$emit('focusout', $event)"
+        @input="input"
+      >
 
-    <slot name="after" />
-    <div v-if="error" :class="errorClass" class="input-err">
+      <slot name="after" />
+    </div>
+
+    <div v-if="error" class="form-input_error">
       <slot name="error">{{ error }}</slot>
     </div>
   </div>
@@ -65,22 +68,6 @@ export default defineComponent({
      * If an error occurred, pass descriptive text here
      */
     error: {
-      type: String,
-      default: '',
-    },
-
-    /**
-     * Classes of FormInput component's elements
-     */
-    labelClass: {
-      type: String,
-      default: '',
-    },
-    inputClass: {
-      type: String,
-      default: '',
-    },
-    errorClass: {
       type: String,
       default: '',
     },
