@@ -1,3 +1,9 @@
+/**
+  All possible css variables for colors, shadows, fonts etc, that are
+  taken from the project design in Figma:
+  https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais
+*/
+
 body {
   --shadow-card: 7px 7px 14px 0 #C7C8CD, -7px -7px 14px 0 #FFFFFF;
   --shadow-card-small: 5px 5px 8px 0 #C7C8CD, -5px -5px 8px 0 #FFFFFF;
@@ -23,12 +29,12 @@ body {
   --border-radius-button: 0.25rem;
 
   --font-family: 'Montserrat', sans-serif;
-  --font-regular: normal normal 1em/1.125em var(--font-family);
-  --font-regular-light: 300 normal 1em/1.125em var(--font-family);
-  --font-h1: 500 normal 2em/3em var(--font-family);
-  --font-h2: 500 normal 1.5em/1.875em var(--font-family);
-  --font-h3: 500 normal 1.25em/1.5em var(--font-family);
-  --font-small: 300 normal 0.75em/0.875em var(--font-family);
+  --font-regular: normal normal 1rem/1.125rem var(--font-family);
+  --font-regular-light: 300 normal 1rem/1.125rem var(--font-family);
+  --font-h1: 500 normal 2rem/3rem var(--font-family);
+  --font-h2: 500 normal 1.5rem/1.875rem var(--font-family);
+  --font-h3: 500 normal 1.25rem/1.5rem var(--font-family);
+  --font-small: 300 normal 0.75rem/0.875rem var(--font-family);
 
   --category-brown: #78350F;
   --category-red: #9F1239;

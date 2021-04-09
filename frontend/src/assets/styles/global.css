@@ -3,8 +3,8 @@
 }
 
 body {
-  background-color: #eaebf1;
-  color: #424567;
+  background-color: var(--color-background);
+  color: var(--color-font-main);
   font-family: var(--font-family);
   overflow-x: hidden;
 }

@@ -35,6 +35,13 @@ module.exports = {
         'no-unused-vars': 'off',
         '@typescript-eslint/no-unused-vars': 'off',
         'no-trailing-spaces': 0,
+        'vue/max-attributes-per-line': [1, {
+          singleline: 3,
+          multiline: {
+            max: 1,
+            allowFirstLine: false,
+          },
+        }],
       },
     },
   ],

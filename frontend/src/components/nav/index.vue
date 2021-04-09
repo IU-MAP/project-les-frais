@@ -11,7 +11,7 @@
     </router-link>
 
     <nav>
-      <Button :link="{ name: 'home'}">
+      <Button :link="{ name: 'login'}">
         Log In
       </Button>
     </nav>
