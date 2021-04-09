@@ -35,3 +35,11 @@
   box-shadow: var(--shadow-button-submit);
   color: var(--color-font-white);
 }
+
+.btn.submit:hover, .btn.submit:focus {
+  box-shadow: var(--shadow-button-submit-hover);
+}
+
+.btn.submit:active {
+  box-shadow: var(--shadow-button-submit-active);
+}

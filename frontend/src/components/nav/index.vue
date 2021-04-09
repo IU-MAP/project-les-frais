@@ -1,5 +1,5 @@
 <template>
-  <header class="header">
+  <header class="header container">
     <router-link
       :to="{name: 'home'}"
       class="logo"
