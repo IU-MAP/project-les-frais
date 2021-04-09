@@ -25,6 +25,6 @@ import Button from '../components/button/index.vue';
 
 export default defineComponent({
   name: 'HomePage',
-  components: {Button},
+  components: { Button },
 });
 </script>

@@ -31,10 +31,10 @@ export default defineComponent({
     },
     link: {
       type: [String, Object],
-      default: '#',
+      default: null,
     },
   },
-  setup(props) {
+  setup (props) {
     const isSubmit = ref(props.look === 'submit');
 
     return {
