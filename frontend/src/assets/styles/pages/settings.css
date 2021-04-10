@@ -48,18 +48,32 @@
   margin-bottom: 1rem;
 }
 
-.settings-page .settings .row {
+.settings-page .profile-settings .row {
   display: flex;
   align-items: center;
   justify-content: flex-start;
 }
 
-.settings-page .settings .row p {
+.settings-page .profile-settings .row p {
   width: 180px;
   margin-right: 1rem;
   text-align: right;
 }
 
-.settings-page .settings .row .btn {
+.settings-page .profile-settings .row .btn {
   width: 250px;
+}
+
+.settings-page .category-settings > h1 {
+  margin-bottom: 0.5rem;
+}
+
+.settings-page .category-settings > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.settings-page .category-settings > div > * {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
 }

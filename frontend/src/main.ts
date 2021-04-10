@@ -6,8 +6,9 @@ import router from './router';
 import './assets/styles/variables.css';
 import './assets/styles/normalize.css';
 import './assets/styles/breakpoints.css';
-import './assets/styles/ui.css';
-import './assets/styles/typography.css';
+import './assets/styles/ui/ui.css';
+import './assets/styles/ui/typography.css';
+import './assets/styles/ui/color-number.css';
 
 createApp(App)
   .use(router)

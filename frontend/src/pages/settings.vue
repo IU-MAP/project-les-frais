@@ -14,7 +14,7 @@
     </div>
 
     <transition name="fade" mode="out-in" appear>
-      <div v-if="activeTab === 'profile'" class="card settings">
+      <div v-if="activeTab === 'profile'" class="card settings profile-settings">
         <h1>Profile settings</h1>
 
         <div class="row">
@@ -43,9 +43,19 @@
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'categories'" class="card settings">
-        <h1>Categories</h1>
+      <div v-else-if="activeTab === 'categories'" class="card settings category-settings">
+        <h1>All categories</h1>
+
+        <div>
+          <Category
+            v-for="category in CATEGORIES_MOCK"
+            :key="category.id"
+            :name="category.name"
+            :color="category.color"
+          />
+        </div>
       </div>
+
       <div v-else-if="activeTab === 'templates'" class="card settings">
         <h1>Expense templates</h1>
       </div>
@@ -57,12 +67,17 @@
 import '../assets/styles/pages/settings.css';
 import { defineComponent, ref } from 'vue';
 import Button from '../components/button/index.vue';
+import Category from '../components/category/index.vue';
+import { CATEGORIES_MOCK } from '../utils/mocks';
 
 type TabsType = 'profile'|'categories'|'templates';
 const TABS: TabsType[] = ['profile', 'categories', 'templates'];
 
 export default defineComponent({
-  components: {Button},
+  components: {
+    Category,
+    Button,
+  },
   setup () {
     const activeTab = ref<TabsType>('profile');
 
@@ -74,6 +89,7 @@ export default defineComponent({
       activeTab,
       TABS,
       changeActive,
+      CATEGORIES_MOCK,
     };
   },
 });
