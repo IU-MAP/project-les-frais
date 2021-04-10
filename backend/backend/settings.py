@@ -26,6 +26,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'lh$z&7m0l8k83v*wtov$042ha3j!qg$o!q&8#5s!l(@uv6wba-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+# TODO: read from an environment variable
 DEBUG = True
 
 ALLOWED_HOSTS = []
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'core',
     'users',
     'rest_framework',
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
@@ -118,6 +120,7 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
 
 
 # Static files (CSS, JavaScript, Images)
