@@ -44,3 +44,7 @@
 .btn.submit:active {
   box-shadow: var(--shadow-button-submit-active);
 }
+
+.btn.danger {
+  border: 1px solid var(--color-error);
+}

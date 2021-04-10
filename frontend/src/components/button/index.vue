@@ -26,7 +26,7 @@ export default defineComponent({
   name: 'Button',
   props: {
     look: {
-      type: String as PropType<'default'|'submit'|'with-icon'>,
+      type: String as PropType<'default'|'submit'|'with-icon'|'danger'>,
       default: 'default',
     },
     link: {

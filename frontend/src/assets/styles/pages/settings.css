@@ -1,0 +1,65 @@
+.settings-page {
+
+}
+
+.settings-page .tabs-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 600px;
+  margin: 0 auto 2rem;
+  padding: .5rem 0;
+}
+
+.settings-page .tabs-nav .tab {
+  display: block;
+  padding-bottom: .25rem;
+  font: var(--font-h2);
+  color: var(--color-font-main);
+  border: none;
+  background-color: transparent;
+  border-bottom: 3px solid transparent;
+  transition: color .2s, border-bottom-color .2s;
+  text-transform: capitalize;
+  cursor: pointer;
+}
+
+.settings-page .tabs-nav .tab:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.settings-page .tabs-nav .tab:focus {
+  outline: none;
+}
+
+.settings-page .tabs-nav .tab:hover, .settings-page .tabs-nav .tab.active {
+  color: var(--color-accent);
+  border-bottom-color: var(--color-accent);
+}
+
+.settings-page .settings {
+  width: 600px;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem;
+}
+
+.settings-page .settings h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.settings-page .settings .row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.settings-page .settings .row p {
+  width: 180px;
+  margin-right: 1rem;
+  text-align: right;
+}
+
+.settings-page .settings .row .btn {
+  width: 250px;
+}

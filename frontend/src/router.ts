@@ -17,6 +17,11 @@ const routes = [
     component: () => import('./pages/signup.vue'),
   },
   {
+    name: 'settings',
+    path: '/settings',
+    component: () => import('./pages/settings.vue'),
+  },
+  {
     name: 'error',
     path: '/:pathMatch(.*)*',
     component: () => import('./pages/error.vue'),
