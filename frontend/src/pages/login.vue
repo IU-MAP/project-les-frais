@@ -43,6 +43,17 @@ import { defineComponent, ref } from 'vue';
 import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
+import api from '../utils/api';
+
+interface ReqBody {
+  username: string,
+  email: string,
+  password: string,
+}
+
+interface ReqRes {
+
+}
 
 export default defineComponent({
   name: 'LoginPage',
@@ -51,12 +62,16 @@ export default defineComponent({
     Button,
     AtSignIcon,
   },
-  setup () {
+  setup (props, context) {
     const email = ref<string>('');
     const password = ref<string>('');
 
     const submit = () => {
-      // console.log(name.value);
+      api.post<ReqBody, ReqRes>('rest-auth/login/', {
+        email,
+        password,
+        username: email,
+      });
     };
 
     return {
