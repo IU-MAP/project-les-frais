@@ -22,11 +22,7 @@ from drf_yasg import openapi
 
 from django.conf import settings
 from rest_framework import permissions
-from users.views import UserViewSet
 from rest_framework import routers
-
-router = routers.SimpleRouter()
-router.register('', UserViewSet)
 
 
 schema_view = get_schema_view(
@@ -55,7 +51,15 @@ urlpatterns = [
     url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
 
+
+'''
+
+router = routers.SimpleRouter()
+router.register('', UserViewSet)
+from users.views import UserViewSet
+
 if settings.DEBUG:
     urlpatterns += [
         path('test/',  include(router.urls)),
     ]
+'''

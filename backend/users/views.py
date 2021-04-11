@@ -10,6 +10,7 @@ from rest_framework.authentication import TokenAuthentication, SessionAuthentica
 
 
 
+'''
 from rest_framework.permissions import SAFE_METHODS, BasePermission, IsAuthenticated
 class IsTheUserOfUser(BasePermission):
     """
@@ -20,8 +21,6 @@ class IsTheUserOfUser(BasePermission):
         return bool(request.user.id == user.id)
 
 
-
-
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
@@ -30,5 +29,5 @@ class UserSerializer(serializers.ModelSerializer):
 class UserViewSet(ModelViewSet):
     serializer_class = UserSerializer
     queryset = User.objects.all()
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
     permission_classes = [IsAuthenticated, IsTheUserOfUser]
+'''
