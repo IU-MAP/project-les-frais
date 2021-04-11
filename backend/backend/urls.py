@@ -18,8 +18,16 @@ from django.contrib import admin
 from django.urls import path, include
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+
+
+from django.conf import settings
 from rest_framework import permissions
+from users.views import UserViewSet
 from rest_framework import routers
+
+router = routers.SimpleRouter()
+router.register('', UserViewSet)
+
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -42,4 +50,12 @@ urlpatterns = [
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+
+    url(r'^rest-auth/', include('rest_auth.urls')),
+    url(r'^rest-auth/registration/', include('rest_auth.registration.urls')),
 ]
+
+if settings.DEBUG:
+    urlpatterns += [
+        path('test/',  include(router.urls)),
+    ]
