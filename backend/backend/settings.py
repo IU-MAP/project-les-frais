@@ -57,7 +57,7 @@ INSTALLED_APPS = [
 ]
 
 
-SITE_ID = 1
+#SITE_ID = 1
 
 
 # TODO: change to CORS_ALLOWED_ORIGINS = ["our_fronend_url.com"]
@@ -140,6 +140,8 @@ USE_L10N = True
 USE_TZ = True
 
 
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+ACCOUNT_EMAIL_VERIFICATION = 'none'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
