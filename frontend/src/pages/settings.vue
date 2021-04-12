@@ -1,50 +1,53 @@
 <template>
   <section class="settings-page">
-    <div class="card tabs-nav">
-      <button
-        v-for="tab in TABS"
-        :key="tab"
-        :class="{active: tab === activeTab}"
-        type="button"
-        class="tab"
-        @click="changeActive(tab)"
-      >
-        {{ tab }}
-      </button>
-    </div>
+    <Tabs :items="tabs" @change="changeActive">
+      <template #item="{item}">
+        {{ t(item) }}
+      </template>
+    </Tabs>
 
     <transition name="fade" mode="out-in" appear>
-      <div v-if="activeTab === 'profile'" class="card settings profile-settings">
-        <h1>Profile settings</h1>
+      <div v-if="activeTab === 'settings_tabs_profile'" class="card settings profile-settings">
+        <h1>{{ t('settings_tab_profile') }}</h1>
 
         <div class="row">
-          <p class="text-regular">Language</p>
-          <Button>English</Button>
+          <p class="text-regular">{{ t('settings_language') }}</p>
+          <Dropdown :items="languages" @select="selectLan($event)">
+            <template #default>
+              {{ t('langs_' + activeLan) }}
+            </template>
+            <template #option="{item}">
+              {{ t('langs_' + item) }}
+            </template>
+          </Dropdown>
         </div>
         <div class="row">
-          <p class="text-regular">Main currency</p>
-          <Button>Russian Rouble</Button>
+          <p class="text-regular">{{ t('settings_currency') }}</p>
+          <Button>{{ t('settings_currency_btn') }}</Button>
         </div>
         <div class="row">
-          <p class="text-regular">Import data</p>
-          <Button>Import from .XLS or .XLSX</Button>
+          <p class="text-regular">{{ t('settings_import') }}</p>
+          <Button>{{ t('settings_import_btn') }}</Button>
         </div>
         <div class="row">
-          <p class="text-regular">Export data</p>
-          <Button>Export to .XLS</Button>
+          <p class="text-regular">{{ t('settings_export') }}</p>
+          <Button>{{ t('settings_export_btn') }}</Button>
         </div>
         <div class="row">
-          <p class="text-regular">Log Out</p>
-          <Button @click="logout">Log Out from account</Button>
+          <p class="text-regular">{{ t('settings_logout') }}</p>
+          <Button @click="logout">{{ t('settings_logout_btn') }}</Button>
         </div>
         <div class="row">
-          <p class="text-regular">Delete account</p>
-          <Button look="danger">Delete all user data</Button>
+          <p class="text-regular">{{ t('settings_delete') }}</p>
+          <Button look="danger">{{ t('settings_delete_btn') }}</Button>
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'categories'" class="card settings category-settings">
-        <h1>All categories</h1>
+      <div
+        v-else-if="activeTab === 'settings_tabs_categories'"
+        class="card settings category-settings"
+      >
+        <h1>{{ t('settings_tab_categories') }}</h1>
 
         <div>
           <Category
@@ -56,8 +59,8 @@
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'templates'" class="card settings">
-        <h1>Expense templates</h1>
+      <div v-else-if="activeTab === 'settings_tabs_templates'" class="card settings">
+        <h1>{{ t('settings_tab_templates') }}</h1>
       </div>
     </transition>
   </section>
@@ -65,28 +68,40 @@
 
 <script lang="ts">
 import '../assets/styles/pages/settings.css';
-import { defineComponent, ref } from 'vue';
+import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
 import { CATEGORIES_MOCK } from '../utils/mocks';
 import useStore from '../store';
+import Dropdown from '../components/dropdown/index.vue';
+import useT from '../utils/translations';
+import { LANGS } from '../utils/constants';
+import Tabs from '../components/tabs/index.vue';
 
-type TabsType = 'profile'|'categories'|'templates';
-const TABS: TabsType[] = ['profile', 'categories', 'templates'];
+type TabsType = 'settings_tabs_profile'|'settings_tabs_categories'|'settings_tabs_templates';
+const TABS: TabsType[] = ['settings_tabs_profile', 'settings_tabs_categories', 'settings_tabs_templates'];
 
 export default defineComponent({
   components: {
+    Tabs,
+    Dropdown,
     Category,
     Button,
   },
   setup () {
+    const t = useT();
     const store = useStore();
     const router = useRouter();
-    const activeTab = ref<TabsType>('profile');
+    const activeTab = ref<TabsType>('settings_tabs_profile');
+    const activeLan = computed(() => store.state.language);
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
+    };
+
+    const selectLan = (lan: LANGS) => {
+      store.dispatch('changeLang', lan);
     };
 
     const logout = () => {
@@ -96,11 +111,15 @@ export default defineComponent({
     };
 
     return {
+      t,
       activeTab,
-      TABS,
+      activeLan,
+      tabs: TABS,
+      languages: Object.values(LANGS),
       changeActive,
       CATEGORIES_MOCK,
       logout,
+      selectLan,
     };
   },
 });

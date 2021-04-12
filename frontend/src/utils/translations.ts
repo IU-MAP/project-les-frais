@@ -66,6 +66,74 @@ export const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Настройки',
     eng: 'Settings',
   },
+  settings_language: {
+    rus: 'Язык',
+    eng: 'Language',
+  },
+  settings_currency: {
+    rus: 'Основная валюта',
+    eng: 'Main currency',
+  },
+  settings_currency_btn: {
+    rus: 'Российский рубль',
+    eng: 'Russian rouble',
+  },
+  settings_import: {
+    rus: 'Импорт данных',
+    eng: 'Import data',
+  },
+  settings_import_btn: {
+    rus: 'Импорт из .XLS',
+    eng: 'Import from .XLS',
+  },
+  settings_export: {
+    rus: 'Экспорт данных',
+    eng: 'Export data',
+  },
+  settings_export_btn: {
+    rus: 'Экспорт в .XLS',
+    eng: 'Export to .XLS',
+  },
+  settings_logout: {
+    rus: 'Выйти',
+    eng: 'Log Out',
+  },
+  settings_logout_btn: {
+    rus: 'Выйти из аккаунта',
+    eng: 'Log out from account',
+  },
+  settings_delete: {
+    rus: 'Удалить аккаунт',
+    eng: 'Delete account',
+  },
+  settings_delete_btn: {
+    rus: 'Удалить все данные',
+    eng: 'Delete all user data',
+  },
+  settings_tabs_profile: {
+    rus: 'Профиль',
+    eng: 'Profile',
+  },
+  settings_tab_profile: {
+    rus: 'Настройки профиля',
+    eng: 'Profile settings',
+  },
+  settings_tabs_categories: {
+    rus: 'Категории',
+    eng: 'Categories',
+  },
+  settings_tab_categories: {
+    rus: 'Все категории',
+    eng: 'All categories',
+  },
+  settings_tabs_templates: {
+    rus: 'Шаблоны',
+    eng: 'Templates',
+  },
+  settings_tab_templates: {
+    rus: 'Шаблоны расходы',
+    eng: 'Expense templates',
+  },
   empty: {
     rus: '',
     eng: '',
