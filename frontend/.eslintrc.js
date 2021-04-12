@@ -32,8 +32,14 @@ module.exports = {
         parser: '@typescript-eslint/parser',
       },
       rules: {
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': 'off',
+        'vue/max-attributes-per-line': [1, {
+          singleline: 3,
+          multiline: {
+            max: 1,
+            allowFirstLine: false,
+          },
+        }],
+        'vue/singleline-html-element-content-newline': 0,
       },
     },
   ],
@@ -41,5 +47,13 @@ module.exports = {
     'import/no-extraneous-dependencies': 0,
     'import/extensions': 0,
     'import/no-unresolved': 0,
+    'import/prefer-default-export': 0,
+    'space-before-function-paren': [1, 'always'],
+    'no-underscore-dangle': 0,
+    'no-console': ['error', { allow: ['warn', 'error'] }],
+    'no-trailing-spaces': 0,
+    'no-unused-vars': 1,
+    'lines-between-class-members': 0,
+    'no-param-reassign': 0,
   },
 };
