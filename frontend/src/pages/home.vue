@@ -2,16 +2,13 @@
   <section class="home-page container">
     <div>
       <h1>
-        An expense tracker you deserve!
+        {{ t('home_title') }}
       </h1>
       <h3 class="text-regular">
-        Import your data from any source and enjoy the power
-        of this tool: statistics, wallets, budgeting, currency
-        converter. And even investment and cryptocurrencies
-        control! Everything is in your hand!
+        {{ t('home_subtitle') }}
       </h3>
       <Button :link="{ name: 'signup' }" look="submit">
-        Create account
+        {{ t('home_action') }}
       </Button>
     </div>
     <img src="/home-diagram.png" alt="diagram">
@@ -22,9 +19,17 @@
 import '../assets/styles/pages/home.css';
 import { defineComponent } from 'vue';
 import Button from '../components/button/index.vue';
+import useT from '../utils/translations';
 
 export default defineComponent({
   name: 'HomePage',
   components: { Button },
+  setup () {
+    const t = useT();
+
+    return {
+      t,
+    };
+  },
 });
 </script>

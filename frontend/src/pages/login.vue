@@ -1,14 +1,14 @@
 <template>
   <section class="auth-page">
     <div class="card">
-      <h1>Login</h1>
+      <h1>{{ t('auth_login') }}</h1>
 
       <form @submit.prevent="submit">
         <FormInput
           v-model:value="email"
           type="email"
-          placeholder="Email"
-          label-text="Email"
+          placeholder="example@domain.com"
+          :label-text="t('auth_email')"
           required
         >
           <template #after>
@@ -22,18 +22,20 @@
           v-model:value="password"
           type="password"
           placeholder="********"
-          label-text="Password"
+          :label-text="t('auth_password')"
           required
         />
 
         <p v-if="error" class="text-regular text-color-error">{{ error }}</p>
 
-        <Button look="submit">Submit</Button>
+        <Button look="submit">{{ t('auth_action') }}</Button>
       </form>
 
       <p>
-        I don't have an account.
-        <router-link :to="{name: 'signup'}" class="text-regular text-link">Sign up</router-link>
+        {{ t('auth_dont') }}
+        <router-link :to="{name: 'signup'}" class="text-regular text-link">
+          {{ t('signup') }}
+        </router-link>
       </p>
     </div>
   </section>
@@ -46,6 +48,7 @@ import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import api from '../utils/api';
+import useT from '../utils/translations';
 
 interface ReqBody {
   username: string,
@@ -65,6 +68,8 @@ export default defineComponent({
     AtSignIcon,
   },
   setup () {
+    const t = useT();
+
     const email = ref<string>('');
     const password = ref<string>('');
     const error = ref<string>('');
@@ -82,6 +87,7 @@ export default defineComponent({
     };
 
     return {
+      t,
       email,
       password,
       error,
