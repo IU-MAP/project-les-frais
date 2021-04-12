@@ -1,4 +1,4 @@
-/* eslint-disable no-undef, no-param-reassign */
+/* eslint-disable no-undef */
 
 /**
  * Thanks jgerigmeyer for this: https://gist.github.com/jgerigmeyer/87d16753c93762132943a26ea40cc665

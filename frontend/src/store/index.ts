@@ -1,4 +1,3 @@
-/* eslint-disable no-param-reassign */
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { LANGS } from '../utils/constants';

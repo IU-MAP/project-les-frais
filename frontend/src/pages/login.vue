@@ -77,9 +77,9 @@ export default defineComponent({
     const submit = async () => {
       try {
         await api.post<ReqBody, ReqRes>('rest-auth/login/', {
-          email,
-          password,
-          username: email,
+          email: email.value,
+          password: password.value,
+          username: email.value,
         });
       } catch (e) {
         error.value = e.message;

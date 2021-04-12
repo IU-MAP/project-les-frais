@@ -53,5 +53,7 @@ module.exports = {
     'no-console': ['error', { allow: ['warn', 'error'] }],
     'no-trailing-spaces': 0,
     'no-unused-vars': 1,
+    'lines-between-class-members': 0,
+    'no-param-reassign': 0,
   },
 };

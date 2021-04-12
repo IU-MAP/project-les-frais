@@ -5,10 +5,11 @@
 
       <form @submit.prevent="submit">
         <FormInput
-          v-model:value="email"
+          v-model:value="values.email"
           type="email"
           placeholder="example@domain.com"
           :label-text="t('auth_email')"
+          :error="errors.email"
           required
         >
           <template #after>
@@ -19,20 +20,26 @@
         </FormInput>
 
         <FormInput
-          v-model:value="password"
+          v-model:value="values.password1"
           type="password"
           placeholder="********"
           :label-text="t('auth_password')"
+          :error="errors.password1"
           required
         />
 
         <FormInput
-          v-model:value="confirm"
+          v-model:value="values.password2"
           type="password"
           placeholder="********"
           :label-text="t('auth_confirm')"
+          :error="errors.password2"
           required
         />
+
+        <p v-if="errors.non_field_errors" class="text-small text-color-error text-center">
+          {{ errors.non_field_errors }}
+        </p>
 
         <Button look="submit">{{ t('auth_action') }}</Button>
       </form>
@@ -49,23 +56,12 @@
 
 <script lang="ts">
 import '../assets/styles/pages/auth.css';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, ref, reactive } from 'vue';
 import Button from '../components/button/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import FormInput from '../components/form-input/index.vue';
-import api from '../utils/api';
+import { apiSignup } from '../utils/api/auth';
 import useT from '../utils/translations';
-
-interface ReqBody {
-  username: string,
-  email: string,
-  password1: string,
-  password2: string,
-}
-
-interface ReqRes {
-
-}
 
 export default defineComponent({
   name: 'SignupPage',
@@ -73,24 +69,40 @@ export default defineComponent({
   setup () {
     const t = useT();
 
-    const email = ref<string>('');
-    const password = ref<string>('');
-    const confirm = ref<string>('');
+    const values = reactive({
+      email: '',
+      password1: '',
+      password2: '',
+    });
 
-    const submit = () => {
-      api.post<ReqBody, ReqRes>('rest-auth/registration/', {
-        email,
-        username: email,
-        password1: password,
-        password2: confirm,
+    const errors = reactive({
+      email: '',
+      password1: '',
+      password2: '',
+      non_field_errors: '',
+    });
+
+    const submit = async () => {
+      const res = await apiSignup({
+        ...values,
+        username: values.email,
       });
+      if (res.error && typeof res.error === 'object') {
+        errors.email = res.error.email || '';
+        errors.password1 = res.error.password1 || '';
+        errors.password2 = res.error.password2 || '';
+        errors.non_field_errors = res.error.non_field_errors || '';
+      }
+
+      if (res.response) {
+        console.log('Success!');
+      }
     };
 
     return {
       t,
-      email,
-      password,
-      confirm,
+      values,
+      errors,
       submit,
     };
   },
