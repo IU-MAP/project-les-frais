@@ -47,7 +47,7 @@ h1, h2, h3 {
   color: var(--color-error);
 }
 
-.text-color-error {
+.text-color-success {
   color: var(--color-success);
 }
 

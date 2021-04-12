@@ -26,6 +26,8 @@
           required
         />
 
+        <p v-if="error" class="text-regular text-color-error">{{ error }}</p>
+
         <Button look="submit">Submit</Button>
       </form>
 
@@ -62,21 +64,27 @@ export default defineComponent({
     Button,
     AtSignIcon,
   },
-  setup (props, context) {
+  setup () {
     const email = ref<string>('');
     const password = ref<string>('');
+    const error = ref<string>('');
 
-    const submit = () => {
-      api.post<ReqBody, ReqRes>('rest-auth/login/', {
-        email,
-        password,
-        username: email,
-      });
+    const submit = async () => {
+      try {
+        await api.post<ReqBody, ReqRes>('rest-auth/login/', {
+          email,
+          password,
+          username: email,
+        });
+      } catch (e) {
+        error.value = e.message;
+      }
     };
 
     return {
       email,
       password,
+      error,
       submit,
     };
   },

@@ -2,6 +2,7 @@ import { createApp } from 'vue';
 import maska from 'maska';
 import App from './app.vue';
 import router from './router';
+import { store, injectionKey } from './store';
 
 import './assets/styles/variables.css';
 import './assets/styles/normalize.css';
@@ -13,4 +14,5 @@ import './assets/styles/ui/color-number.css';
 createApp(App)
   .use(router)
   .use(maska)
+  .use(store, injectionKey)
   .mount('#app');

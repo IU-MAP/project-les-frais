@@ -66,7 +66,7 @@ interface ReqRes {
 
 export default defineComponent({
   name: 'SignupPage',
-  components: {FormInput, Button, AtSignIcon },
+  components: { FormInput, Button, AtSignIcon },
   setup () {
     const email = ref<string>('');
     const password = ref<string>('');

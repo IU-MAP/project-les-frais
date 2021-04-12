@@ -7,7 +7,7 @@ const http = async <T>(path: string, config: RequestInit): Promise<T> => {
     const response = await fetch(request);
     return response.json().catch(() => ({}));
   } catch (e) {
-    throw new Error(e.response.status);
+    throw new Error(e?.response?.status || 500);
   }
 };
 

@@ -125,7 +125,7 @@ export default defineComponent({
       val.value = newVal;
     });
 
-    const input = (e: Event) => {
+    const input = () => {
       if (props.inputDelay) {
         clearTimeout(timeout);
         timeout = setTimeout(() => {
