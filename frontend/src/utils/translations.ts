@@ -10,6 +10,18 @@ export const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Английский',
     eng: 'English',
   },
+  login: {
+    rus: 'Войти',
+    eng: 'Log In',
+  },
+  signup: {
+    rus: 'Зарегистрироваться',
+    eng: 'Sign Up',
+  },
+  empty: {
+    rus: '',
+    eng: '',
+  },
 };
 
 const useT = () => {
@@ -26,9 +38,7 @@ const useT = () => {
     return translation;
   };
 
-  return {
-    t,
-  };
+  return t;
 };
 
 export default useT;

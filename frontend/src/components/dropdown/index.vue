@@ -1,22 +1,29 @@
 <template>
-  <div :class="open" class="dropdown">
-    <button type="button" class="trigger" @click="toggleOpen">
+  <div
+    :class="{open}"
+    v-click-outside="() => toggleOpen(false)"
+    class="dropdown"
+  >
+    <button type="button" class="trigger" @click="() => toggleOpen()">
       <slot>
         {{ label }}
       </slot>
       <ChevronIcon />
     </button>
 
-    <ul class="menu">
-      <li
-        v-for="item in items"
-        :key="item"
-      >
-        <slot name="option" :item="item">
-          {{ item }}
-        </slot>
-      </li>
-    </ul>
+    <div class="dropdown-wrapper">
+      <ul class="menu">
+        <li
+          v-for="item in items"
+          :key="item"
+          @click="select(item)"
+        >
+          <slot name="option" :item="item">
+            {{ item }}
+          </slot>
+        </li>
+      </ul>
+    </div>
   </div>
 </template>
 
@@ -30,6 +37,7 @@ export default defineComponent({
   components: {
     ChevronIcon,
   },
+  emits: ['select'],
   props: {
     label: {
       type: String,
@@ -44,16 +52,26 @@ export default defineComponent({
       default: false,
     },
   },
-  setup () {
+  setup (props, context) {
     const open = ref(false);
 
-    const toggleOpen = () => {
-      open.value = !open.value;
+    const toggleOpen = (val?: boolean) => {
+      if (typeof val !== 'undefined') {
+        open.value = val;
+      } else {
+        open.value = !open.value;
+      }
+    };
+
+    const select = (item: string) => {
+      context.emit('select', item);
+      toggleOpen(false);
     };
 
     return {
       open,
       toggleOpen,
+      select,
     };
   },
 });

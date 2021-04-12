@@ -3,6 +3,7 @@ import maska from 'maska';
 import App from './app.vue';
 import router from './router';
 import { store, injectionKey } from './store';
+import clickOutside from './utils/click-outside';
 
 import './assets/styles/variables.css';
 import './assets/styles/normalize.css';
@@ -15,4 +16,5 @@ createApp(App)
   .use(router)
   .use(maska)
   .use(store, injectionKey)
+  .directive('click-outside', clickOutside)
   .mount('#app');

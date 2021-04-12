@@ -13,12 +13,13 @@ export const injectionKey: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state () {
     return {
-      language: LANGS.ENG,
+      language: (localStorage?.getItem('les-frais-language') as LANGS|undefined) || LANGS.ENG,
     };
   },
   mutations: {
     setLang (state, value: LANGS) {
       state.language = value;
+      localStorage.setItem('les-frais-language', value);
     },
   },
   actions: {

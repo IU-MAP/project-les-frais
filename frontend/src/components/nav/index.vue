@@ -11,9 +11,9 @@
     </router-link>
 
     <nav>
-      <Dropdown :items="items">
+      <Dropdown :items="items" @select="selectLan($event)">
         <template #default>
-          {{ t('langs_rus') }}
+          {{ t('langs_' + activeLan) }}
         </template>
         <template #option="{item}">
           {{ t('langs_' + item) }}
@@ -21,7 +21,7 @@
       </Dropdown>
 
       <Button :link="{ name: 'login'}">
-        Log In
+        {{ t('login') }}
       </Button>
     </nav>
   </header>
@@ -29,21 +29,31 @@
 
 <script lang="ts">
 import './nav.css';
-import { defineComponent } from 'vue';
+import { defineComponent, computed } from 'vue';
 import Button from '../button/index.vue';
 import Dropdown from '../dropdown/index.vue';
 import useT from '../../utils/translations';
 import { LANGS } from '../../utils/constants';
+import useStore from '../../store';
 
 export default defineComponent({
   name: 'AppNav',
   components: { Dropdown, Button },
   setup () {
-    const { t } = useT();
+    const store = useStore();
+    const t = useT();
+
+    const activeLan = computed(() => store.state.language);
+
+    const selectLan = (lan: LANGS) => {
+      store.dispatch('changeLang', lan);
+    };
 
     return {
-      items: Object.values(LANGS),
       t,
+      items: Object.values(LANGS),
+      activeLan,
+      selectLan,
     };
   },
 });

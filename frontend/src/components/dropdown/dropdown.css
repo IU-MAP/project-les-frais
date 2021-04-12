@@ -1,0 +1,90 @@
+.dropdown {
+  position: relative;
+  display: block;
+}
+
+.dropdown-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 2.115rem;
+  padding-top: 2.115rem;
+  border: 1px solid transparent;
+  z-index: 9;
+  transition: max-height .2s;
+}
+
+.dropdown .trigger {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.5625rem 0.875rem;
+  background-color: transparent;
+  font: var(--font-regular);
+  color: var(--color-font-main);
+  border: 1px solid transparent;
+  z-index: 10;
+  cursor: pointer;
+}
+.dropdown .trigger:focus {
+  outline: none;
+}
+.dropdown:not(.open) .trigger:hover {
+  box-shadow: var(--shadow-button-hover);
+}
+
+.dropdown .trigger svg {
+  display: inline-block;
+  margin-left: 0.5rem;
+  transform: rotate(0deg);
+  transition: transform .2s;
+}
+
+.dropdown .menu {
+  margin: 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  border-top: 1px dashed var(--color-font-main);
+  visibility: hidden;
+  opacity: 0;
+}
+
+.dropdown.open .menu {
+  visibility: visible;
+  opacity: 1;
+  transition: opacity .2s, visibility .2s;
+}
+
+.dropdown .menu li {
+  padding: 0.25rem 0.875rem;
+  font: var(--font-regular-light);
+  color: var(--color-font-secondary);
+  transition: color .2s;
+  cursor: pointer;
+}
+
+.dropdown .menu li:hover, .dropdown .menu li.active {
+  color: var(--color-font-main);
+}
+
+.dropdown:not(.open) .trigger {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-button);
+  border-radius: var(--border-radius-button);
+}
+
+.dropdown.open .dropdown-wrapper {
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-button);
+  border-radius: var(--border-radius-button);
+  max-height: 100px;
+}
+
+.dropdown.open .trigger svg {
+  transform: rotate(180deg);
+}
