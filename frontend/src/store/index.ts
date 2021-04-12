@@ -4,6 +4,7 @@ import { LANGS } from '../utils/constants';
 
 export interface User {
   pk: number,
+  email: string,
 }
 
 interface State {
@@ -26,11 +27,22 @@ export const store = createStore<State>({
   mutations: {
     setLang (state, value: LANGS) {
       state.language = value;
-      localStorage.setItem('les-frais-language', value);
+      if (value) {
+        localStorage.setItem('les-frais-language', value);
+      } else {
+        localStorage.removeItem('les-frais-language');
+      }
     },
     setToken (state, value: string) {
       state.token = value;
-      localStorage.setItem('les-frais-token', value);
+      if (value) {
+        localStorage.setItem('les-frais-token', value);
+      } else {
+        localStorage.removeItem('les-frais-token');
+      }
+    },
+    setUser (state, value: User) {
+      state.user = value;
     },
   },
   actions: {
@@ -39,6 +51,9 @@ export const store = createStore<State>({
     },
     changeToken (context, value: string) {
       context.commit('setToken', value);
+    },
+    changeUser (context, value: User) {
+      context.commit('setUser', value);
     },
   },
 });

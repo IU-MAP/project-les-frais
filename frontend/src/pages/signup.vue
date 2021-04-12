@@ -63,14 +63,13 @@ import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import FormInput from '../components/form-input/index.vue';
 import useT from '../utils/translations';
 import useStore from '../store';
-import useApi from '../utils/api';
+import api from '../utils/api';
 
 export default defineComponent({
   name: 'SignupPage',
   components: { FormInput, Button, AtSignIcon },
   setup () {
     const store = useStore();
-    const api = useApi();
     const router = useRouter();
     const t = useT();
 

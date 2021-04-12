@@ -53,7 +53,7 @@ import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import useT from '../utils/translations';
-import useApi from '../utils/api';
+import api from '../utils/api';
 import useStore from '../store';
 
 export default defineComponent({
@@ -65,7 +65,6 @@ export default defineComponent({
   },
   setup () {
     const store = useStore();
-    const api = useApi();
     const router = useRouter();
     const t = useT();
 

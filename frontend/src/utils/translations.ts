@@ -62,6 +62,10 @@ export const translations: Record<string, Record<LANGS, string>> = {
     rus: 'У меня еще нет аккаунта.',
     eng: 'I don\'t have an account.',
   },
+  settings: {
+    rus: 'Настройки',
+    eng: 'Settings',
+  },
   empty: {
     rus: '',
     eng: '',

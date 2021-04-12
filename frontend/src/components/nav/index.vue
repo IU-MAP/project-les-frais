@@ -11,7 +11,7 @@
     </router-link>
 
     <nav>
-      <Dropdown :items="items" @select="selectLan($event)">
+      <Dropdown v-if="!isAuthed" :items="items" @select="selectLan($event)">
         <template #default>
           {{ t('langs_' + activeLan) }}
         </template>
@@ -20,8 +20,12 @@
         </template>
       </Dropdown>
 
-      <Button :link="{ name: 'login'}">
+      <Button v-if="!isAuthed" :link="{ name: 'login'}">
         {{ t('login') }}
+      </Button>
+
+      <Button v-if="isAuthed" :link="{ name: 'settings'}">
+        {{ t('settings') }}
       </Button>
     </nav>
   </header>
@@ -43,6 +47,7 @@ export default defineComponent({
     const store = useStore();
     const t = useT();
 
+    const isAuthed = computed(() => !!store.state.user);
     const activeLan = computed(() => store.state.language);
 
     const selectLan = (lan: LANGS) => {
@@ -53,6 +58,7 @@ export default defineComponent({
       t,
       items: Object.values(LANGS),
       activeLan,
+      isAuthed,
       selectLan,
     };
   },

@@ -32,34 +32,44 @@ interface SignupResult {
   error?: string | Record<string, string|string[]> | null
 }
 
-function authApi (token?: string) {
-  const api = request(token);
-
-  return {
-    login: async (body: LoginBody): Promise<LoginResult> => {
-      try {
-        const res = await api.post<LoginBody, LoginResponse>('rest-auth/login/', body);
-        return { response: res };
-      } catch (e) {
-        if (e.status && e.data) {
-          return { error: parseErrors(e.data) };
-        }
-        return { error: { non_field_errors: 'Sorry, a problem has occurred' } };
-      }
-    },
-
-    signup: async (body: SignupBody): Promise<SignupResult> => {
-      try {
-        const res = await api.post<SignupBody, SignupResponse>('rest-auth/registration/', body);
-        return { response: res };
-      } catch (e) {
-        if (e.status && e.data) {
-          return { error: parseErrors(e.data) };
-        }
-        return { error: { non_field_errors: 'Sorry, a problem has occurred' } };
-      }
-    },
-  };
+interface User {
+  pk: number,
+  email: string,
 }
+
+const authApi = {
+  login: async (body: LoginBody): Promise<LoginResult> => {
+    try {
+      const res = await request.post<LoginBody, LoginResponse>('rest-auth/login/', body);
+      return { response: res };
+    } catch (e) {
+      if (e.status && e.data) {
+        return { error: parseErrors(e.data) };
+      }
+      return { error: { non_field_errors: 'Sorry, a problem has occurred' } };
+    }
+  },
+
+  signup: async (body: SignupBody): Promise<SignupResult> => {
+    try {
+      const res = await request.post<SignupBody, SignupResponse>('rest-auth/registration/', body);
+      return { response: res };
+    } catch (e) {
+      if (e.status && e.data) {
+        return { error: parseErrors(e.data) };
+      }
+      return { error: { non_field_errors: 'Sorry, a problem has occurred' } };
+    }
+  },
+
+  profile: async (): Promise<User|null> => {
+    try {
+      return await request.get<User>('rest-auth/user/');
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  },
+};
 
 export default authApi;

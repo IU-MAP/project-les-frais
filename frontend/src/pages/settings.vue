@@ -35,7 +35,7 @@
         </div>
         <div class="row">
           <p class="text-regular">Log Out</p>
-          <Button>Log Out from account</Button>
+          <Button @click="logout">Log Out from account</Button>
         </div>
         <div class="row">
           <p class="text-regular">Delete account</p>
@@ -66,9 +66,11 @@
 <script lang="ts">
 import '../assets/styles/pages/settings.css';
 import { defineComponent, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
 import { CATEGORIES_MOCK } from '../utils/mocks';
+import useStore from '../store';
 
 type TabsType = 'profile'|'categories'|'templates';
 const TABS: TabsType[] = ['profile', 'categories', 'templates'];
@@ -79,10 +81,18 @@ export default defineComponent({
     Button,
   },
   setup () {
+    const store = useStore();
+    const router = useRouter();
     const activeTab = ref<TabsType>('profile');
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
+    };
+
+    const logout = () => {
+      store.dispatch('changeUser', null);
+      store.dispatch('changeToken', null);
+      router.push({ name: 'home' });
     };
 
     return {
@@ -90,6 +100,7 @@ export default defineComponent({
       TABS,
       changeActive,
       CATEGORIES_MOCK,
+      logout,
     };
   },
 });

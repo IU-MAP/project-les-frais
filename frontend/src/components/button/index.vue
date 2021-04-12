@@ -13,6 +13,7 @@
     class="btn"
     :class="look"
     :type="isSubmit ? 'submit' : 'button'"
+    @click="clk"
   >
     <slot />
   </button>
@@ -34,11 +35,16 @@ export default defineComponent({
       default: null,
     },
   },
-  setup (props) {
+  setup (props, context) {
     const isSubmit = ref(props.look === 'submit');
+
+    const clk = (e: Event) => {
+      context.emit('click', e);
+    };
 
     return {
       isSubmit,
+      clk,
     };
   },
 });
