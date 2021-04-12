@@ -5,10 +5,11 @@
 
       <form @submit.prevent="submit">
         <FormInput
-          v-model:value="email"
+          v-model:value="values.email"
           type="email"
           placeholder="example@domain.com"
           :label-text="t('auth_email')"
+          :error="errors.email"
           required
         >
           <template #after>
@@ -19,14 +20,17 @@
         </FormInput>
 
         <FormInput
-          v-model:value="password"
+          v-model:value="values.password"
           type="password"
           placeholder="********"
           :label-text="t('auth_password')"
+          :error="errors.password"
           required
         />
 
-        <p v-if="error" class="text-regular text-color-error">{{ error }}</p>
+        <p v-if="errors.non_field_errors" class="text-small text-color-error text-center">
+          {{ errors.non_field_errors }}
+        </p>
 
         <Button look="submit">{{ t('auth_action') }}</Button>
       </form>
@@ -43,22 +47,14 @@
 
 <script lang="ts">
 import '../assets/styles/pages/auth.css';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
-import api from '../utils/api';
 import useT from '../utils/translations';
-
-interface ReqBody {
-  username: string,
-  email: string,
-  password: string,
-}
-
-interface ReqRes {
-
-}
+import useApi from '../utils/api';
+import useStore from '../store';
 
 export default defineComponent({
   name: 'LoginPage',
@@ -68,29 +64,45 @@ export default defineComponent({
     AtSignIcon,
   },
   setup () {
+    const store = useStore();
+    const api = useApi();
+    const router = useRouter();
     const t = useT();
 
-    const email = ref<string>('');
-    const password = ref<string>('');
-    const error = ref<string>('');
+    const values = reactive({
+      email: '',
+      password: '',
+    });
+
+    const errors = reactive({
+      email: '',
+      password: '',
+      non_field_errors: '',
+    });
 
     const submit = async () => {
-      try {
-        await api.post<ReqBody, ReqRes>('rest-auth/login/', {
-          email: email.value,
-          password: password.value,
-          username: email.value,
-        });
-      } catch (e) {
-        error.value = e.message;
+      const res = await api.auth.login({
+        email: values.email,
+        password: values.password,
+        username: values.email,
+      });
+
+      if (res.error && typeof res.error === 'object') {
+        errors.email = res.error.email || '';
+        errors.password = res.error.password || '';
+        errors.non_field_errors = res.error.non_field_errors || '';
+      }
+
+      if (res.response) {
+        await store.dispatch('changeToken', res.response.key);
+        await router.push({ name: 'home' });
       }
     };
 
     return {
       t,
-      email,
-      password,
-      error,
+      values,
+      errors,
       submit,
     };
   },

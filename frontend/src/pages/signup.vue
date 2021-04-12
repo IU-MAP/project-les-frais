@@ -56,17 +56,22 @@
 
 <script lang="ts">
 import '../assets/styles/pages/auth.css';
-import { defineComponent, ref, reactive } from 'vue';
+import { defineComponent, reactive } from 'vue';
+import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import FormInput from '../components/form-input/index.vue';
-import { apiSignup } from '../utils/api/auth';
 import useT from '../utils/translations';
+import useStore from '../store';
+import useApi from '../utils/api';
 
 export default defineComponent({
   name: 'SignupPage',
   components: { FormInput, Button, AtSignIcon },
   setup () {
+    const store = useStore();
+    const api = useApi();
+    const router = useRouter();
     const t = useT();
 
     const values = reactive({
@@ -83,10 +88,11 @@ export default defineComponent({
     });
 
     const submit = async () => {
-      const res = await apiSignup({
+      const res = await api.auth.signup({
         ...values,
         username: values.email,
       });
+
       if (res.error && typeof res.error === 'object') {
         errors.email = res.error.email || '';
         errors.password1 = res.error.password1 || '';
@@ -95,7 +101,8 @@ export default defineComponent({
       }
 
       if (res.response) {
-        console.log('Success!');
+        await store.dispatch('changeToken', res.response.key);
+        await router.push({ name: 'home' });
       }
     };
 
