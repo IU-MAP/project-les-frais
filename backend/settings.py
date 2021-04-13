@@ -48,7 +48,7 @@ INSTALLED_APPS = [
     'users',
     'rest_framework',
     'drf_yasg',
-
+    'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
     'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
@@ -69,6 +69,7 @@ CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -86,10 +87,10 @@ TEMPLATES = [
         'DIRS': [],
         'APP_DIRS': True,
         'OPTIONS': {
-            'context_processors': [
+           'context_processors': [
                 'django.template.context_processors.debug',
                 'django.template.context_processors.request',
-                'django.contrib.auth.context_processors.auth',
+                django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
         },
@@ -159,5 +160,36 @@ REST_FRAMEWORK = {
 }
 
 
+
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/2.1/howto/static-files/
+
+# When Vue Builds, path will be `/static/css/...` so we will have Django Serve
+# In Production, it's recommended use an alternative approach such as:
+# http://whitenoise.evans.io/en/stable/django.html?highlight=django
+
+MIDDLEWARE_CLASSES = (
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+)
+
+STATIC_URL = '/static/'
+# Place static in the same location as webpack build files
+STATIC_ROOT = os.path.join(BASE_DIR, 'dist', 'static')
+STATICFILES_DIRS = []
+
+
+##########
+# STATIC #
+##########
+
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Insert Whitenoise Middleware at top but below Security Middleware
+# MIDDLEWARE.insert(1, 'whitenoise.middleware.WhiteNoiseMiddleware',)
+# http://whitenoise.evans.io/en/stable/django.html#make-sure-staticfiles-is-configured-correctly
+
+
 django_heroku.settings(locals())
+
 
