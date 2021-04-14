@@ -1,6 +1,9 @@
 /* eslint-disable no-undef */
 
 /**
+ * A temporary solution of the click-outside directive. Needed while the
+ * v-click-outside library has a critical issue.
+ *
  * Thanks jgerigmeyer for this: https://gist.github.com/jgerigmeyer/87d16753c93762132943a26ea40cc665
  * Modified for Vue 3 from https://github.com/ndelvalle/v-click-outside
  * Cf. https://github.com/ndelvalle/v-click-outside/issues/238

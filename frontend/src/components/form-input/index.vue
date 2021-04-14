@@ -10,7 +10,6 @@
       <input
         :id="id"
         v-model="val"
-        v-maska="mask"
         :type="type"
         :class="'form-input_input'"
         :required="required"
@@ -78,14 +77,6 @@ export default defineComponent({
     inputDelay: {
       type: Number,
       default: 0,
-    },
-
-    /**
-     * Input mask using Maska library: https://github.com/beholdr/maska
-     */
-    mask: {
-      type: String,
-      default: '',
     },
 
     /**

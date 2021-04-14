@@ -11,8 +11,8 @@ export default defineConfig({
       manifest: {
         background_color: '#6c6ee5',
         theme_color: '#fff',
-        name: 'Expenses',
-        short_name: 'expenses',
+        name: 'Les Frais',
+        short_name: 'les-frais',
         display: 'standalone',
         start_url: '/',
         icons: [

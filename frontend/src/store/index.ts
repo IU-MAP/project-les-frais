@@ -13,10 +13,22 @@ interface State {
   user: User|null,
 }
 
+/**
+ * A key that is needed to access the store in a form of useStore() hook in the
+ * setup() function of every component.
+ */
 // eslint-disable-next-line symbol-description
 export const injectionKey: InjectionKey<Store<State>> = Symbol();
 
+/**
+ * Global store with the state that is commonly used throughout many
+ * components in the project.
+ */
 export const store = createStore<State>({
+  /**
+   * Store state. Has persistent data about user-chosen language, token,
+   * currency and additional information that could be shared between components.
+   */
   state () {
     return {
       language: (localStorage?.getItem('les-frais-language') as LANGS|undefined) || LANGS.ENG,
@@ -24,6 +36,7 @@ export const store = createStore<State>({
       user: null,
     };
   },
+
   mutations: {
     setLang (state, value: LANGS) {
       state.language = value;
@@ -45,6 +58,7 @@ export const store = createStore<State>({
       state.user = value;
     },
   },
+
   actions: {
     changeLang (context, value: LANGS) {
       context.commit('setLang', value);
