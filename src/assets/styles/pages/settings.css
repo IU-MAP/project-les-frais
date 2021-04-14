@@ -1,0 +1,45 @@
+.settings-page {
+
+}
+
+.settings-page .settings {
+  width: 600px;
+  margin: 0 auto;
+  padding: 1rem 2rem 2rem;
+}
+
+.settings-page .settings h1 {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.settings-page .profile-settings .row {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.settings-page .profile-settings .row p {
+  width: 180px;
+  margin-right: 1rem;
+  text-align: right;
+}
+
+.settings-page .profile-settings .row .btn,
+.settings-page .profile-settings .row .dropdown {
+  width: 250px;
+}
+
+.settings-page .category-settings > h1 {
+  margin-bottom: 0.5rem;
+}
+
+.settings-page .category-settings > div {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.settings-page .category-settings > div > * {
+  margin-top: 0.5rem;
+  margin-right: 0.5rem;
+}

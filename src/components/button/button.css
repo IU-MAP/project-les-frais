@@ -1,0 +1,50 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 0.5625rem 0.875rem;
+  text-decoration: none;
+  cursor: pointer;
+
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-button);
+  font: var(--font-regular);
+  background: var(--color-background);
+  box-shadow: var(--shadow-button);
+  color: var(--color-font-main);
+
+  transition: box-shadow .2s, color .2s;
+}
+
+.btn:hover {
+  box-shadow: var(--shadow-button-hover);
+}
+
+.btn:focus {
+  box-shadow: var(--shadow-button-hover);
+  outline: none;
+}
+
+.btn:active {
+  box-shadow: var(--shadow-button-active);
+}
+
+.btn.submit {
+  border: 1px solid var(--color-border-accent);
+  background: var(--color-accent);
+  box-shadow: var(--shadow-button-submit);
+  color: var(--color-font-white);
+}
+
+.btn.submit:hover, .btn.submit:focus {
+  box-shadow: var(--shadow-button-submit-hover);
+}
+
+.btn.submit:active {
+  box-shadow: var(--shadow-button-submit-active);
+}
+
+.btn.danger {
+  border: 1px solid var(--color-error);
+}

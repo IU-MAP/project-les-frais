@@ -84,3 +84,56 @@ reviewed by the members of the SCRUM team.
 * Application must be performant in terms of time and memory, do not utilize heavy memory resources and load in less than a second showing 90% of Lighthouse audit test passing.
 
 All the designs are kept in the Figma project: https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais
+
+
+## Project setup
+
+### File structure
+
+The file structure, if looking from the root directory, is the following:
+* `.github` – workflows for testing and automation
+* `backend` – Python backend application
+* `src` – Frontend application
+* `readme` – sources for the grading data
+* other configuration files – needed for the proper deployment. Putting them not in the root folder causes many problems. 
+
+### Backend setup
+Firstly, create virtual environment in backend directory (code for windows):
+```bash
+cd backend
+python -m venv venv
+venv\Scripts\activate
+```
+
+Then, run:
+```bash
+pip install -r requirements.txt
+python manage.py makemigrations
+python manage.py migrate
+python manage.py runserver
+```
+
+### Frontend installation
+
+To start working with this, firstly install all dependencies. It is required to
+have Node.js v12 and greater to be installed on your machine.
+
+```bash
+npm ci
+```
+
+And now, you can **run the app in development mode**:
+```bash
+npm run dev
+```
+
+**Linting** can be done by this command:
+```bash
+npm run lint
+```
+
+**Tests** (either unit or end-to-end) are performed by this command:
+```bash
+npm run test:unit
+npm run test:e2e
+```

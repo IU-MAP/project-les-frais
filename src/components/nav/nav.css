@@ -1,0 +1,24 @@
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem 0;
+}
+
+.header .logo {
+  position: relative;
+  color: #424567;
+  text-decoration: none;
+}
+
+.header .logo img {
+  height: 2.125rem;
+}
+
+.header nav {
+  display: flex;
+}
+
+.header nav > * {
+  margin-left: 1.5rem;
+}
