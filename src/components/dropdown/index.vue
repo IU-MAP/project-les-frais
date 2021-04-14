@@ -1,7 +1,7 @@
 <template>
   <div
-    :class="{open}"
     v-click-outside="() => toggleOpen(false)"
+    :class="{open}"
     class="dropdown"
   >
     <button type="button" class="trigger" @click="() => toggleOpen()">
@@ -37,7 +37,6 @@ export default defineComponent({
   components: {
     ChevronIcon,
   },
-  emits: ['select'],
   props: {
     label: {
       type: String,
@@ -52,6 +51,7 @@ export default defineComponent({
       default: false,
     },
   },
+  emits: ['select'],
   setup (props, context) {
     const open = ref(false);
 

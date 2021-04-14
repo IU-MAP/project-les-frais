@@ -4,32 +4,32 @@ import ApiError from './api-error';
 import { store } from '../../../store';
 
 /**
+ * Given a cookie key `name`, returns the value of
+ * the cookie or `null`, if the key is not found.
+ */
+function getCookie (name: string): string|null {
+  const nameLenPlus = (name.length + 1);
+  return document.cookie
+    .split(';')
+    .map((c) => c.trim())
+    .filter((cookie) => cookie.substring(0, nameLenPlus) === `${name}=`)
+    .map((cookie) => decodeURIComponent(cookie.substring(nameLenPlus)))[0] || null;
+}
+
+/**
  * A request wrapper method that handles authorization token passing, setting fetch
  * headers, catching errors and useful data passing into the request.
  * @param path – URL of the endpoint relative to the API host environmental constant
  * @param config – additional fetch configuration.
  */
-
-function readCookie(name) {
-    var nameEQ = name + "=";
-    var ca = document.cookie.split(';');
-    for(var i=0;i < ca.length;i++) {
-        var c = ca[i];
-        while (c.charAt(0)==' ') c = c.substring(1,c.length);
-        if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length,c.length);
-    }
-    return null;
-}
-
-var csrftoken = readCookie('csrftoken');
-
-
 const http = async <T>(path: string, config: RequestInit): Promise<T> => {
+  const csrftoken = getCookie('csrftoken');
+
   const headers: HeadersInit = {
     'Content-Type': 'application/json',
-    'X-CSRFToken': csrftoken,
   };
   if (store?.state?.token) headers.Authorization = `Token ${store.state.token}`;
+  if (csrftoken) headers['X-CSRFToken'] = csrftoken;
 
   try {
     const req = new Request(API_URL + path, {

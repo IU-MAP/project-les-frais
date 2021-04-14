@@ -35,6 +35,7 @@ export default defineComponent({
       default: null,
     },
   },
+  emits: ['click'],
   setup (props, context) {
     const isSubmit = ref(props.look === 'submit');
 

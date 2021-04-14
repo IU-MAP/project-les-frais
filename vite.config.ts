@@ -6,7 +6,6 @@ import vueSvgPlugin from 'vite-plugin-vue-svg';
 export default defineConfig({
 build: {
     assetsDir: 'static',
-
   },
   plugins: [
     vue(),
