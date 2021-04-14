@@ -75,7 +75,7 @@ import Category from '../components/category/index.vue';
 import { CATEGORIES_MOCK } from '../utils/mocks';
 import useStore from '../store';
 import Dropdown from '../components/dropdown/index.vue';
-import useT from '../utils/translations';
+import useTranslation from '../utils/useTranslation';
 import { LANGS } from '../utils/constants';
 import Tabs from '../components/tabs/index.vue';
 
@@ -90,7 +90,7 @@ export default defineComponent({
     Button,
   },
   setup () {
-    const t = useT();
+    const t = useTranslation();
     const store = useStore();
     const router = useRouter();
     const activeTab = ref<TabsType>('settings_tabs_profile');

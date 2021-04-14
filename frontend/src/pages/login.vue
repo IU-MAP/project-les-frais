@@ -52,7 +52,7 @@ import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import FormInput from '../components/form-input/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
-import useT from '../utils/translations';
+import useTranslation from '../utils/useTranslation';
 import api from '../utils/api';
 import useStore from '../store';
 
@@ -66,7 +66,7 @@ export default defineComponent({
   setup () {
     const store = useStore();
     const router = useRouter();
-    const t = useT();
+    const t = useTranslation();
 
     const values = reactive({
       email: '',

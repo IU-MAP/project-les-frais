@@ -19,13 +19,13 @@
 import '../assets/styles/pages/home.css';
 import { defineComponent } from 'vue';
 import Button from '../components/button/index.vue';
-import useT from '../utils/translations';
+import useTranslation from '../utils/useTranslation';
 
 export default defineComponent({
   name: 'HomePage',
   components: { Button },
   setup () {
-    const t = useT();
+    const t = useTranslation();
 
     return {
       t,
