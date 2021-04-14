@@ -11,7 +11,7 @@
         {{ t('home_action') }}
       </Button>
     </div>
-    <img src="/home-diagram.png" alt="diagram">
+    <img src="../assets/home-diagram.png" alt="diagram">
   </section>
 </template>
 

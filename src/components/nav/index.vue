@@ -5,7 +5,7 @@
       class="logo"
     >
       <img
-        src="/les-frais.png"
+        src="../../assets/les-frais.png"
         alt="expenses"
       >
     </router-link>
