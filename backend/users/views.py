@@ -31,3 +31,4 @@ class UserViewSet(ModelViewSet):
     queryset = User.objects.all()
     permission_classes = [IsAuthenticated, IsTheUserOfUser]
 '''
+
