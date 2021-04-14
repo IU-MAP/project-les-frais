@@ -37,7 +37,16 @@ interface User {
   email: string,
 }
 
+/**
+ * Functions for useful interactions with the back-end.
+ * Define the endpoints for authorization and add returning types and catch possible errors.
+ */
 const authApi = {
+  /**
+   * Log In to the system with the following endpoint.
+   * @param body – email and password for signing in
+   * @return {key: string} – authorization token if successful.
+   */
   login: async (body: LoginBody): Promise<LoginResult> => {
     try {
       const res = await request.post<LoginBody, LoginResponse>('rest-auth/login/', body);
@@ -50,6 +59,11 @@ const authApi = {
     }
   },
 
+  /**
+   * Sign Up to the system with the following endpoint.
+   * @param body – email, password and password confirmation for signing up
+   * @return {key: string} – authorization token if successful.
+   */
   signup: async (body: SignupBody): Promise<SignupResult> => {
     try {
       const res = await request.post<SignupBody, SignupResponse>('rest-auth/registration/', body);
@@ -62,6 +76,11 @@ const authApi = {
     }
   },
 
+  /**
+   * Get the profile data (and also verify authorization) with this endpoint.
+   * It is required to pass Authorization header into the request (handled by request.get method).
+   * @returns – user profile data.
+   */
   profile: async (): Promise<User|null> => {
     try {
       return await request.get<User>('rest-auth/user/');

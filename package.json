@@ -1,6 +1,7 @@
 {
-  "name": "vite",
-  "version": "0.0.0",
+  "name": "les-frais",
+  "description": "An expense tracker with intuitive interface and powerful functionality",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -13,7 +14,6 @@
     "test:e2e-open": "cypress open -b chrome"
   },
   "dependencies": {
-    "maska": "^1.4.1",
     "vue": "^3.0.5",
     "vue-router": "^4.0.6",
     "vuex": "^4.0.0"

@@ -36,7 +36,7 @@ import './nav.css';
 import { defineComponent, computed } from 'vue';
 import Button from '../button/index.vue';
 import Dropdown from '../dropdown/index.vue';
-import useT from '../../utils/translations';
+import useTranslation from '../../utils/useTranslation';
 import { LANGS } from '../../utils/constants';
 import useStore from '../../store';
 
@@ -45,7 +45,7 @@ export default defineComponent({
   components: { Dropdown, Button },
   setup () {
     const store = useStore();
-    const t = useT();
+    const t = useTranslation();
 
     const isAuthed = computed(() => !!store.state.user);
     const activeLan = computed(() => store.state.language);
