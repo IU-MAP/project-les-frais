@@ -61,7 +61,7 @@ import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import FormInput from '../components/form-input/index.vue';
-import useTranslation from '../../utils/useTranslation';
+import useTranslation from '../utils/useTranslation';
 import useStore from '../store';
 import api from '../utils/api';
 
