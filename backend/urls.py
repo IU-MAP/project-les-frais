@@ -23,6 +23,8 @@ from drf_yasg import openapi
 from django.conf import settings
 from rest_framework import permissions
 from rest_framework import routers
+from django.views.generic import TemplateView
+from django.views.decorators.cache import never_cache
 
 
 schema_view = get_schema_view(
@@ -39,8 +41,13 @@ schema_view = get_schema_view(
 )
 
 
+# Serve Vue Application
+index_view = never_cache(TemplateView.as_view(template_name='index.html'))
+
+
 # TODO: enable swager caching before prodction
 urlpatterns = [
+    path('', index_view, name='index'),
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
@@ -56,7 +63,7 @@ urlpatterns = [
 
 router = routers.SimpleRouter()
 router.register('', UserViewSet)
-from users.views import UserViewSet
+from .users.views import UserViewSet
 
 if settings.DEBUG:
     urlpatterns += [

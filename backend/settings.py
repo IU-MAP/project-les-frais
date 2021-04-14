@@ -30,6 +30,7 @@ SECRET_KEY = 'lh$z&7m0l8k83v*wtov$042ha3j!qg$o!q&8#5s!l(@uv6wba-'
 # SECURITY WARNING: don't run with debug turned on in production!
 # TODO: read from an environment variable
 DEBUG = bool(os.environ.get("DEBUG", False))
+DEBUG = True
 
 ALLOWED_HOSTS = [os.environ.get('HOST')]
 
@@ -45,7 +46,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
-    'users',
+    'backend.users',
     'rest_framework',
     'drf_yasg',
     'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
@@ -84,7 +85,7 @@ ROOT_URLCONF = 'backend.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'dist')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -150,7 +151,6 @@ ACCOUNT_EMAIL_VERIFICATION = 'none'
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
-STATIC_URL = '/static/'
 
 REST_FRAMEWORK = {
     # other settings...
@@ -175,9 +175,10 @@ MIDDLEWARE_CLASSES = (
 
 STATIC_URL = '/static/'
 # Place static in the same location as webpack build files
-STATIC_ROOT = os.path.join(BASE_DIR, 'dist', 'static')
-STATICFILES_DIRS = []
-
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'dist/static'),  # update the STATICFILES_DIRS
+)
 
 ##########
 # STATIC #
