@@ -1,13 +1,13 @@
 <template>
-  <div class="transaction" />
+  <div class="button-choice" />
 </template>
 
 <script lang="ts">
-import './transaction.css';
+import './button-choice.css';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Transaction',
+  name: 'ButtonChoice',
   props: {
   },
 });

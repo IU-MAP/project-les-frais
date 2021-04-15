@@ -1,13 +1,13 @@
 <template>
-  <div class="transaction" />
+  <div class="date-input" />
 </template>
 
 <script lang="ts">
-import './transaction.css';
+import './date-input.css';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
-  name: 'Transaction',
+  name: 'DateInput',
   props: {
   },
 });
