@@ -45,8 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'backend.users',
+
+    'backend.core.apps.CoreConfig',
+    'backend.users.apps.UsersConfig',
+    
     'rest_framework',
     'drf_yasg',
     'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
@@ -56,12 +58,14 @@ INSTALLED_APPS = [
     'allauth',
     'allauth.account',
     'rest_auth.registration',
+    'django_filters',
 
     'corsheaders',
 ]
 
 
-#SITE_ID = 1
+# this is needed because of allauth and django.contrib.sites
+SITE_ID = 1
 
 
 # TODO: change to CORS_ALLOWED_ORIGINS = ["our_fronend_url.com"]
@@ -157,6 +161,9 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [ 
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication'],
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+    ),
 }
 
 
