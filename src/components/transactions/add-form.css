@@ -98,14 +98,18 @@
 }
 
 .transaction-add-form_menu_top {
-
-}
-
-.transaction-add-form_menu_categories {
-
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
 }
 
 .transaction-add-form_menu_categories .category {
   margin-right: 0.5rem;
   margin-top: 0.5rem;
+  cursor: pointer;
+}
+
+.transaction-add-form_menu_categories .category.current {
+  box-shadow: var(--shadow-button-active);
 }

@@ -47,13 +47,18 @@
       <div class="transaction-add-form_menu">
         <div class="transaction-add-form_menu_top">
           <DateInput />
-          <ButtonChoice />
+          <ButtonChoice label="Currencies" :items="currencies" />
         </div>
 
         <div class="transaction-add-form_menu_categories">
-          <Category color="1" name="Food" />
-          <Category color="10" name="Transport" />
-          <Category color="20" name="Health" />
+          <Category
+            v-for="category in categories"
+            :key="category.name"
+            :color="category.color"
+            :name="category.name"
+            :class="{current: category.name === activeCategory }"
+            @click="changeActiveCategory(category.name)"
+          />
         </div>
 
         <FormInput
@@ -69,7 +74,7 @@
 
 <script lang="ts">
 import './add-form.css';
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import Toggle from '../form/toggle.vue';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
@@ -77,6 +82,22 @@ import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
 import Category from '../category/index.vue';
 import DateInput from '../form/date-input.vue';
 import ButtonChoice from '../form/button-choice.vue';
+import { CURRENCIES } from '../../utils/constants';
+
+const categories = [
+  {
+    color: 1,
+    name: 'Food',
+  },
+  {
+    color: 10,
+    name: 'Transport',
+  },
+  {
+    color: 16,
+    name: 'Health',
+  },
+];
 
 export default defineComponent({
   name: 'TransactionAddForm',
@@ -100,12 +121,17 @@ export default defineComponent({
       expanded: false,
     });
 
+    const activeCategory = ref('Food');
+
     const submit = () => {
       console.log(data);
     };
 
+    const changeActiveCategory = (val: string) => {
+      activeCategory.value = val;
+    };
+
     const toggleExpanded = (val?: boolean) => {
-      console.log(val);
       if (typeof val === 'undefined') {
         data.expanded = !data.expanded;
       } else {
@@ -117,6 +143,10 @@ export default defineComponent({
       data,
       submit,
       toggleExpanded,
+      activeCategory,
+      currencies: Object.values(CURRENCIES),
+      categories,
+      changeActiveCategory,
     };
   },
 });
