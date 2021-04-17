@@ -12,5 +12,5 @@ categories.register('', views.CategoryViewSet)
 urlpatterns = [
     path('transactions/', include(transactions.urls)),
     path('categories/', include(categories.urls)),
-    path('currency/', views.CurrencyView.as_view())
+    path('currencies/', views.CurrencyView.as_view())
 ]
