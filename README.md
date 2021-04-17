@@ -100,7 +100,6 @@ The file structure, if looking from the root directory, is the following:
 ### Backend setup
 Firstly, create virtual environment in backend directory (code for windows):
 ```bash
-cd backend
 python -m venv venv
 venv\Scripts\activate
 ```
@@ -109,6 +108,8 @@ Then, run:
 ```bash
 pip install -r requirements.txt
 python manage.py makemigrations
+python manage.py makemigrations core
+python manage.py makemigrations users
 python manage.py migrate
 python manage.py runserver
 ```

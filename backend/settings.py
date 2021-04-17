@@ -45,8 +45,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'core',
-    'backend.users',
+
+    'backend.core.apps.CoreConfig',
+    'backend.users.apps.UsersConfig',
+    
     'rest_framework',
     'drf_yasg',
     'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
@@ -61,7 +63,8 @@ INSTALLED_APPS = [
 ]
 
 
-#SITE_ID = 1
+# this is needed because of allauth and django.contrib.sites
+SITE_ID = 1
 
 
 # TODO: change to CORS_ALLOWED_ORIGINS = ["our_fronend_url.com"]
