@@ -24,6 +24,17 @@ class MyChoiseField(serializers.Field):
                 f'Unknown status: {data}, must be one of {self.enum_.names}')
 
 class CategorySerializer(serializers.ModelSerializer):
+    """
+    Model serializer for Category
+    
+    Fields:
+    ``id``
+    ``created_at``
+    ``slug``
+    ``name``
+    ``color``
+
+    """
     class Meta:
         model = Category
         fields = ('id', 'created_at', 'slug', 'name', 'color')
@@ -33,8 +44,11 @@ class CurrencySerializer(serializers.ModelSerializer):
     Model serializer for Currency
     
     Fields:
-
-
+    ``id`` 
+    ``created_at`` 
+    ``slug``
+    ``name`` 
+    ``color``
     """
 
     
@@ -47,6 +61,16 @@ class TransactionSerializer(serializers.ModelSerializer):
     Model serializer for Transactions
     
     Fields:
+    ``id``
+    ``created_at`` 
+    ``type`` 
+    ``date`` 
+    ``title``
+    ``description``
+    ``price`` 
+    ``isTemplate`` 
+    ``currency`` 
+    ``category``
     """
 
     type = MyChoiseField(enum_ = Transaction.Type)
