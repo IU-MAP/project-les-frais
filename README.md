@@ -114,6 +114,21 @@ python manage.py migrate
 python manage.py runserver
 ```
 
+If you want to access admin panel you need to create superuser
+```bash
+python manage.py createsuperuser
+```
+
+| Backend Endpoints:| |
+|---|---|
+|/swagger | swagger endpoint documentation|
+|/admin | admin panel |
+|/api/v1/transactions| |
+|/api/v1/currencies| |
+|/api/v1/categories| |
+| | |
+
+
 ### Frontend installation
 
 To start working with this, firstly install all dependencies. It is required to
