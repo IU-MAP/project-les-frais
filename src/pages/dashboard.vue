@@ -2,7 +2,7 @@
   <section class="dashboard-page">
     <div class="dashboard-page_list">
       <TransactionAddForm />
-      <TransactionsList />
+      <!--<TransactionsList />-->
     </div>
     <div class="dashboard-page_statistics">
       <StatisticsCategories />

@@ -3,6 +3,7 @@
     :class="{expanded: data.expanded}"
     class="transaction-add-form"
     @submit.prevent="submit"
+    v-click-outside="() => toggleExpanded(false)"
   >
     <div class="transaction-add-form_trigger">
       <Toggle
@@ -16,6 +17,7 @@
         no-label
         placeholder="New expense name"
         class="simple"
+        @focusin="() => toggleExpanded(true)"
       >
         <template #after>
           <div class="form-input_icon">
@@ -29,6 +31,7 @@
         no-label
         placeholder="Price"
         class="simple"
+        @focusin="() => toggleExpanded(true)"
       >
         <template #after>
           <div class="form-input_icon">
@@ -53,7 +56,12 @@
           <Category color="20" name="Health" />
         </div>
 
-        <FormInput placeholder="Short info about the expense" label-text="Additional description" />
+        <FormInput
+          v-model:value="data.description"
+          type="textarea"
+          placeholder="Short info about the expense"
+          label-text="Additional description"
+        />
       </div>
     </div>
   </form>
@@ -88,6 +96,7 @@ export default defineComponent({
       isGain: false,
       name: '',
       price: '',
+      description: '',
       expanded: false,
     });
 
@@ -95,9 +104,19 @@ export default defineComponent({
       console.log(data);
     };
 
+    const toggleExpanded = (val?: boolean) => {
+      console.log(val);
+      if (typeof val === 'undefined') {
+        data.expanded = !data.expanded;
+      } else {
+        data.expanded = val;
+      }
+    };
+
     return {
       data,
       submit,
+      toggleExpanded,
     };
   },
 });

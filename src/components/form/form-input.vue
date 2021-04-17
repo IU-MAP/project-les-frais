@@ -8,6 +8,7 @@
       <slot name="before" />
 
       <input
+        v-if="type !== 'textarea'"
         :id="id"
         v-model="val"
         :type="type"
@@ -21,6 +22,21 @@
         @focusout="$emit('focusout', $event)"
         @input="input"
       >
+
+      <textarea
+        v-else
+        :id="id"
+        v-model="val"
+        :type="type"
+        :class="'form-input_input'"
+        :required="required"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        v-bind="inputAttrs"
+        @focusin="$emit('focusin', $event)"
+        @focusout="$emit('focusout', $event)"
+        @input="input"
+      />
 
       <slot name="after" />
     </div>
@@ -84,7 +100,7 @@ export default defineComponent({
      * If you need other, pass inputAttrs object as a prop
      */
     type: {
-      type: String,
+      type: String as PropType<'text' | 'email' | 'password' | 'textarea' | string>,
       default: 'text',
     },
     autocomplete: {
