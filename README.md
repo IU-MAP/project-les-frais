@@ -114,7 +114,7 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-If you want to access admin panel you need to create superuser
+If you want to access admin panel you need to create superuser (it will ask you to enter username and password from console)
 ```bash
 python manage.py createsuperuser
 ```
