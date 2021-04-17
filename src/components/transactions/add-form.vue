@@ -1,9 +1,22 @@
 <template>
-  <form class="transaction-add-form">
+  <form
+    :class="{expanded: data.expanded}"
+    class="transaction-add-form"
+    @submit.prevent="submit"
+  >
     <div class="transaction-add-form_trigger">
-      <Toggle />
+      <Toggle
+        v-model:value="data.isGain"
+        left-label="Loss"
+        right-label="Gain"
+      />
 
-      <FormInput no-label placeholder="New expense name">
+      <FormInput
+        v-model:value="data.name"
+        no-label
+        placeholder="New expense name"
+        class="simple"
+      >
         <template #after>
           <div class="form-input_icon">
             <ChevronIcon />
@@ -11,7 +24,12 @@
         </template>
       </FormInput>
 
-      <FormInput no-label placeholder="Price">
+      <FormInput
+        v-model:value="data.price"
+        no-label
+        placeholder="Price"
+        class="simple"
+      >
         <template #after>
           <div class="form-input_icon">
             ₽
@@ -19,7 +37,7 @@
         </template>
       </FormInput>
 
-      <Button look="submit">+</Button>
+      <Button look="add">+</Button>
     </div>
 
     <div class="transaction-add-form_wrapper">
@@ -43,7 +61,7 @@
 
 <script lang="ts">
 import './add-form.css';
-import { defineComponent } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import Toggle from '../form/toggle.vue';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
@@ -64,6 +82,23 @@ export default defineComponent({
     ChevronIcon,
   },
   props: {
+  },
+  setup () {
+    const data = reactive({
+      isGain: false,
+      name: '',
+      price: '',
+      expanded: false,
+    });
+
+    const submit = () => {
+      console.log(data);
+    };
+
+    return {
+      data,
+      submit,
+    };
   },
 });
 </script>

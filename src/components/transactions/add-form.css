@@ -1,3 +1,70 @@
 .transaction-add-form {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+.transaction-add-form_trigger {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 3.875rem;
+  padding: 0.625rem 1.5rem 0.625rem 1.75rem;
+  border-radius: 2.25rem;
+}
+
+.transaction-add-form_trigger:not(.expanded) {
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-emphasize);
+}
+
+.transaction-add-form_trigger .form-input.simple:last-of-type {
+  width: 8rem;
+  margin-left: 0.25rem;
+  margin-right: 0.5rem;
+}
+
+.transaction-add-form_trigger .form-input.simple:last-of-type input {
+  width: 5.5rem;
+}
+
+.transaction-add-form_trigger .form-input.simple .form-input_wrapper {
+  height: 2.5rem;
+  padding: 0 0 0 0.5rem;
+  background-color: rgba(255, 255, 255, 0.75);
+  box-shadow: none;
+  border-radius: 1.25rem;
+}
+
+.transaction-add-form_trigger .form-input.simple .form-input_icon {
+  border-left: none;
+}
+
+.transaction-add-form_trigger .toggle {
+  margin-right: 0.625rem;
+}
+
+.transaction-add-form_wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+  max-height: 4rem;
+  padding-top: 4rem;
+  border: 1px solid transparent;
+  z-index: -1;
+  transition: max-height .2s;
+}
+
+.transaction-add-form_menu {
+
+}
+
+.transaction-add-form_menu_top {
+
+}
+
+.transaction-add-form_menu_categories {
 
 }

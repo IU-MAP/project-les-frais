@@ -1,4 +1,14 @@
 .dashboard-page {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  width: auto;
+}
+
+.dashboard-page_list {
+  width: 600px;
+  margin-right: 1.5rem;
+}
+
+.dashboard-page_statistics {
+  width: 10rem;
 }
