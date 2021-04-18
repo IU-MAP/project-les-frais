@@ -3,6 +3,7 @@ import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { LANGS } from '../utils/constants';
 import { Category } from '../utils/api/categories';
 import api from '../utils/api';
+import { Currency } from '../utils/api/currency';
 
 export interface User {
   pk: number,
@@ -14,6 +15,7 @@ interface State {
   token: string|null,
   user: User|null,
   categories: Category[],
+  currencies: Currency[],
 }
 
 /**
@@ -38,6 +40,7 @@ export const store = createStore<State>({
       token: (localStorage?.getItem('les-frais-token') as string|undefined) || null,
       user: null,
       categories: [],
+      currencies: [],
     };
   },
 
@@ -64,6 +67,9 @@ export const store = createStore<State>({
     setCategories (state, value: Category[]) {
       state.categories = value;
     },
+    setCurrencies (state, value: Currency[]) {
+      state.currencies = value;
+    },
   },
 
   actions: {
@@ -78,6 +84,14 @@ export const store = createStore<State>({
     },
     async changeCategories (context) {
       const categories = await api.category.read();
+      context.commit('setCategories', categories);
+    },
+    async initStore (context) {
+      const [categories, currencies] = await Promise.all([
+        api.category.read(),
+        api.currencies.read(),
+      ]);
+      context.commit('setCurrencies', currencies);
       context.commit('setCategories', categories);
     },
   },
