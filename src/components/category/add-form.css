@@ -1,0 +1,33 @@
+.category-add-form {
+  width: 655px;
+  margin: auto;
+}
+
+.category-add-form .transaction-add-form_trigger {
+  flex-direction: column;
+  height: 5.5rem;
+}
+
+.category-add-form .category-add-form_row {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.category-add-form .form-input {
+  flex-grow: 1;
+}
+
+.category-add-form .category-choice {
+  margin-top: 0.5rem;
+  display: block;
+}
+
+.category-add-form .category-choice > span {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.category-add-form .category-choice .dot {
+  margin-right: 0.25rem;
+}

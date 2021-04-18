@@ -53,11 +53,11 @@
         <div class="transaction-add-form_menu_categories">
           <Category
             v-for="category in categories"
-            :key="category.name"
+            :key="category.id"
             :color="category.color"
             :name="category.name"
-            :class="{current: category.name === activeCategory }"
-            @click="changeActiveCategory(category.name)"
+            :class="{current: category.id === activeCategory }"
+            @click="changeActiveCategory(category.id)"
           />
         </div>
 
@@ -74,7 +74,7 @@
 
 <script lang="ts">
 import './add-form.css';
-import { defineComponent, reactive, ref } from 'vue';
+import { computed, defineComponent, reactive, ref } from 'vue';
 import Toggle from '../form/toggle.vue';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
@@ -83,21 +83,7 @@ import Category from '../category/index.vue';
 import DateInput from '../form/date-input.vue';
 import ButtonChoice from '../form/button-choice.vue';
 import { CURRENCIES } from '../../utils/constants';
-
-const categories = [
-  {
-    color: 1,
-    name: 'Food',
-  },
-  {
-    color: 10,
-    name: 'Transport',
-  },
-  {
-    color: 16,
-    name: 'Health',
-  },
-];
+import useStore from '../../store';
 
 export default defineComponent({
   name: 'TransactionAddForm',
@@ -110,9 +96,9 @@ export default defineComponent({
     Toggle,
     ChevronIcon,
   },
-  props: {
-  },
+  props: {},
   setup () {
+    const store = useStore();
     const data = reactive({
       isGain: false,
       name: '',
@@ -120,6 +106,7 @@ export default defineComponent({
       description: '',
       expanded: false,
     });
+    const categories = computed<Category[]>(() => store.state.categories);
 
     const activeCategory = ref('Food');
 

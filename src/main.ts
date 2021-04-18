@@ -15,6 +15,8 @@ import './assets/styles/ui/ui.css';
 import './assets/styles/ui/typography.css';
 import './assets/styles/ui/color-number.css';
 
+store.dispatch('changeCategories');
+
 /**
  * Register Vue 3 application with router, store, router and useful directives.
  */

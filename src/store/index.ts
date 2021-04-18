@@ -1,6 +1,8 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
 import { LANGS } from '../utils/constants';
+import { Category } from '../utils/api/categories';
+import api from '../utils/api';
 
 export interface User {
   pk: number,
@@ -11,6 +13,7 @@ interface State {
   language: LANGS,
   token: string|null,
   user: User|null,
+  categories: Category[],
 }
 
 /**
@@ -34,6 +37,7 @@ export const store = createStore<State>({
       language: (localStorage?.getItem('les-frais-language') as LANGS|undefined) || LANGS.ENG,
       token: (localStorage?.getItem('les-frais-token') as string|undefined) || null,
       user: null,
+      categories: [],
     };
   },
 
@@ -57,6 +61,9 @@ export const store = createStore<State>({
     setUser (state, value: User) {
       state.user = value;
     },
+    setCategories (state, value: Category[]) {
+      state.categories = value;
+    },
   },
 
   actions: {
@@ -68,6 +75,10 @@ export const store = createStore<State>({
     },
     changeUser (context, value: User) {
       context.commit('setUser', value);
+    },
+    async changeCategories (context) {
+      const categories = await api.category.read();
+      context.commit('setCategories', categories);
     },
   },
 });

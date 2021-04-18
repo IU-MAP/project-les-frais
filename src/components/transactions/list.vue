@@ -2,7 +2,11 @@
   <div class="transactions-list">
     <MonthPicker />
 
-    <Transaction />
+    <div class="transactions-list_grid">
+      <div class="transactions-list_day">
+        <Transaction />
+      </div>
+    </div>
   </div>
 </template>
 
