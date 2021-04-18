@@ -1,6 +1,7 @@
 <template>
   <div class="transactions-list">
     <MonthPicker />
+
     <Transaction />
   </div>
 </template>

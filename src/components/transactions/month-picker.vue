@@ -1,8 +1,8 @@
 <template>
   <div class="month-picker">
-    <button class="prev"><ChevronIcon /></button>
+    <Button class="prev"><ChevronIcon /></Button>
     <h2>April, 2021</h2>
-    <button class="next"><ChevronIcon /></button>
+    <Button class="next"><ChevronIcon /></Button>
   </div>
 </template>
 
@@ -10,10 +10,12 @@
 import './month-picker.css';
 import { defineComponent } from 'vue';
 import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
+import Button from '../button/index.vue';
 
 export default defineComponent({
   name: 'MonthPicker',
   components: {
+    Button,
     ChevronIcon,
   },
   props: {

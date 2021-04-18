@@ -1,3 +1,85 @@
 .transaction {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 2.875rem;
+  padding-right: 1rem;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--border-radius-card);
+}
 
+.transaction > .more {
+  margin: 0 0.25rem;
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity .2s;
+}
+
+.transaction > .more path {
+  fill: var(--color-font-secondary);
+}
+
+.transaction:hover > .more, .transaction.menu-open > .more {
+  opacity: 1;
+}
+
+.transaction > .title {
+  flex-grow: 1;
+  font: var(--font-h3);
+  color: var(--color-font-main);
+}
+
+.transaction > .price {
+  width: 7.5rem;
+  text-align: right;
+  margin-left: 0.625rem;
+  font: var(--font-h3);
+  color: var(--color-font-main);
+}
+
+.transaction > .price.income {
+  color: var(--color-success);
+}
+
+.transaction > .menu {
+  position: absolute;
+  right: calc(100% + 0.75rem);
+  top: 0;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility .3s, opacity .3s;
+  margin: 0;
+  padding: 0.25rem 0;
+  list-style: none;
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-card);
+  border-radius: var(--border-radius-card);
+}
+
+.transaction.menu-open > .menu {
+  visibility: visible;
+  opacity: 1;
+}
+
+.transaction > .menu li {
+  width: 5rem;
+  text-align: right;
+  padding: 0.125rem 0.625rem 0.125rem 0;
+  margin-bottom: 0.125rem;
+  font: var(--font-small);
+  color: var(--color-font-secondary);
+  transition: color .2s;
+  cursor: pointer;
+}
+
+.transaction > .menu li.text-color-error {
+  color: var(--color-error);
+}
+
+.transaction > .menu li:not(.text-color-error):hover {
+  color: var(--color-font-main);
 }
