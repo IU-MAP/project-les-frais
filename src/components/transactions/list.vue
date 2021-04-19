@@ -18,9 +18,10 @@
 
 <script lang="ts">
 import './list.css';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
 import Transaction from './transaction.vue';
 import MonthPicker from './month-picker.vue';
+import api from '../../utils/api';
 
 export default defineComponent({
   name: 'TransactionsList',
@@ -29,6 +30,18 @@ export default defineComponent({
     Transaction,
   },
   props: {
+  },
+  async setup () {
+    const transactions = ref<Transaction[]>(null);
+
+    const date = new Date();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+    transactions.value = await api.transactions.read({ month, year });
+
+    return {
+      transactions,
+    };
   },
 });
 </script>

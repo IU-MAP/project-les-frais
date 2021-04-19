@@ -1,4 +1,6 @@
 import request from './helpers/api';
+import { getParams } from '../urls';
+import { monthBoundaries } from '../format-date';
 
 export interface Transaction {
   id: number,
@@ -10,6 +12,12 @@ export interface Transaction {
   currency: number,
   category: number,
   isTemplate: boolean,
+}
+
+interface GetTransactionArgs {
+  month: number,
+  year: number,
+  date: string,
 }
 
 interface AddTransactionBody {
@@ -27,9 +35,16 @@ interface AddTransactionBody {
  * Functions for CRUD interactions with the Transactions entity in the backend
  */
 const transactionsApi = {
-  read: async (): Promise<Transaction[]> => {
+  read: async ({ month, year, date }: GetTransactionArgs): Promise<Transaction[]> => {
+    let params: Record<string, string> = {};
+    if (date) {
+      params.date = date;
+    } else if ((month || month === 0) && year) {
+      params = monthBoundaries(month, year);
+    }
+
     try {
-      return await request.get<Transaction[]>('api/v1/transactions/');
+      return await request.get<Transaction[]>(`api/v1/transactions/?${getParams(params)}`);
     } catch (e) {
       console.error(e);
       return [];

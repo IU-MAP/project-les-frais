@@ -2,7 +2,12 @@
   <section class="dashboard-page">
     <div class="dashboard-page_list">
       <TransactionAddForm />
-      <TransactionsList />
+      <suspense>
+        <TransactionsList />
+        <template #fallback>
+          <div />
+        </template>
+      </suspense>
     </div>
     <div class="dashboard-page_statistics">
       <StatisticsCategories />
