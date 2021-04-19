@@ -1,5 +1,6 @@
 import django_filters.rest_framework as filters
-from .models import Transaction, Category  
+from .models import Transaction, Category, Currency 
+from .constants import DEFAULT_CURRENCY
 
 class CategoryFilter(filters.FilterSet):
     class Meta:
@@ -27,19 +28,4 @@ class TransactionFilter(filters.FilterSet):
         }
 
 
-def get_default_categories():
-    return [{'name': {'rus': 'Еда', 'eng': 'Food'}},
-            {'name': {'rus': 'Одежда', 'eng': 'Cloths'}},
-            {'name': {'rus': 'Подписки', 'eng': 'Subscriptions'}},
-            {'name': {'rus': 'Услуги', 'eng': 'Services'}},
-            {'name': {'rus': 'Здоровье', 'eng': 'Health'}},
-            {'name': {'rus': 'Путешествия', 'eng': 'Travels'}},
-            {'name': {'rus': 'Развлечения', 'eng': 'Entertainment'}},
-            {'name': {'rus': 'Прочее', 'eng': 'Miscellaneous'}}]
 
-
-def get_default_currency():
-    return [
-    {"slug": "rur", "name": "ruble", "label": "₽"},
-    {"slug": "usd", "name": "dollar", "label": "$"},
-] 
