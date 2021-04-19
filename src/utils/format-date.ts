@@ -12,7 +12,7 @@ const formatDate = (date: string): string => {
   const month = d.getMonth() + 1;
   const year = d.getFullYear();
 
-  return `${year}–${numberToTwoDigits(month)}–${numberToTwoDigits(day)}`;
+  return `${year}-${numberToTwoDigits(month)}-${numberToTwoDigits(day)}`;
 };
 
 export default formatDate;

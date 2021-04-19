@@ -17,8 +17,10 @@ interface AddTransactionBody {
   date: Date,
   title: string,
   price: number,
+  description: string,
   currency: number,
   category: number,
+  isTemplate: boolean,
 }
 
 /**

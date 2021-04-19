@@ -1,9 +1,9 @@
 <template>
   <form
-    :class="{expanded: data.expanded}"
+    v-click-outside="() => toggleExpanded(false)"
+    :class="{expanded: expanded}"
     class="transaction-add-form"
     @submit.prevent="submit"
-    v-click-outside="() => toggleExpanded(false)"
   >
     <div class="transaction-add-form_trigger">
       <Toggle
@@ -17,6 +17,7 @@
         no-label
         placeholder="New expense name"
         class="simple"
+        required
         @focusin="() => toggleExpanded(true)"
       >
         <template #after>
@@ -31,6 +32,7 @@
         no-label
         placeholder="Price"
         class="simple"
+        required
         @focusin="() => toggleExpanded(true)"
       >
         <template #after>
@@ -46,8 +48,12 @@
     <div class="transaction-add-form_wrapper">
       <div class="transaction-add-form_menu">
         <div class="transaction-add-form_menu_top">
-          <DateInput />
-          <ButtonChoice label="Currencies" :items="currencies" />
+          <DateInput :date="data.date" @change="data.date = $event" />
+          <ButtonChoice
+            v-model:value="activeCurrency"
+            :items="currencies"
+            label="Currencies"
+          />
         </div>
 
         <div class="transaction-add-form_menu_categories">
@@ -56,8 +62,8 @@
             :key="category.id"
             :color="category.color"
             :name="category.name"
-            :class="{current: category.id === activeCategory }"
-            @click="changeActiveCategory(category.id)"
+            :class="{current: activeCategory && category.id === activeCategory.id }"
+            @click="changeActiveCategory(category)"
           />
         </div>
 
@@ -67,6 +73,8 @@
           placeholder="Short info about the expense"
           label-text="Additional description"
         />
+
+        <p v-if="error" class="text-regular text-color-error">{{ error }}</p>
       </div>
     </div>
   </form>
@@ -74,7 +82,11 @@
 
 <script lang="ts">
 import './add-form.css';
-import { computed, defineComponent, reactive, ref } from 'vue';
+import {
+  computed, defineComponent, reactive, ref,
+} from 'vue';
+import type { Category as CategoryType } from '../../utils/api/categories';
+import type { Currency as CurrencyType } from '../../utils/api/currency';
 import Toggle from '../form/toggle.vue';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
@@ -82,8 +94,8 @@ import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
 import Category from '../category/index.vue';
 import DateInput from '../form/date-input.vue';
 import ButtonChoice from '../form/button-choice.vue';
-import { CURRENCIES } from '../../utils/constants';
 import useStore from '../../store';
+import api from '../../utils/api';
 
 export default defineComponent({
   name: 'TransactionAddForm',
@@ -97,42 +109,78 @@ export default defineComponent({
     ChevronIcon,
   },
   props: {},
-  setup () {
+  emits: ['update'],
+  setup (props, context) {
     const store = useStore();
     const data = reactive({
       isGain: false,
       name: '',
       price: '',
+      date: '',
       description: '',
-      expanded: false,
     });
-    const categories = computed<Category[]>(() => store.state.categories);
+    const categories = computed<CategoryType[]>(() => store.state.categories);
+    const currencies = computed<CurrencyType[]>(() => store.state.currencies);
+    const activeCategory = ref<CategoryType|null>(categories.value?.[0] || null);
+    const activeCurrency = ref<CurrencyType|null>(currencies.value?.[0] || null);
 
-    const activeCategory = ref('Food');
+    const error = ref('');
+    const expanded = ref(false);
 
-    const submit = () => {
-      console.log(data);
+    const clearFields = () => {
+      data.isGain = false;
+      data.name = '';
+      data.price = '';
+      data.date = '';
+      data.description = '';
+      activeCurrency.value = currencies.value?.[0] || null;
+      activeCategory.value = categories.value?.[0] || null;
     };
 
-    const changeActiveCategory = (val: string) => {
+    const submit = async () => {
+      const preparedData = {
+        type: data.isGain ? 'gain' : 'loss',
+        title: data.name,
+        price: data.price,
+        date: data.date,
+        description: data.description,
+        currency: activeCurrency.value.id,
+        category: activeCategory.value.id,
+        isTemplate: false,
+      };
+
+      try {
+        await api.transactions.create(preparedData);
+        clearFields();
+        context.emit('update');
+      } catch (e) {
+        console.error(e);
+        error.value = 'Sorry, an unexpected error happened';
+      }
+    };
+
+    const changeActiveCategory = (val: CategoryType) => {
       activeCategory.value = val;
     };
 
     const toggleExpanded = (val?: boolean) => {
       if (typeof val === 'undefined') {
-        data.expanded = !data.expanded;
+        expanded.value = !expanded.value;
       } else {
-        data.expanded = val;
+        expanded.value = val;
       }
     };
 
     return {
       data,
+      expanded,
+      error,
       submit,
       toggleExpanded,
       activeCategory,
-      currencies: Object.values(CURRENCIES),
-      categories,
+      activeCurrency,
+      currencies: currencies.value,
+      categories: categories.value,
       changeActiveCategory,
     };
   },

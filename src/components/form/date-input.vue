@@ -1,6 +1,7 @@
 <template>
   <div :class="{editing}" class="date-input" @keypress.enter.stop="changeDate">
-    <CalendarIcon @click="() => toggleEditing()" />
+    <CalendarIcon v-if="!editing" @click="() => toggleEditing(true)" />
+    <CheckIcon v-else @click="() => toggleEditing(false)" />
 
     <span v-if="!editing" @click="() => toggleEditing(true)">
       {{ current }}
@@ -16,14 +17,18 @@
 
 <script lang="ts">
 import './date-input.css';
-import { defineComponent, ref } from 'vue';
+import {
+  defineComponent, ref, onMounted, watch,
+} from 'vue';
 import CalendarIcon from '../../assets/icons/calendar.svg?component';
+import CheckIcon from '../../assets/icons/check.svg?component';
 import formatDate from '../../utils/format-date';
 
 export default defineComponent({
   name: 'DateInput',
   components: {
     CalendarIcon,
+    CheckIcon,
   },
   props: {
     date: {
@@ -31,23 +36,33 @@ export default defineComponent({
       default: null,
     },
   },
-  setup (props) {
+  emits: ['change'],
+  setup (props, context) {
     const editing = ref(false);
     const current = ref(props.date ? formatDate(props.date) : formatDate(new Date()));
     const newVal = ref('');
 
-    const toggleEditing = (val?: boolean) => {
-      if (typeof val === 'undefined') {
-        editing.value = !editing.value;
-      } else {
-        editing.value = val;
-      }
+    const changeDate = () => {
+      const newValue = formatDate(newVal.value);
+      current.value = newValue;
+      editing.value = false;
+      context.emit('change', newValue);
     };
 
-    const changeDate = () => {
-      current.value = formatDate(newVal.value);
-      editing.value = false;
+    const toggleEditing = (val: boolean) => {
+      editing.value = val;
+      if (!val) changeDate();
     };
+
+    watch(() => props.date, (newValue: string|null) => {
+      const newV = newValue ? formatDate(newValue) : formatDate(new Date());
+      current.value = newV;
+      context.emit('change', newV);
+    });
+
+    onMounted(() => {
+      if (!props.date) context.emit('change', current.value);
+    });
 
     return {
       editing,

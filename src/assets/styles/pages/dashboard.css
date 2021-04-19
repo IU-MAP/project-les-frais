@@ -5,7 +5,6 @@
 }
 
 .dashboard-page_list {
-  width: 655px;
   margin-right: 1.5rem;
 }
 
@@ -17,6 +16,12 @@
   width: 10rem;
 }
 
-.month-picker {
-  margin-bottom: 1.5rem;
+.dashboard-page .transaction-add-form {
+  width: 655px;
+  margin: 0 0 0 auto;
+}
+
+.dashboard-page .month-picker {
+  width: 655px;
+  margin: 0 auto;
 }

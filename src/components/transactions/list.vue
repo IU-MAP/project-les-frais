@@ -4,7 +4,13 @@
 
     <div class="transactions-list_grid">
       <div class="transactions-list_day">
-        <Transaction />
+        <p class="transactions-list_day_title">
+          25<sup>th</sup>
+        </p>
+        <div class="transactions-list_list">
+          <Transaction />
+          <Transaction />
+        </div>
       </div>
     </div>
   </div>

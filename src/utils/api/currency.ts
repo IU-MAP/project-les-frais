@@ -2,8 +2,10 @@ import request from './helpers/api';
 
 export interface Currency {
   id: number,
+  created_at: Date,
   slug: string,
   name: string,
+  label: string,
 }
 
 /**
