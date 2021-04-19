@@ -37,7 +37,7 @@ class CategorySerializer(serializers.ModelSerializer):
     """
     class Meta:
         model = Category
-        fields = ('id', 'created_at', 'slug', 'name', 'color')
+        fields = ('id', 'created_at', 'name', 'color')
 
 class CurrencySerializer(serializers.ModelSerializer):
     """
