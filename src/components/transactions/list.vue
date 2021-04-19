@@ -1,6 +1,10 @@
 <template>
   <div class="transactions-list">
-    <MonthPicker />
+    <MonthPicker
+      v-model:year="year"
+      v-model:month="month"
+      @update:month="updateList"
+    />
 
     <div class="transactions-list_grid">
       <div class="transactions-list_day">
@@ -35,12 +39,23 @@ export default defineComponent({
     const transactions = ref<Transaction[]>(null);
 
     const date = new Date();
-    const month = date.getMonth() + 1;
-    const year = date.getFullYear();
-    transactions.value = await api.transactions.read({ month, year });
+    const month = ref(date.getMonth() + 1);
+    const year = ref(date.getFullYear());
+
+    const updateList = async () => {
+      transactions.value = await api.transactions.read({
+        month: month.value,
+        year: year.value,
+      });
+    };
+
+    transactions.value = await updateList();
 
     return {
       transactions,
+      month,
+      year,
+      updateList,
     };
   },
 });

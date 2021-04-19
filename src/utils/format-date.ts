@@ -1,3 +1,8 @@
+export const MONTH_NAMES = {
+  rus: ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь', 'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'],
+  eng: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
+};
+
 export const numberToTwoDigits = (num: number|string) => {
   if (!num) return '00';
 
@@ -17,7 +22,7 @@ const formatDate = (date: string): string => {
 
 export const monthBoundaries = (month: number, year: number) => {
   const finishYear = month === 12 ? year + 1 : year;
-  const finishMonth = month === 12 ? 0 : month + 1;
+  const finishMonth = month === 12 ? 1 : month + 1;
 
   return {
     date__gt: `${year}-${numberToTwoDigits(month)}-${numberToTwoDigits(1)}`,

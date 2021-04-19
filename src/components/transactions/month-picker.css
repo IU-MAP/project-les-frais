@@ -21,6 +21,8 @@
 }
 
 .month-picker > h2 {
+  width: 13rem;
   margin-left: 1.5rem;
   margin-right: 1.5rem;
+  text-align: center;
 }
