@@ -11,15 +11,18 @@
     </ul>
 
     <MoreIcon class="more" @click="() => toggleMenu()" />
-    <p class="title">Lunch in the canteen</p>
+    <p class="title">{{ transaction.title }}</p>
     <Category color="2" name="Food" />
-    <span :class="{income: false}" class="price">-200₽</span>
+    <span :class="{income: transaction.type === 'gain'}" class="price">
+      {{ transaction.type === 'loss' ? `-${transaction.price}` : transaction.price }}{{ '₽' }}
+    </span>
   </div>
 </template>
 
 <script lang="ts">
 import './transaction.css';
-import { defineComponent, ref } from 'vue';
+import { defineComponent, PropType, ref } from 'vue';
+import type { Transaction } from '../../utils/api/transactions';
 import Category from '../category/index.vue';
 import MoreIcon from '../../assets/icons/more.svg?component';
 
@@ -30,6 +33,10 @@ export default defineComponent({
     MoreIcon,
   },
   props: {
+    transaction: {
+      type: Object as PropType<Transaction>,
+      required: true,
+    },
   },
   emits: ['select', 'edit', 'remove'],
   setup (props, context) {

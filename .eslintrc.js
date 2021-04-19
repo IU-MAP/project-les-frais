@@ -55,6 +55,7 @@ module.exports = {
     'no-unused-vars': 1,
     'lines-between-class-members': 0,
     'no-param-reassign': 0,
+    'vue/prop-name-casing': 0,
     camelcase: 0,
   },
 };

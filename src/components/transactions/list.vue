@@ -7,13 +7,21 @@
     />
 
     <div class="transactions-list_grid">
-      <div class="transactions-list_day">
+      <div
+        v-for="(day, dayNumber) in transactions"
+        :key="dayNumber"
+        class="transactions-list_day"
+      >
         <p class="transactions-list_day_title">
-          25<sup>th</sup>
+          {{ dayNumber }}<sup>th</sup>
         </p>
+
         <div class="transactions-list_list">
-          <Transaction />
-          <Transaction />
+          <Transaction
+            v-for="transaction in day"
+            :key="transaction.id"
+            :transaction="transaction"
+          />
         </div>
       </div>
     </div>
@@ -25,6 +33,7 @@ import './list.css';
 import { defineComponent, ref } from 'vue';
 import Transaction from './transaction.vue';
 import MonthPicker from './month-picker.vue';
+import { Transaction as TransactionType } from '../../utils/api/transactions';
 import api from '../../utils/api';
 
 export default defineComponent({
@@ -36,20 +45,30 @@ export default defineComponent({
   props: {
   },
   async setup () {
-    const transactions = ref<Transaction[]>(null);
+    const transactions = ref<Record<string, TransactionType[]>>({});
 
     const date = new Date();
     const month = ref(date.getMonth() + 1);
     const year = ref(date.getFullYear());
 
     const updateList = async () => {
-      transactions.value = await api.transactions.read({
+      const res = await api.transactions.read({
         month: month.value,
         year: year.value,
       });
+
+      transactions.value = res.reduce((accum, current) => {
+        const day = new Date(current.date).getDate();
+        if (!accum[day]) {
+          accum[day] = [current];
+        } else {
+          accum[day].push(current);
+        }
+        return accum;
+      }, {} as Record<number, TransactionType[]>);
     };
 
-    transactions.value = await updateList();
+    await updateList();
 
     return {
       transactions,
