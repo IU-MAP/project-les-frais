@@ -1,6 +1,6 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from .constants import DEFAULT_CURRENCY
 
 class Currency(models.Model):
     """
@@ -83,3 +83,12 @@ class Transaction(models.Model):
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
 
+
+
+
+
+#-------------------------Initialize dafault values --------------------------------
+
+if (not Currency.objects.count()):
+    for e in DEFAULT_CURRENCY:
+        Currency.objects.create(**e)
