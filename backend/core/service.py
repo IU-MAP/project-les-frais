@@ -7,7 +7,6 @@ class CategoryFilter(filters.FilterSet):
         fields = ('id', 'created_at', 'slug', 'name', 'color')
         fields = {
             'created_at': ['lt', 'gt', 'exact'],
-            'slug':['exact', 'contains'],
             'name':['exact', 'contains'],
         }
 
@@ -26,3 +25,21 @@ class TransactionFilter(filters.FilterSet):
             'currency': ['exact'],
             'category': ['exact'],
         }
+
+
+def get_default_categories():
+    return [{'name': {'rus': 'Еда', 'eng': 'Food'}},
+            {'name': {'rus': 'Одежда', 'eng': 'Cloths'}},
+            {'name': {'rus': 'Подписки', 'eng': 'Subscriptions'}},
+            {'name': {'rus': 'Услуги', 'eng': 'Services'}},
+            {'name': {'rus': 'Здоровье', 'eng': 'Health'}},
+            {'name': {'rus': 'Путешествия', 'eng': 'Travels'}},
+            {'name': {'rus': 'Развлечения', 'eng': 'Entertainment'}},
+            {'name': {'rus': 'Прочее', 'eng': 'Miscellaneous'}}]
+
+
+def get_default_currency():
+    return [
+    {"slug": "rur", "name": "ruble", "label": "₽"},
+    {"slug": "usd", "name": "dollar", "label": "$"},
+] 

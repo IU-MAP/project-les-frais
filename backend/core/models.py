@@ -31,7 +31,6 @@ class Category(models.Model):
     BackReference: ``Transaction``
     """
     created_at = models.DateTimeField(auto_now_add = True)
-    slug = models.CharField(max_length = 10)
     name = models.CharField(max_length = 30)
     # stored in format #rrggbb
     color = models.CharField(max_length = 7)
