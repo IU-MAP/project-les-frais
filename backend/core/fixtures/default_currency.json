@@ -1,0 +1,12 @@
+[
+    {
+    "model": "core.currency",
+    "pk": 1, 
+    "fields": {"slug": "rur", "name": "ruble", "label": "₽"}
+},
+{
+    "model": "core.currency",
+    "pk": 2, 
+    "fields": {"slug": "usd", "name": "dollar", "label": "$"}
+}
+]

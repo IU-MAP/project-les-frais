@@ -10,7 +10,7 @@ class Currency(models.Model):
 
     BackReference: ``Transaction``, ``Profile``
     """
-    created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True, null= True)
     slug = models.CharField(max_length = 10)
     name = models.CharField(max_length = 30)
     label = models.CharField(max_length = 5)
@@ -82,13 +82,3 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
-
-
-
-
-
-#-------------------------Initialize dafault values --------------------------------
-
-if (not Currency.objects.count()):
-    for e in DEFAULT_CURRENCY:
-        Currency.objects.create(**e)
