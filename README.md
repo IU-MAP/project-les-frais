@@ -107,9 +107,6 @@ venv\Scripts\activate
 Then, run:
 ```bash
 pip install -r requirements.txt
-python manage.py makemigrations
-python manage.py makemigrations core
-python manage.py makemigrations users
 python manage.py migrate
 python manage.py runserver
 ```

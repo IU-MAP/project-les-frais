@@ -69,10 +69,51 @@ class TransactionSerializer(serializers.ModelSerializer):
     ``description``
     ``price`` 
     ``isTemplate`` 
-    ``currency`` 
-    ``category``
+    ``currency`` -- nested
+    ``category`` -- nested
     """
 
+
+    currency = CurrencySerializer(read_only=True)
+    category = CategorySerializer(read_only=True)
+    
+    type = MyChoiseField(enum_ = Transaction.Type)
+
+    def save(self, **kwargs):
+        """
+        Check that start is before finish.
+        """
+
+        if self.validated_data['category'].owner.id != kwargs['owner'].id:
+            raise serializers.ValidationError("You are not the owner of the category!")
+        return super().save(**kwargs)
+
+    class Meta:
+        model = Transaction
+        fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
+
+
+
+
+
+class ShortTransactionSerializer(serializers.ModelSerializer):
+    """
+    Model serializer for Transactions
+    
+    Fields:
+    ``id``
+    ``created_at`` 
+    ``type`` 
+    ``date`` 
+    ``title``
+    ``description``
+    ``price`` 
+    ``isTemplate`` 
+    ``currency`` -- pk
+    ``category`` -- pk
+    """
+
+    
     type = MyChoiseField(enum_ = Transaction.Type)
 
     def save(self, **kwargs):

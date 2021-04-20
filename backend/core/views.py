@@ -8,9 +8,10 @@ from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
 
 from .models import Currency, Transaction, Category
-from .serializers import TransactionSerializer, CurrencySerializer, CategorySerializer
+from .serializers import TransactionSerializer, CurrencySerializer, CategorySerializer, ShortTransactionSerializer
 from .permissions import IsTheOwnerOf
 from .service import TransactionFilter, CategoryFilter
+
 # Create your views here.
 
 class TransactionViewSet(viewsets.ModelViewSet):
@@ -27,7 +28,6 @@ class TransactionViewSet(viewsets.ModelViewSet):
     """
 
     queryset = Transaction.objects
-    serializer_class = TransactionSerializer 
 
     filter_backends = [DjangoFilterBackend] 
     filterset_class = TransactionFilter
@@ -36,6 +36,12 @@ class TransactionViewSet(viewsets.ModelViewSet):
     
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TransactionSerializer
+        else:
+            return ShortTransactionSerializer
 
     def perform_create(self, serializer):
         #if (object)
