@@ -8,3 +8,28 @@
 .dot input {
   display: none;
 }
+
+.dot.radio {
+  width: 1rem;
+  height: 1rem;
+  cursor: pointer;
+}
+
+.dot.radio svg {
+  width: 1rem;
+  height: 1rem;
+  opacity: 0;
+  transform: scale(0.75)
+}
+
+.dot.radio svg path {
+  stroke: white;
+}
+
+.dot.radio:hover svg, .dot.radio.active svg {
+  opacity: 1;
+}
+
+.dot.radio:not(.active):hover {
+  filter: brightness(80%);
+}

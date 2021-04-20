@@ -5,10 +5,7 @@ on:
     paths-ignore:
       - 'backend/**'
       - 'readme/**'
-  pull_request:
-    paths-ignore:
-      - 'backend/**'
-      - 'readme/**'
+      - 'core/**'
 
 jobs:
   lint:

@@ -100,7 +100,6 @@ The file structure, if looking from the root directory, is the following:
 ### Backend setup
 Firstly, create virtual environment in backend directory (code for windows):
 ```bash
-cd backend
 python -m venv venv
 venv\Scripts\activate
 ```
@@ -108,10 +107,24 @@ venv\Scripts\activate
 Then, run:
 ```bash
 pip install -r requirements.txt
-python manage.py makemigrations
 python manage.py migrate
 python manage.py runserver
 ```
+
+If you want to access admin panel you need to create superuser (it will ask you to enter username and password from console)
+```bash
+python manage.py createsuperuser
+```
+
+| Backend Endpoints:| |
+|---|---|
+|/swagger | swagger endpoint documentation|
+|/admin | admin panel |
+|/api/v1/transactions| |
+|/api/v1/currencies| |
+|/api/v1/categories| |
+| | |
+
 
 ### Frontend installation
 

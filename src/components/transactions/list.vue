@@ -1,0 +1,119 @@
+<template>
+  <div class="transactions-list">
+    <MonthPicker
+      v-model:year="year"
+      v-model:month="month"
+      @update:month="updateList"
+    />
+
+    <div class="transactions-list_grid">
+      <h3 v-if="!Object.keys(transactions).length" class="no-transactions">
+        {{ t('dashboard_no_transactions') }}
+      </h3>
+
+      <template v-else>
+        <div
+          v-for="(day, dayNumber) in transactions"
+          :key="dayNumber"
+          class="transactions-list_day"
+        >
+          <p class="transactions-list_day_title">
+            {{ dayNumber }}<component
+              :is="getOrdinalTranslation(dayNumber, month).tag"
+              v-if="getOrdinalTranslation(dayNumber, month)"
+            >
+              {{ getOrdinalTranslation(dayNumber, month).suffix }}
+            </component>
+          </p>
+
+          <div class="transactions-list_list">
+            <Transaction
+              v-for="transaction in day"
+              :key="transaction.id"
+              :transaction="transaction"
+              @remove="removeTransaction(transaction.id)"
+            />
+          </div>
+        </div>
+      </template>
+    </div>
+  </div>
+</template>
+
+<script lang="ts">
+import './list.css';
+import {
+  defineComponent, PropType, ref, watch,
+} from 'vue';
+import Transaction from './transaction.vue';
+import MonthPicker from './month-picker.vue';
+import { Transaction as TransactionType } from '../../utils/api/transactions';
+import api from '../../utils/api';
+import useTranslation from '../../utils/useTranslation';
+import getOrdinalTranslation from '../../utils/ordinal-number';
+
+export default defineComponent({
+  name: 'TransactionsList',
+  components: {
+    MonthPicker,
+    Transaction,
+  },
+  props: {
+    updateVal: {
+      type: Object as PropType<TransactionType>,
+      default: null,
+    },
+  },
+  async setup (props) {
+    const t = useTranslation();
+    const transactions = ref<Record<string, TransactionType[]>>({});
+
+    const date = new Date();
+    const month = ref(date.getMonth() + 1);
+    const year = ref(date.getFullYear());
+
+    const updateList = async () => {
+      const res = await api.transactions.read({
+        month: month.value,
+        year: year.value,
+      });
+
+      transactions.value = res.reduce((accum, current) => {
+        const day = new Date(current.date).getDate();
+        if (!accum[day]) {
+          accum[day] = [current];
+        } else {
+          accum[day].push(current);
+        }
+        return accum;
+      }, {} as Record<number, TransactionType[]>);
+    };
+
+    const removeTransaction = async (id: number) => {
+      await api.transactions.delete(id);
+      await updateList();
+    };
+
+    watch(() => props.updateVal, (newVal: TransactionType) => {
+      if (!newVal || !newVal.date) return;
+
+      const newDate = new Date(newVal.date);
+      if (newDate.getMonth() + 1 === month.value && newDate.getFullYear() === year.value) {
+        updateList();
+      }
+    });
+
+    await updateList();
+
+    return {
+      t,
+      transactions,
+      month,
+      year,
+      updateList,
+      getOrdinalTranslation,
+      removeTransaction,
+    };
+  },
+});
+</script>

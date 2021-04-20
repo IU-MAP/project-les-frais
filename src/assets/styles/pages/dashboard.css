@@ -1,0 +1,27 @@
+.dashboard-page {
+  display: flex;
+  justify-content: center;
+  width: auto;
+}
+
+.dashboard-page_list {
+  margin-right: 1.5rem;
+}
+
+.transactions-list {
+  margin-top: 2rem;
+}
+
+.dashboard-page_statistics {
+  width: 10rem;
+}
+
+.dashboard-page .transaction-add-form {
+  width: 655px;
+  margin: 0 0 0 auto;
+}
+
+.dashboard-page .month-picker {
+  width: 655px;
+  margin: 0 0 0 auto;
+}
