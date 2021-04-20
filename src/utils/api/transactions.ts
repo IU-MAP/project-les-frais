@@ -1,4 +1,6 @@
 import request from './helpers/api';
+import type { Category } from './categories';
+import type { Currency } from './currency';
 import { getParams } from '../urls';
 import { monthBoundaries } from '../format-date';
 
@@ -9,8 +11,8 @@ export interface Transaction {
   date: Date,
   title: string,
   price: number,
-  currency: number,
-  category: number,
+  currency: Currency,
+  category: Category,
   isTemplate: boolean,
 }
 

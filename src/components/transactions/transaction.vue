@@ -12,16 +12,24 @@
 
     <MoreIcon class="more" @click="() => toggleMenu()" />
     <p class="title">{{ transaction.title }}</p>
-    <Category color="2" name="Food" />
+
+    <Category
+      v-if="transaction.category"
+      :color="transaction.category.color"
+      :name="transaction.category.name"
+    />
+
     <span :class="{income: transaction.type === 'gain'}" class="price">
-      {{ transaction.type === 'loss' ? `-${transaction.price}` : transaction.price }}{{ '₽' }}
+      {{ price }}
     </span>
   </div>
 </template>
 
 <script lang="ts">
 import './transaction.css';
-import { defineComponent, PropType, ref } from 'vue';
+import {
+  defineComponent, PropType, ref, computed,
+} from 'vue';
 import type { Transaction } from '../../utils/api/transactions';
 import Category from '../category/index.vue';
 import MoreIcon from '../../assets/icons/more.svg?component';
@@ -41,6 +49,11 @@ export default defineComponent({
   emits: ['select', 'edit', 'remove'],
   setup (props, context) {
     const menuOpen = ref(false);
+    const price = computed(() => {
+      const currency = props.transaction.currency.label;
+      const amount = props.transaction.type === 'loss' ? `-${props.transaction.price}` : props.transaction.price;
+      return `${amount}${currency}`;
+    });
 
     const toggleMenu = (val?: boolean) => {
       if (typeof val === 'undefined') {
@@ -67,6 +80,7 @@ export default defineComponent({
 
     return {
       menuOpen,
+      price,
       toggleMenu,
       select,
       edit,

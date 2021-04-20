@@ -7,23 +7,29 @@
     />
 
     <div class="transactions-list_grid">
-      <div
-        v-for="(day, dayNumber) in transactions"
-        :key="dayNumber"
-        class="transactions-list_day"
-      >
-        <p class="transactions-list_day_title">
-          {{ dayNumber }}<sup>th</sup>
-        </p>
+      <h3 v-if="!Object.keys(transactions).length" class="no-transactions">
+        No transactions found for this period
+      </h3>
 
-        <div class="transactions-list_list">
-          <Transaction
-            v-for="transaction in day"
-            :key="transaction.id"
-            :transaction="transaction"
-          />
+      <template v-else>
+        <div
+          v-for="(day, dayNumber) in transactions"
+          :key="dayNumber"
+          class="transactions-list_day"
+        >
+          <p class="transactions-list_day_title">
+            {{ dayNumber }}<sup>th</sup>
+          </p>
+
+          <div class="transactions-list_list">
+            <Transaction
+              v-for="transaction in day"
+              :key="transaction.id"
+              :transaction="transaction"
+            />
+          </div>
         </div>
-      </div>
+      </template>
     </div>
   </div>
 </template>

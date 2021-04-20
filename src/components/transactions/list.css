@@ -1,13 +1,15 @@
-.transactions-list {
-
-}
-
 .transactions-list .month-picker {
   margin-bottom: 1.5rem;
 }
 
 .transactions-list_grid {
   width: 765px;
+}
+
+.transactions-list .no-transactions {
+  width: 655px;
+  margin: 0 0 0 auto;
+  text-align: center;
 }
 
 .transactions-list_day {
