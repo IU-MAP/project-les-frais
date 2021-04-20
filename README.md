@@ -199,6 +199,7 @@ creation User Story. During this spring, we:
 
 ![Swagger UI](./readme/swagger.png)
 ![Unit testing results](./readme/unit_tests.png)
+![Unit testing results](./readme/backend_tests.png)
 
 After two weeks of development, it is already possible to interact 
 with application's basic functionality.
