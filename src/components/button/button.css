@@ -37,14 +37,21 @@
   color: var(--color-font-white);
 }
 
-.btn.submit:hover, .btn.submit:focus {
+.btn.submit:hover, .btn.submit:focus, .btn.add:hover, .btn.add:focus {
   box-shadow: var(--shadow-button-submit-hover);
 }
 
-.btn.submit:active {
+.btn.submit:active, .btn.add:active {
   box-shadow: var(--shadow-button-submit-active);
 }
 
 .btn.danger {
   border: 1px solid var(--color-error);
+}
+
+.btn.add {
+  width: 2.5rem;
+  border-radius: 50%;
+  border: none;
+  box-shadow: var(--shadow-button-submit);
 }

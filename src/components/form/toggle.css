@@ -1,0 +1,56 @@
+.toggle {
+  position: relative;
+  display: block;
+  width: 5.5rem;
+  height: 1.75rem;
+  padding: 0.2rem 0.5rem;
+  box-shadow: var(--shadow-button-active);
+  background-color: var(--color-card-background);
+  border-radius: 0.875rem;
+  cursor: pointer;
+  transition: background-color .3s ease-in-out;
+}
+
+.toggle .toggle_input {
+  display: none;
+}
+
+.toggle .toggle_switcher {
+  position: absolute;
+  height: 1.8rem;
+  width: 1.85rem;
+  border: 0.5px solid var(--color-card-background);
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-button);
+  border-radius: 50%;
+  left: 0;
+  transform: translateX(-30%) translateY(-0.25rem);
+  transition: left .3s ease-in-out, transform .3s ease-in-out;
+}
+
+.toggle .toggle_label {
+  display: inline-block;
+  width: 100%;
+  font: var(--font-small);
+  color: var(--color-font-main);
+}
+
+.toggle .toggle_left {
+  text-align: right;
+}
+
+.toggle.checked {
+  background-color: #7EFF8B;
+}
+
+.toggle.checked .toggle_switcher {
+  left: 50%;
+  transform: translateX(25%) translateY(-0.25rem);
+}
+
+.toggle.checked .toggle_left {
+  display: none;
+}
+.toggle:not(.checked) .toggle_right {
+  display: none;
+}

@@ -17,6 +17,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Зарегистрироваться',
     eng: 'Sign Up',
   },
+
+  /**
+   * Home page
+   */
   home_title: {
     rus: 'Контроль расходов, который вы заслужили!',
     eng: 'An expense tracker you deserve!',
@@ -29,6 +33,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Создать аккаунт',
     eng: 'Create account',
   },
+
+  /**
+   * Auth page
+   */
   auth_login: {
     rus: 'Вход',
     eng: 'Log In',
@@ -61,6 +69,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'У меня еще нет аккаунта.',
     eng: 'I don\'t have an account.',
   },
+
+  /**
+   * Settings page
+   */
   settings: {
     rus: 'Настройки',
     eng: 'Settings',
@@ -133,6 +145,71 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Шаблоны расходы',
     eng: 'Expense templates',
   },
+
+  /**
+   * Dashboard add transactions form
+   */
+  add_loss: {
+    rus: 'Расх',
+    eng: 'Loss',
+  },
+  add_gain: {
+    rus: 'Дох',
+    eng: 'Gain',
+  },
+  add_new_loss_name: {
+    rus: 'Название статьи расхода',
+    eng: 'New expense name',
+  },
+  add_new_gain_name: {
+    rus: 'Название статьи дохода',
+    eng: 'New income name',
+  },
+  add_price: {
+    rus: 'Цена',
+    eng: 'Price',
+  },
+  add_currency: {
+    rus: 'Валюта',
+    eng: 'Currency',
+  },
+  add_additional: {
+    rus: 'Дополнительное описание',
+    eng: 'Additional description',
+  },
+  add_additional_placeholder_loss: {
+    rus: 'Короткое описание статьи расхода',
+    eng: 'Short info about the expense',
+  },
+  add_additional_placeholder_gain: {
+    rus: 'Короткое описание статьи дохода',
+    eng: 'Short info about the income',
+  },
+  add_error: {
+    rus: 'Извините, произошла ошибка',
+    eng: 'Sorry, an unexpected error happened',
+  },
+
+  /**
+   * Dashboard list of transactions
+   */
+  dashboard_no_transactions: {
+    rus: 'За данный период не найдено транзакций',
+    eng: 'No transactions found for this period',
+  },
+  dashboard_transaction_remove: {
+    rus: 'Удалить',
+    eng: 'Remove',
+  },
+  dashboard_transaction_select: {
+    rus: 'Выбрать',
+    eng: 'Select',
+  },
+  dashboard_transaction_edit: {
+    rus: 'Редактировать',
+    eng: 'Edit',
+  },
+
   empty: {
     rus: '',
     eng: '',

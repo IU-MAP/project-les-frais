@@ -50,7 +50,7 @@ import '../assets/styles/pages/auth.css';
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
-import FormInput from '../components/form-input/index.vue';
+import FormInput from '../components/form/form-input.vue';
 import AtSignIcon from '../assets/icons/at-sign.svg?component';
 import useTranslation from '../utils/useTranslation';
 import api from '../utils/api';
