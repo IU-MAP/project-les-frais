@@ -72,7 +72,6 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
-import { CATEGORIES_MOCK } from '../utils/mocks';
 import useStore from '../store';
 import Dropdown from '../components/dropdown/index.vue';
 import useTranslation from '../utils/useTranslation';
