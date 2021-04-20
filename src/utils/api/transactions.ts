@@ -61,6 +61,15 @@ const transactionsApi = {
       return null;
     }
   },
+
+  delete: async (id: number) => {
+    try {
+      return await request.delete(`api/v1/transactions/${id}/`, {});
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  },
 };
 
 export default transactionsApi;

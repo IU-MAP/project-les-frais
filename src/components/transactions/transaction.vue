@@ -5,8 +5,10 @@
     v-click-outside="() => toggleMenu(false)"
   >
     <ul class="menu">
+      <!-- TODO: Implement
       <li @click="edit">{{ t('dashboard_transaction_edit') }}</li>
       <li @click="select">{{ t('dashboard_transaction_select') }}</li>
+      -->
       <li class="text-color-error" @click="remove">{{ t('dashboard_transaction_remove') }}</li>
     </ul>
 

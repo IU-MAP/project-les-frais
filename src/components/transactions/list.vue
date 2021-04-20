@@ -31,6 +31,7 @@
               v-for="transaction in day"
               :key="transaction.id"
               :transaction="transaction"
+              @remove="removeTransaction(transaction.id)"
             />
           </div>
         </div>
@@ -41,7 +42,9 @@
 
 <script lang="ts">
 import './list.css';
-import { defineComponent, ref } from 'vue';
+import {
+  defineComponent, PropType, ref, watch,
+} from 'vue';
 import Transaction from './transaction.vue';
 import MonthPicker from './month-picker.vue';
 import { Transaction as TransactionType } from '../../utils/api/transactions';
@@ -56,8 +59,12 @@ export default defineComponent({
     Transaction,
   },
   props: {
+    updateVal: {
+      type: Object as PropType<TransactionType>,
+      default: null,
+    },
   },
-  async setup () {
+  async setup (props) {
     const t = useTranslation();
     const transactions = ref<Record<string, TransactionType[]>>({});
 
@@ -82,6 +89,20 @@ export default defineComponent({
       }, {} as Record<number, TransactionType[]>);
     };
 
+    const removeTransaction = async (id: number) => {
+      await api.transactions.delete(id);
+      await updateList();
+    };
+
+    watch(() => props.updateVal, (newVal: TransactionType) => {
+      if (!newVal || !newVal.date) return;
+
+      const newDate = new Date(newVal.date);
+      if (newDate.getMonth() + 1 === month.value && newDate.getFullYear() === year.value) {
+        updateList();
+      }
+    });
+
     await updateList();
 
     return {
@@ -91,6 +112,7 @@ export default defineComponent({
       year,
       updateList,
       getOrdinalTranslation,
+      removeTransaction,
     };
   },
 });

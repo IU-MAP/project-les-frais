@@ -1,9 +1,10 @@
 <template>
   <section class="dashboard-page">
     <div class="dashboard-page_list">
-      <TransactionAddForm />
+      <TransactionAddForm @update="update" />
+
       <suspense>
-        <TransactionsList />
+        <TransactionsList :update-val="updateVal" />
         <template #fallback>
           <div />
         </template>
@@ -17,7 +18,8 @@
 
 <script lang="ts">
 import '../assets/styles/pages/dashboard.css';
-import { defineComponent } from 'vue';
+import { defineComponent, ref } from 'vue';
+import type { Transaction } from '../utils/api/transactions';
 import TransactionAddForm from '../components/transactions/add-form.vue';
 import TransactionsList from '../components/transactions/list.vue';
 import StatisticsCategories from '../components/statistics/categories.vue';
@@ -27,6 +29,18 @@ export default defineComponent({
     StatisticsCategories,
     TransactionAddForm,
     TransactionsList,
+  },
+  setup () {
+    const updateVal = ref<Transaction|null>(null);
+
+    const update = (val: Transaction) => {
+      updateVal.value = val;
+    };
+
+    return {
+      update,
+      updateVal,
+    };
   },
 });
 </script>

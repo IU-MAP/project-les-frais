@@ -154,9 +154,9 @@ export default defineComponent({
       };
 
       try {
-        await api.transactions.create(preparedData);
+        const newTransaction = await api.transactions.create(preparedData);
         clearFields();
-        context.emit('update');
+        context.emit('update', newTransaction);
       } catch (e) {
         console.error(e);
         error.value = t('add_error');
