@@ -8,7 +8,7 @@
 
     <div class="transactions-list_grid">
       <h3 v-if="!Object.keys(transactions).length" class="no-transactions">
-        No transactions found for this period
+        {{ t('dashboard_no_transactions') }}
       </h3>
 
       <template v-else>
@@ -18,7 +18,12 @@
           class="transactions-list_day"
         >
           <p class="transactions-list_day_title">
-            {{ dayNumber }}<sup>th</sup>
+            {{ dayNumber }}<component
+              :is="getOrdinalTranslation(dayNumber, month).tag"
+              v-if="getOrdinalTranslation(dayNumber, month)"
+            >
+              {{ getOrdinalTranslation(dayNumber, month).suffix }}
+            </component>
           </p>
 
           <div class="transactions-list_list">
@@ -41,6 +46,8 @@ import Transaction from './transaction.vue';
 import MonthPicker from './month-picker.vue';
 import { Transaction as TransactionType } from '../../utils/api/transactions';
 import api from '../../utils/api';
+import useTranslation from '../../utils/useTranslation';
+import getOrdinalTranslation from '../../utils/ordinal-number';
 
 export default defineComponent({
   name: 'TransactionsList',
@@ -51,6 +58,7 @@ export default defineComponent({
   props: {
   },
   async setup () {
+    const t = useTranslation();
     const transactions = ref<Record<string, TransactionType[]>>({});
 
     const date = new Date();
@@ -77,10 +85,12 @@ export default defineComponent({
     await updateList();
 
     return {
+      t,
       transactions,
       month,
       year,
       updateList,
+      getOrdinalTranslation,
     };
   },
 });

@@ -5,9 +5,9 @@
     v-click-outside="() => toggleMenu(false)"
   >
     <ul class="menu">
-      <li @click="edit">Edit</li>
-      <li @click="select">Select</li>
-      <li class="text-color-error" @click="remove">Remove</li>
+      <li @click="edit">{{ t('dashboard_transaction_edit') }}</li>
+      <li @click="select">{{ t('dashboard_transaction_select') }}</li>
+      <li class="text-color-error" @click="remove">{{ t('dashboard_transaction_remove') }}</li>
     </ul>
 
     <MoreIcon class="more" @click="() => toggleMenu()" />
@@ -31,6 +31,7 @@ import {
   defineComponent, PropType, ref, computed,
 } from 'vue';
 import type { Transaction } from '../../utils/api/transactions';
+import useTranslation from '../../utils/useTranslation';
 import Category from '../category/index.vue';
 import MoreIcon from '../../assets/icons/more.svg?component';
 
@@ -48,6 +49,8 @@ export default defineComponent({
   },
   emits: ['select', 'edit', 'remove'],
   setup (props, context) {
+    const t = useTranslation();
+
     const menuOpen = ref(false);
     const price = computed(() => {
       const currency = props.transaction.currency.label;
@@ -79,6 +82,7 @@ export default defineComponent({
     };
 
     return {
+      t,
       menuOpen,
       price,
       toggleMenu,

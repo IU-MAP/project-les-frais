@@ -3,6 +3,11 @@ export const MONTH_NAMES = {
   eng: ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'],
 };
 
+export const SHORT_MONTH_NAMES = {
+  rus: ['янв', 'фев', 'мар', 'апр', 'май', 'июнь', 'июль', 'авг', 'сен', 'окт', 'ноя', 'дек'],
+  eng: ['jan', 'feb', 'mar', 'apr', 'may', 'jun', 'jul', 'aug', 'sep', 'oct', 'nov', 'dec'],
+};
+
 export const numberToTwoDigits = (num: number|string) => {
   if (!num) return '00';
 

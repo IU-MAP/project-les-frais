@@ -33,6 +33,12 @@
   font: var(--font-regular);
 }
 
+.transactions-list_day_title > span {
+  display: inline-block;
+  margin-left: 0.25rem;
+  font: var(--font-regular);
+}
+
 .transactions-list_list {
   width: 655px;
 }
