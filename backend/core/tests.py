@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase
 from .models import Category
 from .models import Currency
 from .models import Transaction
-from .serializers import TransactionSerializer
 
 
 class CategoryAPIViewTestCase(APITestCase):
@@ -87,7 +86,7 @@ class TransactionAPIViewTestCase(APITestCase):
         })
         self.assertEqual(201, response.status_code)
 
-    def test_todo_object_update_authorization(self):
+    def test_transactions_update_authorization(self):
         """
             Test to verify that put call with different user token
         """
@@ -101,7 +100,7 @@ class TransactionAPIViewTestCase(APITestCase):
         response = self.client.delete(transaction_url)
         self.assertEqual(404, response.status_code)
 
-    def test_todo_object_delete(self):
+    def test_transactions_delete(self):
         transaction_url = f"{self.url}{self.transaction1.id}/"
         response = self.client.delete(transaction_url)
         self.assertEqual(204, response.status_code)

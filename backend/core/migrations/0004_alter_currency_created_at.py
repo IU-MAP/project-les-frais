@@ -6,7 +6,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('core', '0003_remove_category_slug'),
+        ('core', '0002_auto_20210420_1337'),
     ]
 
     operations = [
