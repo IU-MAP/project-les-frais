@@ -1,8 +1,8 @@
 <template>
   <div
+    v-click-outside="() => toggleMenu(false)"
     :class="{'menu-open': menuOpen}"
     class="transaction"
-    v-click-outside="() => toggleMenu(false)"
   >
     <ul class="menu">
       <!-- TODO: Implement

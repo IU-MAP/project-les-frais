@@ -51,7 +51,9 @@ export default defineComponent({
       context.emit('update:value', item);
     };
 
-    watch(() => props.value, (newVal: ItemType|null) => val.value = newVal || props.items[0]);
+    watch(() => props.value, (newVal: ItemType|null) => {
+      val.value = newVal || props.items[0];
+    });
 
     return {
       val,

@@ -37,7 +37,7 @@ import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
 import Dot from '../dot/index.vue';
 import api from '../../utils/api';
-import {store} from '../../store';
+import { store } from '../../store';
 
 export default defineComponent({
   name: 'CategoryAddForm',
