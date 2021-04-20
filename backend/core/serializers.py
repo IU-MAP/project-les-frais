@@ -121,7 +121,8 @@ class ShortTransactionSerializer(serializers.ModelSerializer):
         Check that start is before finish.
         """
 
-        if self.validated_data['category'].owner.id != kwargs['owner'].id:
+        if ('categoty' in self.validated_data and
+                self.validated_data['category'].owner.id != kwargs['owner'].id):
             raise serializers.ValidationError("You are not the owner of the category!")
         return super().save(**kwargs)
 

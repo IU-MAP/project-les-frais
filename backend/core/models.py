@@ -9,7 +9,7 @@ class Currency(models.Model):
 
     BackReference: ``Transaction``, ``Profile``
     """
-    created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True, null= True)
     slug = models.CharField(max_length = 10)
     name = models.CharField(max_length = 30)
     label = models.CharField(max_length = 5)
