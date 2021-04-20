@@ -33,6 +33,7 @@
         :disabled="disabled"
         :placeholder="placeholder"
         v-bind="inputAttrs"
+        v-maska="mask"
         @focusin="$emit('focusin', $event)"
         @focusout="$emit('focusout', $event)"
         @input="input"
@@ -93,6 +94,14 @@ export default defineComponent({
     inputDelay: {
       type: Number,
       default: 0,
+    },
+
+    /**
+     * Make a masked input using ...
+     */
+    mask: {
+      type: String,
+      default: '',
     },
 
     /**

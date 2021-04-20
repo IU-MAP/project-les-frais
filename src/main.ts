@@ -1,4 +1,5 @@
 import { createApp } from 'vue';
+import Maska from 'maska';
 import App from './app.vue';
 import router from './router';
 import { store, injectionKey } from './store';
@@ -21,6 +22,7 @@ store.dispatch('initStore');
  * Register Vue 3 application with router, store, router and useful directives.
  */
 createApp(App)
+  .use(Maska)
   .use(router)
   .use(store, injectionKey)
   .directive('click-outside', clickOutside)

@@ -1,5 +1,10 @@
 <template>
-  <div :class="{editing}" class="date-input" @keypress.enter.stop="changeDate">
+  <div
+    v-click-outside="clickOutside"
+    :class="{editing}"
+    class="date-input"
+    @keypress.enter.stop.prevent="changeDate"
+  >
     <CalendarIcon v-if="!editing" @click="() => toggleEditing(true)" />
     <CheckIcon v-else @click="() => toggleEditing(false)" />
 
@@ -8,8 +13,9 @@
     </span>
 
     <input
-      v-else
+      v-show="editing"
       v-model="newVal"
+      v-maska="'####-##-##'"
       type="text"
     >
   </div>
@@ -52,6 +58,12 @@ export default defineComponent({
     const toggleEditing = (val: boolean) => {
       editing.value = val;
       if (!val) changeDate();
+      else newVal.value = current.value;
+    };
+
+    const clickOutside = () => {
+      if (!editing.value) return;
+      changeDate();
     };
 
     watch(() => props.date, (newValue: string|null) => {
@@ -69,6 +81,7 @@ export default defineComponent({
       current,
       newVal,
       toggleEditing,
+      clickOutside,
       changeDate,
     };
   },

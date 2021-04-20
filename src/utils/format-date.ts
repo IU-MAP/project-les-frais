@@ -12,7 +12,13 @@ export const numberToTwoDigits = (num: number|string) => {
 };
 
 const formatDate = (date: string): string => {
-  const d = new Date(date);
+  const d: Date|null = new Date(date);
+
+  // If date is invalid, return current date
+  if (Number.isNaN(d.getTime())) {
+    return formatDate(new Date().toDateString());
+  }
+
   const day = d.getDate();
   const month = d.getMonth() + 1;
   const year = d.getFullYear();
