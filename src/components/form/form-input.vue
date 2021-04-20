@@ -8,6 +8,7 @@
       <slot name="before" />
 
       <input
+        v-if="type !== 'textarea'"
         :id="id"
         v-model="val"
         :type="type"
@@ -22,6 +23,22 @@
         @input="input"
       >
 
+      <textarea
+        v-else
+        :id="id"
+        v-model="val"
+        v-maska="mask"
+        :type="type"
+        :class="'form-input_input'"
+        :required="required"
+        :disabled="disabled"
+        :placeholder="placeholder"
+        v-bind="inputAttrs"
+        @focusin="$emit('focusin', $event)"
+        @focusout="$emit('focusout', $event)"
+        @input="input"
+      />
+
       <slot name="after" />
     </div>
 
@@ -34,7 +51,7 @@
 <script lang="ts">
 import './form-input.css';
 import {
-  defineComponent, PropType, ref, watch,
+  defineComponent, PropType, ref, watchEffect,
 } from 'vue';
 
 let timeout: any = null;
@@ -80,11 +97,19 @@ export default defineComponent({
     },
 
     /**
+     * Make a masked input using ...
+     */
+    mask: {
+      type: String,
+      default: '',
+    },
+
+    /**
      * Basic HTML-attributes for the input element.
      * If you need other, pass inputAttrs object as a prop
      */
     type: {
-      type: String,
+      type: String as PropType<'text' | 'email' | 'password' | 'textarea' | string>,
       default: 'text',
     },
     autocomplete: {
@@ -112,7 +137,7 @@ export default defineComponent({
   setup (props, context) {
     const val = ref(props.value);
 
-    watch((() => props.value), (newVal) => {
+    watchEffect((() => props.value), (newVal) => {
       val.value = newVal;
     });
 

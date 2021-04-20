@@ -43,19 +43,19 @@
         </div>
       </div>
 
-      <div
-        v-else-if="activeTab === 'settings_tabs_categories'"
-        class="card settings category-settings"
-      >
-        <h1>{{ t('settings_tab_categories') }}</h1>
+      <div v-else-if="activeTab === 'settings_tabs_categories'" class="settings category-settings">
+        <CategoryAddForm />
+        <div class="card">
+          <h1>{{ t('settings_tab_categories') }}</h1>
 
-        <div>
-          <Category
-            v-for="category in CATEGORIES_MOCK"
-            :key="category.id"
-            :name="category.name"
-            :color="category.color"
-          />
+          <div>
+            <Category
+              v-for="category in categories"
+              :key="category.id"
+              :name="category.name"
+              :color="category.color"
+            />
+          </div>
         </div>
       </div>
 
@@ -72,18 +72,19 @@ import { computed, defineComponent, ref } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
-import { CATEGORIES_MOCK } from '../utils/mocks';
 import useStore from '../store';
 import Dropdown from '../components/dropdown/index.vue';
 import useTranslation from '../utils/useTranslation';
 import { LANGS } from '../utils/constants';
 import Tabs from '../components/tabs/index.vue';
+import CategoryAddForm from '../components/category/add-form.vue';
 
 type TabsType = 'settings_tabs_profile'|'settings_tabs_categories'|'settings_tabs_templates';
 const TABS: TabsType[] = ['settings_tabs_profile', 'settings_tabs_categories', 'settings_tabs_templates'];
 
 export default defineComponent({
   components: {
+    CategoryAddForm,
     Tabs,
     Dropdown,
     Category,
@@ -95,6 +96,7 @@ export default defineComponent({
     const router = useRouter();
     const activeTab = ref<TabsType>('settings_tabs_profile');
     const activeLan = computed(() => store.state.language);
+    const categories = computed<Category[]>(() => store.state.categories);
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
@@ -117,7 +119,7 @@ export default defineComponent({
       tabs: TABS,
       languages: Object.values(LANGS),
       changeActive,
-      CATEGORIES_MOCK,
+      categories,
       logout,
       selectLan,
     };

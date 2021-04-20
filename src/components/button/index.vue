@@ -27,7 +27,7 @@ export default defineComponent({
   name: 'Button',
   props: {
     look: {
-      type: String as PropType<'default'|'submit'|'with-icon'|'danger'>,
+      type: String as PropType<'default'|'submit'|'with-icon'|'danger'|'add'>,
       default: 'default',
     },
     link: {
@@ -37,7 +37,7 @@ export default defineComponent({
   },
   emits: ['click'],
   setup (props, context) {
-    const isSubmit = ref(props.look === 'submit');
+    const isSubmit = ref(props.look === 'submit' || props.look === 'add');
 
     const clk = (e: Event) => {
       context.emit('click', e);

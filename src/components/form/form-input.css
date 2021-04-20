@@ -36,6 +36,16 @@
   outline: none;
 }
 
+.form-input textarea.form-input_input {
+  padding: 0.75rem;
+  height: 5rem;
+  resize: none;
+}
+
+.form-input textarea.form-input_input::placeholder {
+  color: var(--color-font-secondary);
+}
+
 .form-input.error .form-input_wrapper {
   border: 1px solid var(--color-error);
 }

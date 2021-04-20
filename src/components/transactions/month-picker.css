@@ -1,0 +1,28 @@
+.month-picker {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.month-picker > .btn {
+  display: flex;
+  align-items: center;
+  width: 2.215rem;
+  height: 2.215rem;
+  padding: 0;
+}
+
+.month-picker > .btn.prev svg {
+  transform: rotate(90deg);
+}
+
+.month-picker > .btn.next svg {
+  transform: rotate(-90deg);
+}
+
+.month-picker > h2 {
+  width: 13rem;
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+  text-align: center;
+}
