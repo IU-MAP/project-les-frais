@@ -1,6 +1,5 @@
 from django.contrib.auth.models import User
 from django.db import models
-from .constants import DEFAULT_CURRENCY
 
 class Currency(models.Model):
     """
@@ -14,7 +13,7 @@ class Currency(models.Model):
     slug = models.CharField(max_length = 10)
     name = models.CharField(max_length = 30)
     label = models.CharField(max_length = 5)
-    
+
     def __str__(self) -> str:
         return self.name
 
@@ -39,7 +38,7 @@ class Category(models.Model):
     # we delete all transactions when user is deleted
     owner = models.ForeignKey(User, verbose_name = 'Owner', on_delete=models.CASCADE)
 
-    
+
     def __str__(self) -> str:
         return self.name
     class Meta:
@@ -57,11 +56,11 @@ class Transaction(models.Model):
     """
 
     created_at = models.DateTimeField(auto_now_add = True)
-    
+
     class Type(models.TextChoices):
         gain = 'gn'
         loss = 'ls'
-    
+
     type = models.CharField(max_length = 2, choices = Type.choices)
     date = models.DateField()
     # title is less than 30
@@ -82,13 +81,3 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
-
-
-
-
-
-#-------------------------Initialize dafault values --------------------------------
-
-if (not Currency.objects.count()):
-    for e in DEFAULT_CURRENCY:
-        Currency.objects.create(**e)
