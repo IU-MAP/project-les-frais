@@ -51,7 +51,7 @@
 <script lang="ts">
 import './form-input.css';
 import {
-  defineComponent, PropType, ref, watch,
+  defineComponent, PropType, ref, watchEffect,
 } from 'vue';
 
 let timeout: any = null;
@@ -137,7 +137,7 @@ export default defineComponent({
   setup (props, context) {
     const val = ref(props.value);
 
-    watch((() => props.value), (newVal) => {
+    watchEffect((() => props.value), (newVal) => {
       val.value = newVal;
     });
 

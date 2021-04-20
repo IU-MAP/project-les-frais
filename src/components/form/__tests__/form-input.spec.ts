@@ -1,5 +1,5 @@
 import { mount } from '@vue/test-utils';
-import FormInput from '../index.vue';
+import FormInput from '../form-input.vue';
 
 describe('FormInput', () => {
   const setupWrapper = (props: any) => mount(FormInput, {
@@ -27,7 +27,7 @@ describe('FormInput', () => {
   });
 
   describe('when it has the basic HTML attributes', () => {
-    const component = setupWrapper({ 
+    const component = setupWrapper({
       type: 'email',
       autocomplete: 'on',
       placeholder: 'google@innopolis.university',

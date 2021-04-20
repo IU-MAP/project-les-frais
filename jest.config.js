@@ -10,4 +10,5 @@ module.exports = {
     '^.+\\.vue$': 'vue-jest',
   },
   moduleNameMapper: { '\\.(css|less)$': 'identity-obj-proxy' },
+  modulePathIgnorePatterns: ['src/tests'],
 };
