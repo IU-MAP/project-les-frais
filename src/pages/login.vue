@@ -94,6 +94,7 @@ export default defineComponent({
 
       if (res.response) {
         await store.dispatch('changeToken', res.response.key);
+        await store.dispatch('initStore', res.response.key);
         await router.push({ name: 'home' });
       }
     };

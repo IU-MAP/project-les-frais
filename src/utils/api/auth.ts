@@ -13,7 +13,7 @@ interface LoginResponse {
 
 interface LoginResult {
   response?: LoginResponse,
-  error?: string | Record<string, string|string[]> | null
+  error?: string | Record<string, string> | null
 }
 
 interface SignupBody {
@@ -29,7 +29,7 @@ interface SignupResponse {
 
 interface SignupResult {
   response?: SignupResponse,
-  error?: string | Record<string, string|string[]> | null
+  error?: string | Record<string, string> | null
 }
 
 interface User {
