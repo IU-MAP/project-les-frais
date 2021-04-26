@@ -10,3 +10,4 @@ staticfiles
 node_modules
 cypress
 .env
+coverage

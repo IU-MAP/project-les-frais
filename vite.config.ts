@@ -2,7 +2,6 @@ import { defineConfig } from 'vite'; // eslint-disable-line
 import vue from '@vitejs/plugin-vue'; // eslint-disable-line
 import { VitePWA } from 'vite-plugin-pwa'; // eslint-disable-line
 // @ts-ignore
-import vueSvgPlugin from './src/transformSvg.js';
 
 export default defineConfig({
   build: {
@@ -10,7 +9,6 @@ export default defineConfig({
   },
   plugins: [
     vue(),
-    vueSvgPlugin(),
     VitePWA({
       manifest: {
         background_color: '#6c6ee5',
