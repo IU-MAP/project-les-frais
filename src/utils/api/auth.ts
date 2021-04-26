@@ -89,6 +89,20 @@ const authApi = {
       return null;
     }
   },
+
+  /**
+   * Remove all account data and the entities connected to it
+   * @returns – boolean if successful.
+   */
+  deleteAccount: async (): Promise<boolean> => {
+    try {
+      await request.delete<{}, null>('rest-auth/delete-user/', {});
+      return true;
+    } catch (e) {
+      console.error(e);
+      return false;
+    }
+  },
 };
 
 export default authApi;
