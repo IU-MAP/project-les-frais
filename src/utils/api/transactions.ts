@@ -13,6 +13,7 @@ export interface Transaction {
   price: number,
   currency: Currency,
   category: Category,
+  description: string,
   isTemplate: boolean,
 }
 
@@ -56,6 +57,15 @@ const transactionsApi = {
   create: async (body: AddTransactionBody): Promise<Transaction|null> => {
     try {
       return await request.post<AddTransactionBody, Transaction>('api/v1/transactions/', body);
+    } catch (e) {
+      console.error(e);
+      return null;
+    }
+  },
+
+  update: async (id: number|string, body: AddTransactionBody): Promise<Transaction|null> => {
+    try {
+      return await request.patch<AddTransactionBody, Transaction>(`api/v1/transactions/${id}/`, body);
     } catch (e) {
       console.error(e);
       return null;

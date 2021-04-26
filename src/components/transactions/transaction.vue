@@ -1,5 +1,6 @@
 <template>
   <div
+    v-if="!editing"
     v-click-outside="() => toggleMenu(false)"
     :class="{'menu-open': menuOpen}"
     class="transaction"
@@ -23,6 +24,12 @@
       {{ price }}
     </span>
   </div>
+
+  <TransactionAddForm
+    v-else
+    :transaction="transaction"
+    @update="sendUpdate"
+  />
 </template>
 
 <script lang="ts">
@@ -34,10 +41,12 @@ import type { Transaction } from '../../utils/api/transactions';
 import useTranslation from '../../utils/useTranslation';
 import Category from '../category/index.vue';
 import MoreIcon from '../../assets/icons/more.svg?component';
+import TransactionAddForm from './add-form.vue';
 
 export default defineComponent({
   name: 'Transaction',
   components: {
+    TransactionAddForm,
     Category,
     MoreIcon,
   },
@@ -46,8 +55,12 @@ export default defineComponent({
       type: Object as PropType<Transaction>,
       required: true,
     },
+    editing: {
+      type: Boolean,
+      default: false,
+    },
   },
-  emits: ['select', 'edit', 'remove'],
+  emits: ['select', 'edit', 'remove', 'update'],
   setup (props, context) {
     const t = useTranslation();
 
@@ -82,6 +95,10 @@ export default defineComponent({
       context.emit('remove');
     };
 
+    const sendUpdate = (newTransaction: Transaction) => {
+      context.emit('update', newTransaction);
+    };
+
     return {
       t,
       menuOpen,
@@ -91,6 +108,7 @@ export default defineComponent({
       select,
       edit,
       remove,
+      sendUpdate,
     };
   },
 });

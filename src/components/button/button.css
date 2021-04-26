@@ -52,6 +52,7 @@
 .btn.add {
   width: 2.5rem;
   border-radius: 50%;
+  padding: 0.5625rem;
   border: none;
   box-shadow: var(--shadow-button-submit);
 }

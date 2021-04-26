@@ -46,9 +46,12 @@
               :key="transaction.id"
               :transaction="transaction"
               :class="{selected: selection.includes(transaction.id)}"
+              :editing="editingId === transaction.id"
               @remove="removeTransaction(transaction.id)"
               @select="toggleSelection(transaction.id)"
               @click="addToSelection(transaction.id)"
+              @edit="editingId = transaction.id"
+              @update="afterEdit"
             />
           </div>
         </div>
@@ -96,6 +99,7 @@ export default defineComponent({
     const year = ref(date.getFullYear());
 
     const selection = ref<number[]>([]);
+    const editingId = ref<number|null>(null);
 
     const updateList = async () => {
       const res = await api.transactions.read({
@@ -142,6 +146,11 @@ export default defineComponent({
       await updateList();
     };
 
+    const afterEdit = () => {
+      editingId.value = null;
+      updateList();
+    };
+
     watch(() => props.updateVal, (newVal: TransactionType) => {
       if (!newVal || !newVal.date) return;
 
@@ -159,6 +168,7 @@ export default defineComponent({
       month,
       year,
       selection,
+      editingId,
       updateList,
       getOrdinalTranslation,
       removeTransaction,
@@ -166,6 +176,7 @@ export default defineComponent({
       addToSelection,
       cancelSelection,
       removeSelected,
+      afterEdit,
     };
   },
 });
