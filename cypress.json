@@ -3,5 +3,7 @@
   "integrationFolder": "src/tests",
   "pluginsFile": false,
   "supportFile": false,
-  "video": false
+  "video": true,
+  "viewportWidth": 1440,
+  "viewportHeight": 800
 }
