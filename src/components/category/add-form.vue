@@ -48,9 +48,9 @@ import { store } from '../../store';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
 import Dot from '../dot/index.vue';
-import TrashIcon from '../../assets/icons/trash.svg?component';
-import CheckIcon from '../../assets/icons/check.svg?component';
-import PlusIcon from '../../assets/icons/plus.svg?component';
+import TrashIcon from '../../assets/icons/trash.svg';
+import CheckIcon from '../../assets/icons/check.svg';
+import PlusIcon from '../../assets/icons/plus.svg';
 
 export default defineComponent({
   name: 'CategoryAddForm',

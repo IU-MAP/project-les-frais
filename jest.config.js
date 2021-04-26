@@ -8,7 +8,8 @@ module.exports = {
   transform: {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.vue$': 'vue-jest',
+    '^.+\\.svg$': '<rootDir>/src/jest-svg.js',
   },
-  moduleNameMapper: { '\\.(css|less)$': 'identity-obj-proxy' },
+  moduleNameMapper: { '\\.(css|)$': 'identity-obj-proxy' },
   modulePathIgnorePatterns: ['src/tests'],
 };

@@ -27,8 +27,8 @@ import './date-input.css';
 import {
   defineComponent, ref, onMounted, watch, nextTick,
 } from 'vue';
-import CalendarIcon from '../../assets/icons/calendar.svg?component';
-import CheckIcon from '../../assets/icons/check.svg?component';
+import CalendarIcon from '../../assets/icons/calendar.svg';
+import CheckIcon from '../../assets/icons/check.svg';
 import formatDate from '../../utils/format-date';
 
 export default defineComponent({

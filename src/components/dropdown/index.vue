@@ -30,7 +30,7 @@
 <script lang="ts">
 import './dropdown.css';
 import { defineComponent, PropType, ref } from 'vue';
-import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
+import ChevronIcon from '../../assets/icons/chevron-down.svg';
 
 export default defineComponent({
   name: 'Dropdown',

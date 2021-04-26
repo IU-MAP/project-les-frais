@@ -72,8 +72,8 @@ import api from '../../utils/api';
 import Transaction from './transaction.vue';
 import MonthPicker from './month-picker.vue';
 import Button from '../button/index.vue';
-import XIcon from '../../assets/icons/x.svg?component';
-import TrashIcon from '../../assets/icons/trash.svg?component';
+import XIcon from '../../assets/icons/x.svg';
+import TrashIcon from '../../assets/icons/trash.svg';
 
 export default defineComponent({
   name: 'TransactionsList',

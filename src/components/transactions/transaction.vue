@@ -40,7 +40,7 @@ import {
 import type { Transaction } from '../../utils/api/transactions';
 import useTranslation from '../../utils/useTranslation';
 import Category from '../category/index.vue';
-import MoreIcon from '../../assets/icons/more.svg?component';
+import MoreIcon from '../../assets/icons/more.svg';
 import TransactionAddForm from './add-form.vue';
 
 export default defineComponent({

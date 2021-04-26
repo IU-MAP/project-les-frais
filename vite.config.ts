@@ -1,10 +1,11 @@
 import { defineConfig } from 'vite'; // eslint-disable-line
 import vue from '@vitejs/plugin-vue'; // eslint-disable-line
 import { VitePWA } from 'vite-plugin-pwa'; // eslint-disable-line
-import vueSvgPlugin from 'vite-plugin-vue-svg';
+// @ts-ignore
+import vueSvgPlugin from './src/transformSvg.js';
 
 export default defineConfig({
-build: {
+  build: {
     assetsDir: 'static',
   },
   plugins: [

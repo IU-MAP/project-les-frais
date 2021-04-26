@@ -65,7 +65,9 @@ VueWrapper {
         "performance": false,
         "warnHandler": undefined,
       },
-      "directives": Object {},
+      "directives": Object {
+        "maska": [Function],
+      },
       "mixins": Array [
         Object {
           "__emits": null,
@@ -210,7 +212,9 @@ VueWrapper {
         "performance": false,
         "warnHandler": undefined,
       },
-      "directives": Object {},
+      "directives": Object {
+        "maska": [Function],
+      },
       "mixins": Array [
         Object {
           "__emits": null,
@@ -355,7 +359,9 @@ VueWrapper {
         "performance": false,
         "warnHandler": undefined,
       },
-      "directives": Object {},
+      "directives": Object {
+        "maska": [Function],
+      },
       "mixins": Array [
         Object {
           "__emits": null,

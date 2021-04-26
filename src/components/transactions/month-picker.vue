@@ -15,7 +15,7 @@
 <script lang="ts">
 import './month-picker.css';
 import { defineComponent, computed } from 'vue';
-import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
+import ChevronIcon from '../../assets/icons/chevron-down.svg';
 import Button from '../button/index.vue';
 import { MONTH_NAMES } from '../../utils/format-date';
 import useStore from '../../store';

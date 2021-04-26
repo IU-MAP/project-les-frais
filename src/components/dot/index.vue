@@ -13,9 +13,9 @@
 <script lang="ts">
 import './dot.css';
 import {
-  defineComponent, computed, ref, watch, 
+  defineComponent, computed, ref, watch,
 } from 'vue';
-import CheckIcon from '../../assets/icons/check.svg?component';
+import CheckIcon from '../../assets/icons/check.svg';
 
 export default defineComponent({
   name: 'Dot',
