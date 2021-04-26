@@ -31,3 +31,16 @@
 .category-add-form .category-choice .dot {
   margin-right: 0.25rem;
 }
+
+.category-add-form .btn.remove {
+  display: none;
+  margin-right: 0.5rem;
+}
+
+.category-add-form.edit .btn.remove {
+  display: block;
+}
+
+.category-add-form.edit .btn.add {
+  padding: 0.5625rem 0.5rem;
+}

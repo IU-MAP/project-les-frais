@@ -44,7 +44,7 @@
       </div>
 
       <div v-else-if="activeTab === 'settings_tabs_categories'" class="settings category-settings">
-        <CategoryAddForm />
+        <CategoryAddForm :edit="categoryToEdit" @edited="editCategory(null)" />
 
         <div class="card">
           <h1>{{ t('settings_tab_categories') }}</h1>
@@ -59,6 +59,7 @@
                 :key="category.id"
                 :name="category.name"
                 :color="category.color"
+                @click="editCategory(category)"
               />
             </template>
           </div>
@@ -108,6 +109,8 @@ export default defineComponent({
     const initialTab = ((route.query.slug) && TABS.includes(route.query.slug as TabsType)) ? route.query.slug as TabsType : 'settings_tabs_profile';
     const activeTab = ref<TabsType>(initialTab);
 
+    const categoryToEdit = ref<CategoryType|null>(null);
+
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
     };
@@ -122,6 +125,10 @@ export default defineComponent({
       router.push({ name: 'home' });
     };
 
+    const editCategory = (val: CategoryType|null) => {
+      categoryToEdit.value = val;
+    };
+
     return {
       t,
       activeTab,
@@ -132,6 +139,8 @@ export default defineComponent({
       categories,
       logout,
       selectLan,
+      editCategory,
+      categoryToEdit,
     };
   },
 });

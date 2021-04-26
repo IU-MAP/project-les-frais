@@ -141,6 +141,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Все категории',
     eng: 'All categories',
   },
+  settings_tab_categories_color: {
+    rus: 'Цвет',
+    eng: 'Color',
+  },
   settings_tab_categories_no_categories: {
     rus: 'У вас пока нет добавленных категорий',
     eng: 'You don\'t have categories yet',

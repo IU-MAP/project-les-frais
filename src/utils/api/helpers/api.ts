@@ -84,6 +84,14 @@ const request = {
   },
 
   /**
+   * PATCH-request. Use it to update entity instances
+   */
+  patch: <T, U>(path: string, body: T, config?: RequestInit): Promise<U> => {
+    const init = { method: 'patch', body: JSON.stringify(body), ...config };
+    return http<U>(path, init);
+  },
+
+  /**
    * PUT-request. Use it to delete entities
    */
   delete: <T, U>(path: string, body: T, config?: RequestInit): Promise<U> => {
