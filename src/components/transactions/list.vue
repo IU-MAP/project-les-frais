@@ -1,10 +1,24 @@
 <template>
   <div class="transactions-list">
-    <MonthPicker
-      v-model:year="year"
-      v-model:month="month"
-      @update:month="updateList"
-    />
+    <div class="transactions-list_toolbar">
+      <div v-if="selection.length" class="transactions-list_toolbar_selection">
+        <Button @click="cancelSelection">
+          <XIcon />
+          {{ t('cancel') }}
+        </Button>
+        <Button look="remove" @click="removeSelected">
+          <TrashIcon />
+          {{ t('remove') }} ({{ selection.length }})
+        </Button>
+      </div>
+
+      <MonthPicker
+        v-else
+        v-model:year="year"
+        v-model:month="month"
+        @update:month="updateList"
+      />
+    </div>
 
     <div class="transactions-list_grid">
       <h3 v-if="!Object.keys(transactions).length" class="no-transactions">
@@ -26,12 +40,15 @@
             </component>
           </p>
 
-          <div class="transactions-list_list">
+          <div :class="{selection: !!selection.length}" class="transactions-list_list">
             <Transaction
               v-for="transaction in day"
               :key="transaction.id"
               :transaction="transaction"
+              :class="{selected: selection.includes(transaction.id)}"
               @remove="removeTransaction(transaction.id)"
+              @select="toggleSelection(transaction.id)"
+              @click="addToSelection(transaction.id)"
             />
           </div>
         </div>
@@ -45,18 +62,24 @@ import './list.css';
 import {
   defineComponent, PropType, ref, watch,
 } from 'vue';
-import Transaction from './transaction.vue';
-import MonthPicker from './month-picker.vue';
-import { Transaction as TransactionType } from '../../utils/api/transactions';
-import api from '../../utils/api';
+import type { Transaction as TransactionType } from '../../utils/api/transactions';
 import useTranslation from '../../utils/useTranslation';
 import getOrdinalTranslation from '../../utils/ordinal-number';
+import api from '../../utils/api';
+import Transaction from './transaction.vue';
+import MonthPicker from './month-picker.vue';
+import Button from '../button/index.vue';
+import XIcon from '../../assets/icons/x.svg?component';
+import TrashIcon from '../../assets/icons/trash.svg?component';
 
 export default defineComponent({
   name: 'TransactionsList',
   components: {
+    Button,
     MonthPicker,
     Transaction,
+    XIcon,
+    TrashIcon,
   },
   props: {
     updateVal: {
@@ -71,6 +94,8 @@ export default defineComponent({
     const date = new Date();
     const month = ref(date.getMonth() + 1);
     const year = ref(date.getFullYear());
+
+    const selection = ref<number[]>([]);
 
     const updateList = async () => {
       const res = await api.transactions.read({
@@ -94,6 +119,29 @@ export default defineComponent({
       await updateList();
     };
 
+    const toggleSelection = (id: number) => {
+      if (selection.value.includes(id)) {
+        selection.value = selection.value.filter((val) => val !== id);
+      } else {
+        selection.value = [...selection.value, id];
+      }
+    };
+
+    const addToSelection = (id: number) => {
+      if (!selection.value.length) return;
+      toggleSelection(id);
+    };
+
+    const cancelSelection = () => {
+      selection.value = [];
+    };
+
+    const removeSelected = async () => {
+      await Promise.all(selection.value.map(async (id) => api.transactions.delete(id)));
+      selection.value = [];
+      await updateList();
+    };
+
     watch(() => props.updateVal, (newVal: TransactionType) => {
       if (!newVal || !newVal.date) return;
 
@@ -110,9 +158,14 @@ export default defineComponent({
       transactions,
       month,
       year,
+      selection,
       updateList,
       getOrdinalTranslation,
       removeTransaction,
+      toggleSelection,
+      addToSelection,
+      cancelSelection,
+      removeSelected,
     };
   },
 });

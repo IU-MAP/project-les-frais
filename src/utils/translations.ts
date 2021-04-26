@@ -17,6 +17,14 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Зарегистрироваться',
     eng: 'Sign Up',
   },
+  remove: {
+    rus: 'Удалить',
+    eng: 'Remove',
+  },
+  cancel: {
+    rus: 'Отменить',
+    eng: 'Cancel',
+  },
 
   /**
    * Home page

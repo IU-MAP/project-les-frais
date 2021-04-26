@@ -1,5 +1,23 @@
-.transactions-list .month-picker {
-  margin-bottom: 1.5rem;
+.transactions-list_toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.transactions-list_toolbar_selection {
+  display: flex;
+  flex-grow: 1;
+}
+.transactions-list_toolbar_selection .btn {
+  width: auto;
+  height: 2.215rem;
+  white-space: nowrap;
+}
+.transactions-list_toolbar_selection .btn svg {
+  margin-right: 0.5rem;
+}
+.transactions-list_toolbar_selection .btn:not(:last-of-type) {
+  margin-right: 1rem;
 }
 
 .transactions-list_grid {
@@ -45,4 +63,12 @@
 
 .transactions-list_list .transaction:not(:first-of-type) {
   margin-top: 0.625rem;
+}
+
+.transactions-list_list.selection .transaction > .more {
+  opacity: 0;
+}
+
+.transactions-list_list.selection .transaction {
+  cursor: pointer;
 }

@@ -57,9 +57,7 @@
 }
 
 .btn.remove {
-  width: 2.5rem;
-  padding: 0.5625rem 0.5rem;
-  border-radius: 50%;
   border: none;
+  color: var(--color-error);
   box-shadow: var(--shadow-button-remove);
 }

@@ -4,11 +4,9 @@
     :class="{'menu-open': menuOpen}"
     class="transaction"
   >
-    <ul class="menu">
-      <!-- TODO: Implement
+    <ul class="menu" @click.stop>
       <li @click="edit">{{ t('dashboard_transaction_edit') }}</li>
       <li @click="select">{{ t('dashboard_transaction_select') }}</li>
-      -->
       <li class="text-color-error" @click="remove">{{ t('dashboard_transaction_remove') }}</li>
     </ul>
 
@@ -16,12 +14,12 @@
     <p class="title">{{ transaction.title }}</p>
 
     <Category
-      v-if="transaction.category"
+      v-if="transaction.category && !isGain"
       :color="transaction.category.color"
       :name="transaction.category.name"
     />
 
-    <span :class="{income: transaction.type === 'gain'}" class="price">
+    <span :class="{income: isGain}" class="price">
       {{ price }}
     </span>
   </div>
@@ -59,6 +57,7 @@ export default defineComponent({
       const amount = props.transaction.type === 'loss' ? `-${props.transaction.price}` : props.transaction.price;
       return `${amount}${currency}`;
     });
+    const isGain = computed(() => props.transaction.type === 'gain');
 
     const toggleMenu = (val?: boolean) => {
       if (typeof val === 'undefined') {
@@ -87,6 +86,7 @@ export default defineComponent({
       t,
       menuOpen,
       price,
+      isGain,
       toggleMenu,
       select,
       edit,

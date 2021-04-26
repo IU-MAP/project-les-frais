@@ -56,7 +56,7 @@
           />
         </div>
 
-        <div class="transaction-add-form_menu_categories">
+        <div v-if="!data.isGain" class="transaction-add-form_menu_categories">
           <router-link
             v-if="!categories.length"
             :to="{name: 'settings', query: { slug: 'settings_tabs_categories' }}"
