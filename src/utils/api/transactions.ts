@@ -24,9 +24,9 @@ interface GetTransactionArgs {
 
 interface AddTransactionBody {
   type: 'loss'|'gain',
-  date: Date,
+  date: string,
   title: string,
-  price: number,
+  price: number|string,
   description: string,
   currency: number,
   category: number,

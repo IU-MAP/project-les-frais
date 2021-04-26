@@ -47,7 +47,7 @@ const translations: Record<string, Record<LANGS, string>> = {
   },
   auth_email: {
     rus: 'Е-мейл',
-    eng: 'Email',
+    eng: 'E-mail',
   },
   auth_password: {
     rus: 'Пароль',
@@ -68,6 +68,10 @@ const translations: Record<string, Record<LANGS, string>> = {
   auth_dont: {
     rus: 'У меня еще нет аккаунта.',
     eng: 'I don\'t have an account.',
+  },
+  auth_login_error: {
+    rus: 'Неправильный Е-мейл или пароль.',
+    eng: 'E-mail or password is incorrect.',
   },
 
   /**
@@ -137,6 +141,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Все категории',
     eng: 'All categories',
   },
+  settings_tab_categories_no_categories: {
+    rus: 'У вас пока нет добавленных категорий',
+    eng: 'You don\'t have categories yet',
+  },
   settings_tabs_templates: {
     rus: 'Шаблоны',
     eng: 'Templates',
@@ -172,6 +180,10 @@ const translations: Record<string, Record<LANGS, string>> = {
   add_currency: {
     rus: 'Валюта',
     eng: 'Currency',
+  },
+  add_no_categories: {
+    rus: 'Добавьте категории, прежде чем продолжить',
+    eng: 'Add categories before proceed',
   },
   add_additional: {
     rus: 'Дополнительное описание',

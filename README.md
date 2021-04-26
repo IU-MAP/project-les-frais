@@ -14,7 +14,7 @@ Useful links:
 * [Project backlog](https://github.com/IU-MAP/project-les-frais/projects/1)
 * [Application deployed to Heroku](https://project-les-frais.herokuapp.com) (might require ~10-30s to warm up)
 * [Figma designs](https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais)
-* [Swagger documentation](https://project-les-frais.herokuapp.com/swagger)
+* [Swagger documentation](https://project-les-frais.herokuapp.com/swagger/)
 
 ## Initial product backlog
 
@@ -190,7 +190,7 @@ the following results:
 The goal of this sprint was the implementation of transaction 
 creation User Story. During this spring, we:
 
-* Produced backend documentation in form of [Swagger](https://project-les-frais.herokuapp.com/swagger)
+* Produced backend documentation in form of [Swagger](https://project-les-frais.herokuapp.com/swagger/)
 * Implemented CRUD endpoints for different entities: Transactions, Categories, Currencies etc.
 * Connected frontend with the backend endpoints for transaction creation
 * Implemented category creation in the settings page of the app

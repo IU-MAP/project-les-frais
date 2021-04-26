@@ -90,6 +90,9 @@ export default defineComponent({
         errors.email = res.error.email || '';
         errors.password = res.error.password || '';
         errors.non_field_errors = res.error.non_field_errors || '';
+        if (res.error.detail) {
+          errors.non_field_errors = t('auth_login_error');
+        }
       }
 
       if (res.response) {

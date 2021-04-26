@@ -57,14 +57,23 @@
         </div>
 
         <div class="transaction-add-form_menu_categories">
-          <Category
-            v-for="category in categories"
-            :key="category.id"
-            :color="category.color"
-            :name="category.name"
-            :class="{current: activeCategory && category.id === activeCategory.id }"
-            @click="changeActiveCategory(category)"
-          />
+          <router-link
+            v-if="!categories.length"
+            :to="{name: 'settings', query: { slug: 'settings_tabs_categories' }}"
+            class="text-regular text-link"
+          >
+            {{ t('add_no_categories') }}
+          </router-link>
+          <template v-else>
+            <Category
+              v-for="category in categories"
+              :key="category.id"
+              :color="category.color"
+              :name="category.name"
+              :class="{current: activeCategory && category.id === activeCategory.id }"
+              @click="changeActiveCategory(category)"
+            />
+          </template>
         </div>
 
         <FormInput
@@ -143,7 +152,7 @@ export default defineComponent({
 
     const submit = async () => {
       const preparedData = {
-        type: data.isGain ? 'gain' : 'loss',
+        type: (data.isGain ? 'gain' : 'loss') as 'gain'|'loss',
         title: data.name,
         price: data.price,
         date: data.date,

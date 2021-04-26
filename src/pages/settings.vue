@@ -1,6 +1,6 @@
 <template>
   <section class="settings-page">
-    <Tabs :items="tabs" @change="changeActive">
+    <Tabs :initial="activeTab" :items="tabs" @change="changeActive">
       <template #item="{item}">
         {{ t(item) }}
       </template>
@@ -45,16 +45,22 @@
 
       <div v-else-if="activeTab === 'settings_tabs_categories'" class="settings category-settings">
         <CategoryAddForm />
+
         <div class="card">
           <h1>{{ t('settings_tab_categories') }}</h1>
 
           <div>
-            <Category
-              v-for="category in categories"
-              :key="category.id"
-              :name="category.name"
-              :color="category.color"
-            />
+            <span v-if="!categories.length" class="text-regular">
+              {{ t('settings_tab_categories_no_categories') }}
+            </span>
+            <template v-else>
+              <Category
+                v-for="category in categories"
+                :key="category.id"
+                :name="category.name"
+                :color="category.color"
+              />
+            </template>
           </div>
         </div>
       </div>
@@ -69,7 +75,7 @@
 <script lang="ts">
 import '../assets/styles/pages/settings.css';
 import { computed, defineComponent, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
 import useStore from '../store';
@@ -78,6 +84,7 @@ import useTranslation from '../utils/useTranslation';
 import { LANGS } from '../utils/constants';
 import Tabs from '../components/tabs/index.vue';
 import CategoryAddForm from '../components/category/add-form.vue';
+import type { Category as CategoryType } from '../utils/api/categories';
 
 type TabsType = 'settings_tabs_profile'|'settings_tabs_categories'|'settings_tabs_templates';
 const TABS: TabsType[] = ['settings_tabs_profile', 'settings_tabs_categories', 'settings_tabs_templates'];
@@ -94,9 +101,12 @@ export default defineComponent({
     const t = useTranslation();
     const store = useStore();
     const router = useRouter();
-    const activeTab = ref<TabsType>('settings_tabs_profile');
+    const route = useRoute();
     const activeLan = computed(() => store.state.language);
-    const categories = computed<Category[]>(() => store.state.categories);
+    const categories = computed<CategoryType[]>(() => store.state.categories);
+
+    const initialTab = ((route.query.slug) && TABS.includes(route.query.slug as TabsType)) ? route.query.slug as TabsType : 'settings_tabs_profile';
+    const activeTab = ref<TabsType>(initialTab);
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;

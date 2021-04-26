@@ -26,10 +26,14 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       required: true,
     },
+    initial: {
+      type: String,
+      default: null,
+    },
   },
   emits: ['change'],
   setup (props, context) {
-    const active = ref(props.items?.[0] || null);
+    const active = ref(props.initial || props.items?.[0] || null);
 
     const changeActive = (tab: string) => {
       active.value = tab;

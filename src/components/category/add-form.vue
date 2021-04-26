@@ -62,12 +62,13 @@ export default defineComponent({
 
     const submit = async () => {
       const res = await api.category.create({
-        slug: 'abcde',
         name: data.name,
         color: data.color,
       });
 
       if (res) {
+        data.name = '';
+        data.color = 1;
         await store.dispatch('changeCategories');
       }
     };

@@ -3,13 +3,11 @@ import request from './helpers/api';
 export interface Category {
   id: number,
   created_at: Date,
-  slug: string,
   name: string,
   color: string,
 }
 
 interface AddCategoryBody {
-  slug: string,
   name: string,
   color: number,
 }
