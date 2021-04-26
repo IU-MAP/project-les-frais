@@ -2,6 +2,14 @@ import { mount } from '@vue/test-utils';
 import AddForm from '../add-form.vue';
 
 jest.mock('../../../utils/useTranslation.ts', () => () => (key: string) => `${key} mock translation`);
+jest.mock('../../../utils/api/index.ts', () => ({
+  category: {
+    patch: jest.fn(),
+    create: jest.fn(),
+    remove: jest.fn(),
+  },
+}));
+
 describe('Category component', () => {
   it('matches the snapshot', () => {
     const component = mount(AddForm, {
