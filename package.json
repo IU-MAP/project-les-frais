@@ -9,7 +9,7 @@
     "serve": "vite build && vite preview --port 3000",
     "lint": "eslint --fix src",
     "test:unit": "jest src",
-    "test:e2e": "start-server-and-test start http-get://localhost:3000 test:e2e-run",
+    "test:e2e": "start-server-and-test dev http-get://localhost:3000 test:e2e-run",
     "test:e2e-run": "cypress run --headless",
     "test:e2e-open": "cypress open -b chrome"
   },

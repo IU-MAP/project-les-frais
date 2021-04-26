@@ -80,7 +80,9 @@
 
 <script lang="ts">
 import '../assets/styles/pages/settings.css';
-import { computed, defineComponent, ref } from 'vue';
+import {
+  computed, defineComponent, ref, watchEffect,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
@@ -112,9 +114,9 @@ export default defineComponent({
     const activeLan = computed(() => store.state.language);
     const categories = computed<CategoryType[]>(() => store.state.categories);
 
-    const initialTab = ((route.query.slug) && TABS.includes(route.query.slug as TabsType))
+    const initialTab = computed<TabsType>(() => ((route.query.slug) && TABS.includes(route.query.slug as TabsType))
       ? route.query.slug as TabsType
-      : 'settings_tabs_profile';
+      : 'settings_tabs_profile');
     const activeTab = ref<TabsType>(initialTab);
 
     const categoryToEdit = ref<CategoryType|null>(null);
@@ -122,6 +124,7 @@ export default defineComponent({
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
+      router.push({ query: { slug: tab } });
     };
 
     const selectLan = (lan: LANGS) => {
@@ -148,6 +151,10 @@ export default defineComponent({
       if (!res) deleteAccountClicked.value = false;
       else logout();
     };
+
+    watchEffect(() => {
+      activeTab.value = initialTab.value;
+    });
 
     return {
       t,
