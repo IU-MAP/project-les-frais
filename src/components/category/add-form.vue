@@ -17,7 +17,7 @@
 
         <Button look="add">
           <CheckIcon v-if="edit" />
-          <template v-else>+</template>
+          <PlusIcon v-else />
         </Button>
       </div>
       <div class="category-add-form_row category-choice">
@@ -41,15 +41,16 @@ import './add-form.css';
 import {
   defineComponent, PropType, reactive, ref, watchEffect,
 } from 'vue';
+import type { Category } from '../../utils/api/categories';
+import useTranslation from '../../utils/useTranslation';
+import api from '../../utils/api';
+import { store } from '../../store';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
 import Dot from '../dot/index.vue';
-import api from '../../utils/api';
-import { store } from '../../store';
 import TrashIcon from '../../assets/icons/trash.svg?component';
 import CheckIcon from '../../assets/icons/check.svg?component';
-import type { Category } from '../../utils/api/categories';
-import useTranslation from '../../utils/useTranslation';
+import PlusIcon from '../../assets/icons/plus.svg?component';
 
 export default defineComponent({
   name: 'CategoryAddForm',
@@ -58,6 +59,7 @@ export default defineComponent({
     FormInput,
     Button,
     TrashIcon,
+    PlusIcon,
     CheckIcon,
   },
   props: {
