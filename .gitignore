@@ -8,3 +8,4 @@ db.sqlite3
 dist
 staticfiles
 node_modules
+.env

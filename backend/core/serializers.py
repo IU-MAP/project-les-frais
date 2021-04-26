@@ -1,5 +1,6 @@
 from django.db.models import fields
 from rest_framework import serializers
+from rest_framework.exceptions import ValidationError
 
 from .models import Transaction, Currency, Category
 
@@ -126,6 +127,15 @@ class ShortTransactionSerializer(serializers.ModelSerializer):
             raise serializers.ValidationError("You are not the owner of the category!")
         return super().save(**kwargs)
 
+    def validate(self, attrs):
+        if (not attrs['isTemplate']):
+            required = {'date', 'description', 'price', 'currency', 'category'}
+            message = 'this field is required if isTemplate is false'
+            error = {f: message  for f in required if attrs[f] is None}
+            if (error):
+                raise ValidationError(error)
+        return super().validate(attrs)
+    
     class Meta:
         model = Transaction
         fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
