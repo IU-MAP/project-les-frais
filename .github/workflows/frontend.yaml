@@ -80,5 +80,5 @@ jobs:
       - name: Build the app
         run: npm run build
 
-      - name: Perform End-to-End testing
-        run: npm run test:e2e
+#      - name: Perform End-to-End testing
+#        run: npm run test:e2e

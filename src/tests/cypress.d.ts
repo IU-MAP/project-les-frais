@@ -4,5 +4,6 @@ declare namespace Cypress {
     login(): Chainable<Element>,
     logout(): Chainable<Element>,
     removeUser(): Chainable<Element>,
+    addCategory(): Chainable<Element>,
   }
 }
