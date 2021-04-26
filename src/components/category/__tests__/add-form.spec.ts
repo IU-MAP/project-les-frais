@@ -9,6 +9,9 @@ jest.mock('../../../utils/api/index.ts', () => ({
     remove: jest.fn(),
   },
 }));
+jest.mock('../../../store', () => ({
+  dispatch: jest.fn(),
+}));
 
 describe('Category component', () => {
   it('matches the snapshot', () => {
