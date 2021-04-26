@@ -1,0 +1,729 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Category component matches the snapshot 1`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <form
+        class="transaction-add-form category-add-form"
+        type="[object Object]"
+      >
+        <div
+          class="transaction-add-form_trigger"
+        >
+          <div
+            class="category-add-form_row"
+          >
+            <button
+              class="btn remove"
+              type="button"
+            >
+              
+              <!---->
+              
+            </button>
+            <div
+              class="form-input simple"
+            >
+              <!--v-if-->
+              <div
+                class="form-input_wrapper"
+              >
+                
+                
+                <input
+                  autocomplete="off"
+                  class="form-input_input"
+                  placeholder="New category name"
+                  type="text"
+                />
+                
+                
+              </div>
+              <!--v-if-->
+            </div>
+            <button
+              class="btn add"
+              type="submit"
+            >
+              
+              <!---->
+              
+            </button>
+          </div>
+          <div
+            class="category-add-form_row category-choice"
+          >
+            <span
+              class="text-regular"
+            >
+              settings_tab_categories_color mock translation:
+            </span>
+            
+            <label
+              class="dot color-number-1 radio active"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-2 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-3 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-4 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-5 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-6 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-7 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-8 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-9 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-10 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-11 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-12 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-13 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-14 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-15 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-16 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-17 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-18 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-19 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-20 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-21 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-22 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-23 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-24 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-25 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            <label
+              class="dot color-number-26 radio"
+            >
+              
+              <input
+                type="checkbox"
+              />
+              <!---->
+              
+            </label>
+            
+          </div>
+        </div>
+      </form>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 0,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "activeCategory": "Food",
+    "changeActiveCategory": [Function],
+    "data": Object {
+      "color": 1,
+      "name": "",
+    },
+    "edit": null,
+    "hasOwnProperty": [Function],
+    "remove": [Function],
+    "submit": [Function],
+    "t": [Function],
+  },
+  "rootVM": Object {},
+  "wrapperElement": <form
+    class="transaction-add-form category-add-form"
+    type="[object Object]"
+  >
+    <div
+      class="transaction-add-form_trigger"
+    >
+      <div
+        class="category-add-form_row"
+      >
+        <button
+          class="btn remove"
+          type="button"
+        >
+          
+          <!---->
+          
+        </button>
+        <div
+          class="form-input simple"
+        >
+          <!--v-if-->
+          <div
+            class="form-input_wrapper"
+          >
+            
+            
+            <input
+              autocomplete="off"
+              class="form-input_input"
+              placeholder="New category name"
+              type="text"
+            />
+            
+            
+          </div>
+          <!--v-if-->
+        </div>
+        <button
+          class="btn add"
+          type="submit"
+        >
+          
+          <!---->
+          
+        </button>
+      </div>
+      <div
+        class="category-add-form_row category-choice"
+      >
+        <span
+          class="text-regular"
+        >
+          settings_tab_categories_color mock translation:
+        </span>
+        
+        <label
+          class="dot color-number-1 radio active"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-2 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-3 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-4 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-5 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-6 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-7 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-8 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-9 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-10 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-11 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-12 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-13 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-14 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-15 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-16 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-17 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-18 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-19 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-20 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-21 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-22 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-23 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-24 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-25 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        <label
+          class="dot color-number-26 radio"
+        >
+          
+          <input
+            type="checkbox"
+          />
+          <!---->
+          
+        </label>
+        
+      </div>
+    </div>
+  </form>,
+}
+`;

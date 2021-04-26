@@ -1,17 +1,9 @@
 import { mount } from '@vue/test-utils';
-import { createStore } from 'vuex';
 import AddForm from '../add-form.vue';
 
-const store = createStore({
-  state () {
-    return {
-      language: 'eng',
-    };
-  },
-});
-
+jest.mock('../../../utils/useTranslation.ts', () => () => (key: string) => `${key} mock translation`);
 describe('Category component', () => {
-  xit('matches the snapshot', () => {
+  it('matches the snapshot', () => {
     const component = mount(AddForm, {
       props: {
         type: {
@@ -20,9 +12,6 @@ describe('Category component', () => {
           name: 'test',
           color: '1',
         },
-      },
-      global: {
-        plugins: [store],
       },
     });
 
