@@ -45,6 +45,7 @@ index_view = never_cache(TemplateView.as_view(template_name='index.html'))
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    path('', include('backend.users.urls')),
     path('api/v1/', include('backend.core.urls')),
 
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
