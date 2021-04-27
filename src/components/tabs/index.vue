@@ -17,7 +17,9 @@
 
 <script lang="ts">
 import './tabs.css';
-import { defineComponent, PropType, ref } from 'vue';
+import {
+  defineComponent, PropType, ref, watchEffect,
+} from 'vue';
 
 export default defineComponent({
   name: 'Tabs',
@@ -26,15 +28,23 @@ export default defineComponent({
       type: Array as PropType<string[]>,
       required: true,
     },
+    initial: {
+      type: String,
+      default: null,
+    },
   },
   emits: ['change'],
   setup (props, context) {
-    const active = ref(props.items?.[0] || null);
+    const active = ref(props.initial || props.items?.[0] || null);
 
     const changeActive = (tab: string) => {
       active.value = tab;
       context.emit('change', tab);
     };
+
+    watchEffect(() => {
+      active.value = props.initial || props.items?.[0] || null;
+    });
 
     return {
       active,

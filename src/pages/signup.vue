@@ -59,7 +59,7 @@ import '../assets/styles/pages/auth.css';
 import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
-import AtSignIcon from '../assets/icons/at-sign.svg?component';
+import AtSignIcon from '../assets/icons/at-sign.svg';
 import FormInput from '../components/form/form-input.vue';
 import useTranslation from '../utils/useTranslation';
 import useStore from '../store';
@@ -101,6 +101,7 @@ export default defineComponent({
 
       if (res.response) {
         await store.dispatch('changeToken', res.response.key);
+        await store.dispatch('initStore', res.response.key);
         await router.push({ name: 'home' });
       }
     };

@@ -8,20 +8,16 @@
   margin-right: 1.5rem;
 }
 
-.transactions-list {
-  margin-top: 2rem;
-}
-
 .dashboard-page_statistics {
   width: 10rem;
 }
 
 .dashboard-page .transaction-add-form {
   width: 655px;
-  margin: 0 0 0 auto;
+  margin: 1rem 0 2rem auto;
 }
 
-.dashboard-page .month-picker {
+.dashboard-page .transactions-list_toolbar {
   width: 655px;
-  margin: 0 0 0 auto;
+  margin: 0 0 1.5rem auto;
 }

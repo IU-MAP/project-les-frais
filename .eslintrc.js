@@ -56,6 +56,7 @@ module.exports = {
     'lines-between-class-members': 0,
     'no-param-reassign': 0,
     'vue/prop-name-casing': 0,
+    'max-len': [1, { code: 120 }],
     camelcase: 0,
   },
 };

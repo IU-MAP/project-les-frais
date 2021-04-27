@@ -20,6 +20,7 @@ const checkAuth = async (isRouteProtected: boolean) => {
         await store.dispatch('changeUser', user);
         return true;
       }
+      await store.dispatch('changeToken', null);
     }
 
     return { name: 'home' };
@@ -36,6 +37,7 @@ const checkAuth = async (isRouteProtected: boolean) => {
       await store.dispatch('changeUser', user);
       return { name: 'dashboard' };
     }
+    await store.dispatch('changeToken', null);
   }
 
   return true;

@@ -9,7 +9,7 @@ class Currency(models.Model):
 
     BackReference: ``Transaction``, ``Profile``
     """
-    created_at = models.DateTimeField(auto_now_add = True)
+    created_at = models.DateTimeField(auto_now_add = True, null= True)
     slug = models.CharField(max_length = 10)
     name = models.CharField(max_length = 30)
     label = models.CharField(max_length = 5)
@@ -62,17 +62,17 @@ class Transaction(models.Model):
         loss = 'ls'
 
     type = models.CharField(max_length = 2, choices = Type.choices)
-    date = models.DateField()
+    date = models.DateField(null=True, blank=True)
     # title is less than 30
     title = models.CharField(max_length = 30)
     description = models.TextField(blank = True, null = True)
     # price is less than 10^7
-    price = models.DecimalField(max_digits = 9, decimal_places=2)
+    price = models.DecimalField(max_digits = 9, decimal_places=2, null=True, blank=True)
     isTemplate = models.BooleanField()
 
     owner = models.ForeignKey(User, verbose_name = 'Owner', on_delete=models.CASCADE)
-    currency = models.ForeignKey(Currency, verbose_name = 'Currency',  on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, verbose_name = 'Category',  on_delete=models.CASCADE)
+    currency = models.ForeignKey(Currency, verbose_name = 'Currency',  on_delete=models.CASCADE, null=True, blank=True)
+    category = models.ForeignKey(Category, verbose_name = 'Category',  on_delete=models.CASCADE, null=True, blank=True)
 
 
     def __str__(self) -> str:
@@ -81,3 +81,4 @@ class Transaction(models.Model):
     class Meta:
         verbose_name = 'Transaction'
         verbose_name_plural = 'Transactions'
+        ordering = ['-date', 'id']

@@ -137,8 +137,8 @@ export default defineComponent({
   setup (props, context) {
     const val = ref(props.value);
 
-    watchEffect((() => props.value), (newVal) => {
-      val.value = newVal;
+    watchEffect(() => {
+      val.value = props.value;
     });
 
     const input = () => {

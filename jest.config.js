@@ -9,6 +9,9 @@ module.exports = {
     '^.+\\.ts$': 'ts-jest',
     '^.+\\.vue$': 'vue-jest',
   },
-  moduleNameMapper: { '\\.(css|less)$': 'identity-obj-proxy' },
+  moduleNameMapper: {
+    '\\.(css|less)$': 'identity-obj-proxy', 
+    '^.+/(.*\\.svg)$': 'jest-transform-stub', 
+  },
   modulePathIgnorePatterns: ['src/tests'],
 };

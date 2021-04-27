@@ -1,9 +1,15 @@
 import { mount } from '@vue/test-utils';
+import { maska } from 'maska';
 import FormInput from '../form-input.vue';
 
 describe('FormInput', () => {
   const setupWrapper = (props: any) => mount(FormInput, {
     ...props,
+    global: {
+      directives: {
+        maska,
+      },
+    },
   });
   describe('when it has no label', () => {
     const component = setupWrapper({ noLabel: true });

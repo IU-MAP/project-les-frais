@@ -1,7 +1,7 @@
 <template>
   <form
     v-click-outside="() => toggleExpanded(false)"
-    :class="{expanded: expanded}"
+    :class="{expanded: expanded || transaction}"
     class="transaction-add-form"
     @submit.prevent="submit"
   >
@@ -42,7 +42,10 @@
         </template>
       </FormInput>
 
-      <Button look="add">+</Button>
+      <Button look="add">
+        <CheckIcon v-if="transaction" />
+        <PlusIcon v-else />
+      </Button>
     </div>
 
     <div class="transaction-add-form_wrapper">
@@ -56,15 +59,24 @@
           />
         </div>
 
-        <div class="transaction-add-form_menu_categories">
-          <Category
-            v-for="category in categories"
-            :key="category.id"
-            :color="category.color"
-            :name="category.name"
-            :class="{current: activeCategory && category.id === activeCategory.id }"
-            @click="changeActiveCategory(category)"
-          />
+        <div v-if="!data.isGain" class="transaction-add-form_menu_categories">
+          <router-link
+            v-if="!categories.length"
+            :to="{name: 'settings', query: { slug: 'settings_tabs_categories' }}"
+            class="text-regular text-link"
+          >
+            {{ t('add_no_categories') }}
+          </router-link>
+          <template v-else>
+            <Category
+              v-for="category in categories"
+              :key="category.id"
+              :color="category.color"
+              :name="category.name"
+              :class="{current: activeCategory && category.id === activeCategory.id }"
+              @click="changeActiveCategory(category)"
+            />
+          </template>
         </div>
 
         <FormInput
@@ -85,8 +97,9 @@
 <script lang="ts">
 import './add-form.css';
 import {
-  computed, defineComponent, reactive, ref,
+  computed, defineComponent, PropType, reactive, ref,
 } from 'vue';
+import type { Transaction } from '../../utils/api/transactions';
 import type { Category as CategoryType } from '../../utils/api/categories';
 import type { Currency as CurrencyType } from '../../utils/api/currency';
 import useTranslation from '../../utils/useTranslation';
@@ -94,7 +107,9 @@ import useStore from '../../store';
 import Toggle from '../form/toggle.vue';
 import Button from '../button/index.vue';
 import FormInput from '../form/form-input.vue';
-import ChevronIcon from '../../assets/icons/chevron-down.svg?component';
+import ChevronIcon from '../../assets/icons/chevron-down.svg';
+import PlusIcon from '../../assets/icons/plus.svg';
+import CheckIcon from '../../assets/icons/check.svg';
 import Category from '../category/index.vue';
 import DateInput from '../form/date-input.vue';
 import ButtonChoice from '../form/button-choice.vue';
@@ -110,23 +125,30 @@ export default defineComponent({
     Button,
     Toggle,
     ChevronIcon,
+    PlusIcon,
+    CheckIcon,
   },
-  props: {},
+  props: {
+    transaction: {
+      type: Object as PropType<Transaction|null>,
+      default: null,
+    },
+  },
   emits: ['update'],
   setup (props, context) {
     const t = useTranslation();
     const store = useStore();
     const data = reactive({
-      isGain: false,
-      name: '',
-      price: '',
-      date: '',
-      description: '',
+      isGain: props.transaction?.type === 'gain',
+      name: props.transaction?.title || '',
+      price: props.transaction?.price || '',
+      date: props.transaction?.date || '',
+      description: props.transaction?.description || '',
     });
     const categories = computed<CategoryType[]>(() => store.state.categories);
     const currencies = computed<CurrencyType[]>(() => store.state.currencies);
-    const activeCategory = ref<CategoryType|null>(categories.value?.[0] || null);
-    const activeCurrency = ref<CurrencyType|null>(currencies.value?.[0] || null);
+    const activeCategory = ref<CategoryType|null>(props.transaction?.category || categories.value?.[0] || null);
+    const activeCurrency = ref<CurrencyType|null>(props.transaction?.currency || currencies.value?.[0] || null);
 
     const error = ref('');
     const expanded = ref(false);
@@ -143,7 +165,7 @@ export default defineComponent({
 
     const submit = async () => {
       const preparedData = {
-        type: data.isGain ? 'gain' : 'loss',
+        type: (data.isGain ? 'gain' : 'loss') as 'gain'|'loss',
         title: data.name,
         price: data.price,
         date: data.date,
@@ -154,7 +176,9 @@ export default defineComponent({
       };
 
       try {
-        const newTransaction = await api.transactions.create(preparedData);
+        let newTransaction: Transaction;
+        if (props.transaction) newTransaction = await api.transactions.update(props.transaction.id, preparedData);
+        else newTransaction = await api.transactions.create(preparedData);
         clearFields();
         context.emit('update', newTransaction);
       } catch (e) {

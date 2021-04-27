@@ -13,6 +13,7 @@ body {
   --shadow-button-submit: 3px 3px 4px rgba(1, 98, 242, 0.5), -3px -3px 4px rgba(173, 206, 255, 0.5);
   --shadow-button-submit-hover: 3px 3px 5px 2px rgba(1, 98, 242, 0.5), -3px -3px 5px 2px rgba(173, 206, 255, 0.5);
   --shadow-button-submit-active: inset 3px 3px 4px 1px rgba(1, 98, 242, 0.5), inset -3px -3px 4px 1px rgba(173, 206, 255, 0.5);
+  --shadow-button-remove: 3px 3px 4px 0 rgba(214, 96, 96, 0.75), -3px -3px 4px 0 #FFD6D6;
   --shadow-emphasize: 7px 7px 14px 0 #7C8CDE, -7px -7px 14px 0 #DAE2FF;
   --shadow-emphasize-purple: 5px 5px 10px 0 #8866D0, -5px -5px 10px 0 #E6DBFF;
 
@@ -26,6 +27,7 @@ body {
   --color-accent: #2079FF;
   --color-border: #F7F7F7;
   --color-border-accent: #0162F2;
+  --color-border-purple: #D6CAEE;
 
   --border-radius-card: 0.625rem;
   --border-radius-button: 0.25rem;

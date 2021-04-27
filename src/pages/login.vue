@@ -51,7 +51,7 @@ import { defineComponent, reactive } from 'vue';
 import { useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import FormInput from '../components/form/form-input.vue';
-import AtSignIcon from '../assets/icons/at-sign.svg?component';
+import AtSignIcon from '../assets/icons/at-sign.svg';
 import useTranslation from '../utils/useTranslation';
 import api from '../utils/api';
 import useStore from '../store';
@@ -90,10 +90,14 @@ export default defineComponent({
         errors.email = res.error.email || '';
         errors.password = res.error.password || '';
         errors.non_field_errors = res.error.non_field_errors || '';
+        if (res.error.detail) {
+          errors.non_field_errors = t('auth_login_error');
+        }
       }
 
       if (res.response) {
         await store.dispatch('changeToken', res.response.key);
+        await store.dispatch('initStore', res.response.key);
         await router.push({ name: 'home' });
       }
     };

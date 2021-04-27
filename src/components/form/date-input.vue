@@ -14,6 +14,7 @@
 
     <input
       v-show="editing"
+      ref="inputRef"
       v-model="newVal"
       v-maska="'####-##-##'"
       type="text"
@@ -24,10 +25,10 @@
 <script lang="ts">
 import './date-input.css';
 import {
-  defineComponent, ref, onMounted, watch,
+  defineComponent, ref, onMounted, watch, nextTick,
 } from 'vue';
-import CalendarIcon from '../../assets/icons/calendar.svg?component';
-import CheckIcon from '../../assets/icons/check.svg?component';
+import CalendarIcon from '../../assets/icons/calendar.svg';
+import CheckIcon from '../../assets/icons/check.svg';
 import formatDate from '../../utils/format-date';
 
 export default defineComponent({
@@ -47,6 +48,7 @@ export default defineComponent({
     const editing = ref(false);
     const current = ref(props.date ? formatDate(props.date) : formatDate(new Date()));
     const newVal = ref('');
+    const inputRef = ref<HTMLInputElement>();
 
     const changeDate = () => {
       const newValue = formatDate(newVal.value);
@@ -58,7 +60,13 @@ export default defineComponent({
     const toggleEditing = (val: boolean) => {
       editing.value = val;
       if (!val) changeDate();
-      else newVal.value = current.value;
+      else {
+        newVal.value = current.value;
+        nextTick(() => {
+          inputRef.value?.setSelectionRange(current.value.length - 2, current.value.length);
+          inputRef.value?.focus();
+        });
+      }
     };
 
     const clickOutside = () => {
@@ -67,7 +75,7 @@ export default defineComponent({
     };
 
     watch(() => props.date, (newValue: string|null) => {
-      const newV = newValue ? formatDate(newValue) : formatDate(new Date());
+      const newV = newValue ? formatDate(newValue) : formatDate(new Date().toDateString());
       current.value = newV;
       context.emit('change', newV);
     });
@@ -80,6 +88,7 @@ export default defineComponent({
       editing,
       current,
       newVal,
+      inputRef,
       toggleEditing,
       clickOutside,
       changeDate,

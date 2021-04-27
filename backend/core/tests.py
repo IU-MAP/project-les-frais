@@ -7,7 +7,6 @@ from rest_framework.test import APITestCase
 from .models import Category
 from .models import Currency
 from .models import Transaction
-from .serializers import TransactionSerializer
 
 
 class CategoryAPIViewTestCase(APITestCase):
@@ -49,7 +48,7 @@ class TransactionAPIViewTestCase(APITestCase):
         self.currency = Currency.objects.get(slug="rur")
         self.category1 = Category.objects.create(owner=self.user, name="cookies", color="brown")
         self.category2 = Category.objects.create(owner=self.user, name="tea", color="white")
-        self.transaction1 = Transaction.objects.create(type="loss",
+        self.transaction1 = Transaction.objects.create(type="ls",
                                                        date="2021-04-20",
                                                        owner=self.user,
                                                        title="string",
@@ -87,7 +86,27 @@ class TransactionAPIViewTestCase(APITestCase):
         })
         self.assertEqual(201, response.status_code)
 
-    def test_todo_object_update_authorization(self):
+    def test_transactions_update(self):
+        transaction_url = f"{self.url}{self.transaction1.id}/"
+        response = self.client.patch(transaction_url, {"title": "new title"})
+        self.assertEqual(200, response.status_code)
+
+        self.assertEqual(Transaction.objects.get(id=self.transaction1.id).title, "new title")
+
+        response = self.client.put(transaction_url, {
+            "type": "loss",
+            "date": "2021-04-20",
+            "title": "string",
+            "description": "string",
+            "price": 100,
+            "currency": self.currency.id,
+            "category": self.category1.id
+        })
+        self.assertEqual(200, response.status_code)
+
+        self.assertEqual(Transaction.objects.get(id=self.transaction1.id).title, "string")
+
+    def test_transactions_update_authorization(self):
         """
             Test to verify that put call with different user token
         """
@@ -101,7 +120,7 @@ class TransactionAPIViewTestCase(APITestCase):
         response = self.client.delete(transaction_url)
         self.assertEqual(404, response.status_code)
 
-    def test_todo_object_delete(self):
+    def test_transactions_delete(self):
         transaction_url = f"{self.url}{self.transaction1.id}/"
         response = self.client.delete(transaction_url)
         self.assertEqual(204, response.status_code)

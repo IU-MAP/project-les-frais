@@ -17,6 +17,14 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Зарегистрироваться',
     eng: 'Sign Up',
   },
+  remove: {
+    rus: 'Удалить',
+    eng: 'Remove',
+  },
+  cancel: {
+    rus: 'Отменить',
+    eng: 'Cancel',
+  },
 
   /**
    * Home page
@@ -47,7 +55,7 @@ const translations: Record<string, Record<LANGS, string>> = {
   },
   auth_email: {
     rus: 'Е-мейл',
-    eng: 'Email',
+    eng: 'E-mail',
   },
   auth_password: {
     rus: 'Пароль',
@@ -68,6 +76,10 @@ const translations: Record<string, Record<LANGS, string>> = {
   auth_dont: {
     rus: 'У меня еще нет аккаунта.',
     eng: 'I don\'t have an account.',
+  },
+  auth_login_error: {
+    rus: 'Неправильный Е-мейл или пароль.',
+    eng: 'E-mail or password is incorrect.',
   },
 
   /**
@@ -121,6 +133,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Удалить все данные',
     eng: 'Delete all user data',
   },
+  settings_delete_btn_sure: {
+    rus: 'Вы уверены?',
+    eng: 'Are you sure?',
+  },
   settings_tabs_profile: {
     rus: 'Профиль',
     eng: 'Profile',
@@ -136,6 +152,14 @@ const translations: Record<string, Record<LANGS, string>> = {
   settings_tab_categories: {
     rus: 'Все категории',
     eng: 'All categories',
+  },
+  settings_tab_categories_color: {
+    rus: 'Цвет',
+    eng: 'Color',
+  },
+  settings_tab_categories_no_categories: {
+    rus: 'У вас пока нет добавленных категорий',
+    eng: 'You don\'t have categories yet',
   },
   settings_tabs_templates: {
     rus: 'Шаблоны',
@@ -172,6 +196,10 @@ const translations: Record<string, Record<LANGS, string>> = {
   add_currency: {
     rus: 'Валюта',
     eng: 'Currency',
+  },
+  add_no_categories: {
+    rus: 'Добавьте категории, прежде чем продолжить',
+    eng: 'Add categories before proceed',
   },
   add_additional: {
     rus: 'Дополнительное описание',
