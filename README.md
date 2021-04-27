@@ -15,6 +15,7 @@ Useful links:
 * [Application deployed to Heroku](https://project-les-frais.herokuapp.com) (might require ~10-30s to warm up)
 * [Figma designs](https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais)
 * [Swagger documentation](https://project-les-frais.herokuapp.com/swagger/)
+* [E2E test videos](https://drive.google.com/drive/folders/1rxUNc_9MaX99J5Va_ujMm0L9ZTkovlXY?usp=sharing)
 
 ## Initial product backlog
 
@@ -33,25 +34,6 @@ in the [GitHub issues](https://github.com/IU-MAP/project-les-frais/issues?q=is%3
 * [Interface language switch](https://github.com/IU-MAP/project-les-frais/issues/22)
 * [Search transactions](https://github.com/IU-MAP/project-les-frais/issues/34)
 * [Statistics](https://github.com/IU-MAP/project-les-frais/issues/39)
-
-### Release plan
-
-***V1.0.0*** is going to be released after the 4th sprint. 
-It should contain the following User Stories:
-* Backlog planning – Sprint 0
-* Authorization and registration – Sprint 1
-* Interface language switch – Sprint 1
-* Transactions – Sprint 2
-* Categories – Sprint 3
-* Expense templates – Sprint 3
-* Data import (incomplete) – Sprint 3
-* Completing the technical dept – Sprint 3
-
-***V2.0.0*** is going to be released after the 7th sprint:
-* Data import – Sprint 4
-* Search transactions – Sprint 4
-* Statistics – Sprint 5
-* Switch default currency – Sprint 6
 
 ## Development
 
@@ -203,3 +185,23 @@ creation User Story. During this spring, we:
 
 After two weeks of development, it is already possible to interact 
 with application's basic functionality.
+
+### Sprint 3
+
+The sprint was focused on the finishing the technical dept, adding only small features aimed to improve
+user experience and reduce the unexpected behavior or the amount of bugs users can encounter. We:
+
+* Implemented transaction edition, selection and batch removal #15
+* Implemented category editing and removal
+* Fixed bugs all around the website after manual hand testing 
+* Fixed link to the [Swagger](https://project-les-frais.herokuapp.com/swagger/) documentation 
+* Added E2E tests for #5 #16 #21 #24. Cypress has produced test videos that [can be found here](https://drive.google.com/drive/folders/1rxUNc_9MaX99J5Va_ujMm0L9ZTkovlXY?usp=sharing)
+* Added more unit tests for frontend components
+* Started working on the big user story of data import from .XLS files
+
+After this sprint, such user stories are completed fully:
+
+* [Authorization and registration](https://github.com/IU-MAP/project-les-frais/issues/8)
+* [Transactions](https://github.com/IU-MAP/project-les-frais/issues/17)
+* [Categories](https://github.com/IU-MAP/project-les-frais/issues/18)
+* [Interface language switch](https://github.com/IU-MAP/project-les-frais/issues/22)
