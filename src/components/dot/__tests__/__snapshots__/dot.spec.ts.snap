@@ -1,0 +1,293 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dot component matches snapshots 1`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <span
+        class="dot color-number-1"
+      >
+        <!--v-if-->
+      </span>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 0,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "change": [Function],
+    "checked": false,
+    "component": "span",
+    "hasOwnProperty": [Function],
+    "number": 1,
+    "radio": false,
+    "val": false,
+  },
+  "rootVM": Object {},
+  "wrapperElement": <span
+    class="dot color-number-1"
+  >
+    <!--v-if-->
+  </span>,
+}
+`;
+
+exports[`Dot component matches snapshots 2`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <label
+        class="dot color-number-1 radio"
+      >
+        
+        <input
+          type="checkbox"
+        />
+        <!---->
+        
+      </label>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 1,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "change": [Function],
+    "checked": false,
+    "component": "label",
+    "hasOwnProperty": [Function],
+    "number": 1,
+    "radio": true,
+    "val": false,
+  },
+  "rootVM": Object {},
+  "wrapperElement": <label
+    class="dot color-number-1 radio"
+  >
+    
+    <input
+      type="checkbox"
+    />
+    <!---->
+    
+  </label>,
+}
+`;
+
+exports[`Dot component matches snapshots 3`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <span
+        class="dot color-number-1 active"
+      >
+        <!--v-if-->
+      </span>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 2,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "change": [Function],
+    "checked": true,
+    "component": "span",
+    "hasOwnProperty": [Function],
+    "number": 1,
+    "radio": false,
+    "val": true,
+  },
+  "rootVM": Object {},
+  "wrapperElement": <span
+    class="dot color-number-1 active"
+  >
+    <!--v-if-->
+  </span>,
+}
+`;

@@ -24,7 +24,7 @@
         {{ t('login') }}
       </Button>
 
-      <Button v-if="isAuthed" :link="{ name: 'settings'}">
+      <Button v-if="isAuthed" :link="{name: 'settings', query: { slug: 'settings_tabs_profile' }}">
         {{ t('settings') }}
       </Button>
     </nav>

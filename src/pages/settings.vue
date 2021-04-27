@@ -39,7 +39,12 @@
         </div>
         <div class="row">
           <p class="text-regular">{{ t('settings_delete') }}</p>
-          <Button look="danger">{{ t('settings_delete_btn') }}</Button>
+          <Button v-if="!deleteAccountClicked" look="danger" @click="deleteAccount">
+            {{ t('settings_delete_btn') }}
+          </Button>
+          <Button v-else look="remove" @click="deleteAccount">
+            {{ t('settings_delete_btn_sure') }}
+          </Button>
         </div>
       </div>
 
@@ -75,7 +80,9 @@
 
 <script lang="ts">
 import '../assets/styles/pages/settings.css';
-import { computed, defineComponent, ref } from 'vue';
+import {
+  computed, defineComponent, ref, watchEffect,
+} from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
@@ -86,6 +93,7 @@ import { LANGS } from '../utils/constants';
 import Tabs from '../components/tabs/index.vue';
 import CategoryAddForm from '../components/category/add-form.vue';
 import type { Category as CategoryType } from '../utils/api/categories';
+import api from '../utils/api';
 
 type TabsType = 'settings_tabs_profile'|'settings_tabs_categories'|'settings_tabs_templates';
 const TABS: TabsType[] = ['settings_tabs_profile', 'settings_tabs_categories', 'settings_tabs_templates'];
@@ -106,13 +114,17 @@ export default defineComponent({
     const activeLan = computed(() => store.state.language);
     const categories = computed<CategoryType[]>(() => store.state.categories);
 
-    const initialTab = ((route.query.slug) && TABS.includes(route.query.slug as TabsType)) ? route.query.slug as TabsType : 'settings_tabs_profile';
+    const initialTab = computed<TabsType>(() => ((route.query.slug) && TABS.includes(route.query.slug as TabsType))
+      ? route.query.slug as TabsType
+      : 'settings_tabs_profile');
     const activeTab = ref<TabsType>(initialTab);
 
     const categoryToEdit = ref<CategoryType|null>(null);
+    const deleteAccountClicked = ref<boolean>(false);
 
     const changeActive = (tab: TabsType) => {
       activeTab.value = tab;
+      router.push({ query: { slug: tab } });
     };
 
     const selectLan = (lan: LANGS) => {
@@ -129,18 +141,35 @@ export default defineComponent({
       categoryToEdit.value = val;
     };
 
+    const deleteAccount = async () => {
+      if (!deleteAccountClicked.value) {
+        deleteAccountClicked.value = true;
+        return;
+      }
+
+      const res = await api.auth.deleteAccount();
+      if (!res) deleteAccountClicked.value = false;
+      else logout();
+    };
+
+    watchEffect(() => {
+      activeTab.value = initialTab.value;
+    });
+
     return {
       t,
       activeTab,
       activeLan,
       tabs: TABS,
       languages: Object.values(LANGS),
-      changeActive,
       categories,
+      categoryToEdit,
+      deleteAccountClicked,
+      changeActive,
       logout,
       selectLan,
       editCategory,
-      categoryToEdit,
+      deleteAccount,
     };
   },
 });

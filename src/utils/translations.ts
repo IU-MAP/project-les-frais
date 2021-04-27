@@ -133,6 +133,10 @@ const translations: Record<string, Record<LANGS, string>> = {
     rus: 'Удалить все данные',
     eng: 'Delete all user data',
   },
+  settings_delete_btn_sure: {
+    rus: 'Вы уверены?',
+    eng: 'Are you sure?',
+  },
   settings_tabs_profile: {
     rus: 'Профиль',
     eng: 'Profile',
