@@ -1,6 +1,8 @@
 import django_filters.rest_framework as filters
-from .models import Transaction, Category, Currency 
+
 from .constants import DEFAULT_CURRENCY
+from .models import Category, Currency, Transaction
+
 
 class CategoryFilter(filters.FilterSet):
     class Meta:
@@ -27,5 +29,23 @@ class TransactionFilter(filters.FilterSet):
             'category': ['exact'],
         }
 
+from io import BytesIO
+
+import openpyxl
+import xlrd
 
 
+def parce_excel(file, filename):
+    if (filename.endswith('xlsx')):
+        wb = openpyxl.load_workbook(filename=BytesIO(file.read()))
+        sheet_names = wb.sheetnames
+        return [tuple(wb[sheet].values) for sheet in sheet_names]
+    elif (filename.endswith('xls')):
+        wb = xlrd.open_workbook(file_contents=file.read())
+        res = {}
+        for sheet_name in wb.sheet_names():
+            sheet = wb.sheet_by_name(sheet_name)
+            res[sheet_name] = [sheet.row_values(i) for i in range(sheet.nrows)]
+        return res
+    else:
+        raise ValueError('this file type is not supported')

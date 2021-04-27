@@ -1,16 +1,17 @@
-from django.utils.decorators import method_decorator
 from backend.core.models import Transaction
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from rest_framework import status, viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import status, viewsets
+from rest_framework.generics import ListAPIView
+from rest_framework.permissions import IsAuthenticated
 
-from .models import Currency, Transaction, Category
-from .serializers import TransactionSerializer, CurrencySerializer, CategorySerializer, ShortTransactionSerializer
+from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
-from .service import TransactionFilter, CategoryFilter
+from .serializers import (CategorySerializer, CurrencySerializer,
+                          ShortTransactionSerializer, TransactionSerializer)
+from .service import CategoryFilter, TransactionFilter
 
 # Create your views here.
 
@@ -91,3 +92,22 @@ class CurrencyView(ListAPIView):
     @method_decorator(cache_page(60*60*2))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+from rest_framework import views
+from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.response import Response
+
+from .service import parce_excel
+
+
+class ParceExcelView(views.APIView):
+    parser_classes = [FileUploadParser]
+
+    def put(self, request, filename, format=None):
+        file_obj = request.data['file']
+        try:
+            parced = parce_excel(file = file_obj, filename=filename)
+            return Response(status=200, data=parced)
+        except Exception as e:
+            return Response(status=500, data={'detail': str(e)})
