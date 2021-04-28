@@ -3,7 +3,9 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
 from .models import Transaction, Currency, Category
-
+from rest_framework_bulk import (
+    BulkListSerializer,
+    BulkSerializerMixin)
 
 class MyChoiseField(serializers.Field):
     """
@@ -57,7 +59,7 @@ class CurrencySerializer(serializers.ModelSerializer):
         model = Currency
         fields = ('id', 'created_at', 'slug', 'name', 'label')
 
-class TransactionSerializer(serializers.ModelSerializer):
+class TransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     """
     Model serializer for Transactions
     
@@ -75,29 +77,19 @@ class TransactionSerializer(serializers.ModelSerializer):
     """
 
 
-    currency = CurrencySerializer(read_only=True)
-    category = CategorySerializer(read_only=True)
+    currency = CurrencySerializer()
+    category = CategorySerializer()
     
     type = MyChoiseField(enum_ = Transaction.Type)
-
-    def save(self, **kwargs):
-        """
-        Check that start is before finish.
-        """
-
-        if self.validated_data['category'].owner.id != kwargs['owner'].id:
-            raise serializers.ValidationError("You are not the owner of the category!")
-        return super().save(**kwargs)
+    def save():
+        raise ValidationError("you are using read-only serializer, please contact Andrey")
 
     class Meta:
         model = Transaction
         fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
+        list_serializer_class = BulkListSerializer
 
-
-
-
-
-class ShortTransactionSerializer(serializers.ModelSerializer):
+class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     """
     Model serializer for Transactions
     
@@ -139,3 +131,4 @@ class ShortTransactionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Transaction
         fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
+        list_serializer_class = BulkListSerializer

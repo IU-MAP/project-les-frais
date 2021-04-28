@@ -3,7 +3,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status, viewsets
+from rest_framework import mixins, status, viewsets
 from rest_framework.generics import ListAPIView
 from rest_framework.permissions import IsAuthenticated
 
@@ -12,10 +12,16 @@ from .permissions import IsTheOwnerOf
 from .serializers import (CategorySerializer, CurrencySerializer,
                           ShortTransactionSerializer, TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter
-
+from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
+from rest_framework.generics import RetrieveUpdateDestroyAPIView
+from rest_framework_bulk import mixins as bulk_mixins
+from rest_framework.decorators import action
 # Create your views here.
-
-class TransactionViewSet(viewsets.ModelViewSet):
+'''
+class TransactionViewSet(bulk_mixins.BulkCreateModelMixin,
+                        bulk_mixins.BulkUpdateModelMixin,
+                        bulk_mixins.BulkDestroyModelMixin,
+                        viewsets.ModelViewSet):
     """
     View set for ``Transaction``
 
@@ -34,7 +40,19 @@ class TransactionViewSet(viewsets.ModelViewSet):
     filterset_class = TransactionFilter
 
     permission_classes = [IsAuthenticated, IsTheOwnerOf]
+
+    @action(detail = False,  methods = ['delete'], name='')
+    def bulk_destroy(self, request, *args, **kwargs):
+        return super().bulk_destroy(request, *args, **kwargs)
     
+    @action(detail = False,  methods = ['put'])
+    def bulk_update(self, request, *args, **kwargs):
+        return super().bulk_update(request, *args, **kwargs)    
+
+    @action(detail = False,  methods = ['patch'])
+    def partial_bulk_update(self, request, *args, **kwargs):
+        return super().partial_bulk_update(request, *args, **kwargs)
+
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
 
@@ -45,9 +63,11 @@ class TransactionViewSet(viewsets.ModelViewSet):
             return ShortTransactionSerializer
 
     def perform_create(self, serializer):
-        #if (object)
-        serializer.save(owner=self.request.user)
-    
+        serializer.save(owner = self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(owner = self.request.user)
+'''
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -94,6 +114,72 @@ class CurrencyView(ListAPIView):
         return super().list(request, *args, **kwargs)
 
 
+class TransactionView(
+    ListBulkCreateUpdateDestroyAPIView):
+    """
+    Global View for ``Transaction``
+
+    functions:
+
+    ``get`` -- returns list
+    ``post`` -- accepts both single object or a list
+    ``put``, ``patch`` -- accept list
+    ``delete`` -- will delete all object matching filters (may delete all objects in no filters)
+    """
+    queryset = Transaction.objects
+
+    filter_backends = [DjangoFilterBackend] 
+    filterset_class = TransactionFilter
+
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TransactionSerializer
+        else:
+            return ShortTransactionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+    
+    def perform_update(self, serializer):
+        serializer.save(owner=self.request.user)
+
+class TransactionObjectView(RetrieveUpdateDestroyAPIView):
+    """
+    Object View for ``Transaction``
+
+    functions:
+
+    ``get``
+    ``post``
+    ``put``,
+    ``patch`` 
+    ``delete``
+    """
+    queryset = Transaction.objects
+
+    filter_backends = [DjangoFilterBackend] 
+    filterset_class = TransactionFilter
+
+    permission_classes = [IsAuthenticated, IsTheOwnerOf]
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TransactionSerializer
+        else:
+            return ShortTransactionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
 from rest_framework import views
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.response import Response
@@ -102,6 +188,11 @@ from .service import parce_excel
 
 
 class ParceExcelView(views.APIView):
+    """
+        Accepts xls or xlsx file in a body in binary format
+        return json representation
+    """
+
     parser_classes = [FileUploadParser]
 
     def put(self, request, filename, format=None):
