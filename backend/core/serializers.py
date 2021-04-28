@@ -10,6 +10,7 @@ from rest_framework_bulk import (
 
 import logging
 
+
 class MyChoiseField(serializers.Field):
     """
     Custom Choise field, provides representation instead of id
@@ -29,10 +30,11 @@ class MyChoiseField(serializers.Field):
             raise serializers.ValidationError(
                 f'Unknown status: {data}, must be one of {self.enum_.names}')
 
+
 class CategorySerializer(serializers.ModelSerializer):
     """
     Model serializer for Category
-    
+
     Fields:
     ``id``
     ``created_at``
@@ -45,10 +47,11 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'created_at', 'name', 'color')
 
+
 class CurrencySerializer(serializers.ModelSerializer):
     """
     Model serializer for Currency
-    
+
     Fields:
     ``id`` 
     ``created_at`` 
@@ -57,15 +60,15 @@ class CurrencySerializer(serializers.ModelSerializer):
     ``color``
     """
 
-    
     class Meta:
         model = Currency
         fields = ('id', 'created_at', 'slug', 'name', 'label')
 
+
 class TransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     """
     Model serializer for Transactions
-    
+
     Fields:
     ``id``
     ``created_at`` 
@@ -79,23 +82,26 @@ class TransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     ``category`` -- nested
     """
 
-
     currency = CurrencySerializer()
     category = CategorySerializer()
-    
-    type = MyChoiseField(enum_ = Transaction.Type)
+
+    type = MyChoiseField(enum_=Transaction.Type)
+
     def save():
-        raise ValidationError("you are using read-only serializer, please contact Andrey")
+        raise ValidationError(
+            "you are using read-only serializer, please contact Andrey")
 
     class Meta:
         model = Transaction
-        fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
+        fields = ('id', 'created_at', 'type', 'date', 'title',
+                  'description', 'price', 'isTemplate', 'currency', 'category')
         list_serializer_class = BulkListSerializer
+
 
 class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
     """
     Model serializer for Transactions
-    
+
     Fields:
     ``id``
     ``created_at`` 
@@ -109,8 +115,7 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
     ``category`` -- pk
     """
 
-    
-    type = MyChoiseField(enum_ = Transaction.Type)
+    type = MyChoiseField(enum_=Transaction.Type)
 
     def save(self, **kwargs):
         """
@@ -119,19 +124,21 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
 
         if ('categoty' in self.validated_data and
                 self.validated_data['category'].owner.id != kwargs['owner'].id):
-            raise serializers.ValidationError("You are not the owner of the category!")
+            raise serializers.ValidationError(
+                "You are not the owner of the category!")
         return super().save(**kwargs)
 
     def validate(self, attrs):
         if (not self.partial and not attrs['isTemplate']):
             required = {'date', 'description', 'price', 'currency', 'category'}
             message = 'this field is required if isTemplate is false'
-            error = {f: message  for f in required if attrs[f] is None}
+            error = {f: message for f in required if attrs[f] is None}
             if (error):
                 raise ValidationError(error)
         return super().validate(attrs)
-    
+
     class Meta:
         model = Transaction
-        fields = ('id', 'created_at', 'type', 'date', 'title', 'description', 'price', 'isTemplate', 'currency', 'category')
+        fields = ('id', 'created_at', 'type', 'date', 'title',
+                  'description', 'price', 'isTemplate', 'currency', 'category')
         list_serializer_class = BulkListSerializer

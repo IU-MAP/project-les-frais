@@ -1,3 +1,6 @@
+from io import BytesIO
+import xlrd
+import openpyxl
 import django_filters.rest_framework as filters
 
 from .constants import DEFAULT_CURRENCY
@@ -10,7 +13,7 @@ class CategoryFilter(filters.FilterSet):
         fields = ('id', 'created_at', 'slug', 'name', 'color')
         fields = {
             'created_at': ['lt', 'gt', 'exact'],
-            'name':['exact', 'contains'],
+            'name': ['exact', 'contains'],
         }
 
 
@@ -20,19 +23,14 @@ class TransactionFilter(filters.FilterSet):
         fields = {
             'created_at': ['lt', 'gt', 'exact'],
             'type': ['exact'],
-            'date' : ['lt', 'gt', 'exact'],
+            'date': ['lt', 'gt', 'exact'],
             'title': ['exact', 'contains'],
             'description': ['exact', 'contains'],
-            'price' : ['lt', 'gt', 'exact'],
+            'price': ['lt', 'gt', 'exact'],
             'isTemplate': ['exact'],
             'currency': ['exact'],
             'category': ['exact'],
         }
-
-from io import BytesIO
-
-import openpyxl
-import xlrd
 
 
 def parce_excel(file, filename):
