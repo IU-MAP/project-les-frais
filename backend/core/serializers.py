@@ -1,3 +1,4 @@
+from functools import partial
 from django.db.models import fields
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
@@ -6,6 +7,8 @@ from .models import Transaction, Currency, Category
 from rest_framework_bulk import (
     BulkListSerializer,
     BulkSerializerMixin)
+
+import logging
 
 class MyChoiseField(serializers.Field):
     """
@@ -120,7 +123,7 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
         return super().save(**kwargs)
 
     def validate(self, attrs):
-        if (not attrs['isTemplate']):
+        if (not self.partial and not attrs['isTemplate']):
             required = {'date', 'description', 'price', 'currency', 'category'}
             message = 'this field is required if isTemplate is false'
             error = {f: message  for f in required if attrs[f] is None}

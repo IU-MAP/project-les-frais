@@ -16,6 +16,7 @@ from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 from rest_framework.generics import RetrieveUpdateDestroyAPIView
 from rest_framework_bulk import mixins as bulk_mixins
 from rest_framework.decorators import action
+from rest_framework import exceptions
 # Create your views here.
 '''
 class TransactionViewSet(bulk_mixins.BulkCreateModelMixin,
@@ -124,7 +125,7 @@ class TransactionView(
     ``get`` -- returns list
     ``post`` -- accepts both single object or a list
     ``put``, ``patch`` -- accept list
-    ``delete`` -- will delete all object matching filters (may delete all objects in no filters)
+    ``delete`` -- will delete all object matching filters (may delete all objects if no filters)
     """
     queryset = Transaction.objects
 
@@ -178,6 +179,12 @@ class TransactionObjectView(RetrieveUpdateDestroyAPIView):
 
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
+
+    def permission_denied(self, request, message, code):
+        try:
+            return super().permission_denied(request, message=message, code=code)
+        except exceptions.PermissionDenied as e:
+            raise exceptions.NotFound
 
 
 from rest_framework import views
