@@ -89,7 +89,7 @@ class TransactionSerializer(BulkSerializerMixin, serializers.ModelSerializer):
 
     def save():
         raise ValidationError(
-            "you are using read-only serializer, please contact Andrey")
+            "you are using read-only serializer")
 
     class Meta:
         model = Transaction
