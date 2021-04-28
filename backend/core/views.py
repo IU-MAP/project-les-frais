@@ -145,6 +145,8 @@ class ParceExcelView(views.APIView):
 
     parser_classes = [FileUploadParser]
 
+    permission_classes = [IsAuthenticated]
+
     def put(self, request, filename, format=None):
         file_obj = request.data['file']
         try:
