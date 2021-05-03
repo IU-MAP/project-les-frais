@@ -27,6 +27,7 @@
   position: absolute;
   left: 1rem;
   top: 0;
+  right: 2rem;
   height: 2.5rem;
   display: flex;
   align-items: center;
@@ -34,6 +35,8 @@
   pointer-events: none;
   font: var(--font-regular);
   color: var(--color-font-secondary);
+  white-space: nowrap;
+  overflow-x: hidden;
   opacity: 0.75;
   z-index: 1;
 }

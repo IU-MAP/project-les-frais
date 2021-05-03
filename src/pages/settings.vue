@@ -127,9 +127,9 @@ export default defineComponent({
     const categories = computed<CategoryType[]>(() => store.state.categories);
     const updateTemplatesVal = ref<Transaction|null>(null);
 
-    const initialTab = computed<TabsType>(() => ((route.query.slug) && TABS.includes(route.query.slug as TabsType))
+    const initialTab = computed<TabsType>(() => (((route.query.slug) && TABS.includes(route.query.slug as TabsType))
       ? route.query.slug as TabsType
-      : 'settings_tabs_profile');
+      : 'settings_tabs_profile'));
     const activeTab = ref<TabsType>(initialTab);
 
     const categoryToEdit = ref<CategoryType|null>(null);
