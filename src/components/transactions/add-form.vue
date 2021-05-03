@@ -15,6 +15,7 @@
       <FormInput
         v-model:value="data.name"
         no-label
+        :fake-placeholder="data.name ? data.name + ' cool' : ''"
         :placeholder="data.isGain ? t('add_new_gain_name') : t('add_new_loss_name')"
         class="simple"
         required
@@ -31,6 +32,7 @@
         v-model:value="data.price"
         no-label
         :placeholder="t('add_price')"
+        type="number"
         class="simple"
         required
         @focusin="() => toggleExpanded(true)"
