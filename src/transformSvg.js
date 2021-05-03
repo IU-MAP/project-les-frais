@@ -26,11 +26,10 @@ const transformSvg = () => {
   
   return {
     name: 'vue-svg',
+    // eslint-disable-next-line consistent-return
     async transform (source, id) {
       const result = id.match(svgRegex);
-      
       if (result) return transform(id);
-      return '';
     },
   };
 };
