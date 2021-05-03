@@ -21,6 +21,7 @@ interface GetTransactionArgs {
   month: number,
   year: number,
   date: string,
+  isTemplate: boolean,
 }
 
 interface AddTransactionBody {
@@ -38,13 +39,19 @@ interface AddTransactionBody {
  * Functions for CRUD interactions with the Transactions entity in the backend
  */
 const transactionsApi = {
-  read: async ({ month, year, date }: GetTransactionArgs): Promise<Transaction[]> => {
+  read: async ({
+    month,
+    year,
+    date,
+    isTemplate = false,
+  }: Partial<GetTransactionArgs>): Promise<Transaction[]> => {
     let params: Record<string, string> = {};
     if (date) {
       params.date = date;
     } else if ((month || month === 0) && year) {
       params = monthBoundaries(month, year);
     }
+    params.isTemplate = isTemplate ? 'true' : 'false';
 
     try {
       return await request.get<Transaction[]>(`api/v1/transactions/?${getParams(params)}`);

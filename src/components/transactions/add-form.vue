@@ -15,10 +15,12 @@
       <FormInput
         v-model:value="data.name"
         no-label
+        :fake-placeholder="foundTemplate"
         :placeholder="data.isGain ? t('add_new_gain_name') : t('add_new_loss_name')"
         class="simple"
         required
         @focusin="() => toggleExpanded(true)"
+        @keyup="templateSubmit"
       >
         <template #after>
           <div class="form-input_icon">
@@ -31,6 +33,7 @@
         v-model:value="data.price"
         no-label
         :placeholder="t('add_price')"
+        type="number"
         class="simple"
         required
         @focusin="() => toggleExpanded(true)"
@@ -51,7 +54,9 @@
     <div class="transaction-add-form_wrapper">
       <div class="transaction-add-form_menu">
         <div class="transaction-add-form_menu_top">
-          <DateInput :date="data.date" @change="data.date = $event" />
+          <DateInput v-if="!isTemplate" :date="data.date" @change="data.date = $event" />
+          <div v-else />
+
           <ButtonChoice
             v-model:value="activeCurrency"
             :items="currencies"
@@ -80,6 +85,7 @@
         </div>
 
         <FormInput
+          v-if="!isTemplate"
           v-model:value="data.description"
           type="textarea"
           :label-text="t('add_additional')"
@@ -96,12 +102,10 @@
 
 <script lang="ts">
 import './add-form.css';
-import {
-  computed, defineComponent, PropType, reactive, ref,
-} from 'vue';
-import type { Transaction } from '../../utils/api/transactions';
-import type { Category as CategoryType } from '../../utils/api/categories';
-import type { Currency as CurrencyType } from '../../utils/api/currency';
+import {computed, defineComponent, PropType, reactive, ref,} from 'vue';
+import type {Transaction} from '../../utils/api/transactions';
+import type {Category as CategoryType} from '../../utils/api/categories';
+import type {Currency as CurrencyType} from '../../utils/api/currency';
 import useTranslation from '../../utils/useTranslation';
 import useStore from '../../store';
 import Toggle from '../form/toggle.vue';
@@ -133,6 +137,10 @@ export default defineComponent({
       type: Object as PropType<Transaction|null>,
       default: null,
     },
+    isTemplate: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update'],
   setup (props, context) {
@@ -146,12 +154,32 @@ export default defineComponent({
       description: props.transaction?.description || '',
     });
     const categories = computed<CategoryType[]>(() => store.state.categories);
+    const templates = computed<Transaction[]>(() => store.state.templates);
     const currencies = computed<CurrencyType[]>(() => store.state.currencies);
     const activeCategory = ref<CategoryType|null>(props.transaction?.category || categories.value?.[0] || null);
     const activeCurrency = ref<CurrencyType|null>(props.transaction?.currency || currencies.value?.[0] || null);
 
+    const foundTemplate = computed<string|null>(() => {
+      if (!data.name || props.isTemplate) return null;
+
+      const regex = `^${data.name}`;
+      const match: Transaction|null = templates.value
+        .find((template: Transaction) => new RegExp(regex, 'i').test(template.title));
+
+      if (!match) return null;
+      return data.name + match.title.slice(data.name.length);
+    });
+
     const error = ref('');
     const expanded = ref(false);
+
+    const toggleExpanded = (val?: boolean) => {
+      if (typeof val === 'undefined') {
+        expanded.value = !expanded.value;
+      } else {
+        expanded.value = val;
+      }
+    };
 
     const clearFields = () => {
       data.isGain = false;
@@ -161,6 +189,7 @@ export default defineComponent({
       data.description = '';
       activeCurrency.value = currencies.value?.[0] || null;
       activeCategory.value = categories.value?.[0] || null;
+      toggleExpanded(false);
     };
 
     const submit = async () => {
@@ -168,11 +197,11 @@ export default defineComponent({
         type: (data.isGain ? 'gain' : 'loss') as 'gain'|'loss',
         title: data.name,
         price: data.price,
-        date: data.date,
+        date: props.isTemplate ? null : data.date,
         description: data.description,
         currency: activeCurrency.value.id,
         category: activeCategory.value.id,
-        isTemplate: false,
+        isTemplate: props.isTemplate,
       };
 
       try {
@@ -191,12 +220,20 @@ export default defineComponent({
       activeCategory.value = val;
     };
 
-    const toggleExpanded = (val?: boolean) => {
-      if (typeof val === 'undefined') {
-        expanded.value = !expanded.value;
-      } else {
-        expanded.value = val;
-      }
+    const templateSubmit = (e: KeyboardEvent) => {
+      if ((e.key !== 'Enter' && e.key !== 'ArrowRight') || !foundTemplate.value) return;
+      e.preventDefault();
+
+      const match: Transaction|null = templates.value
+        .find((template: Transaction) => new RegExp(`^${data.name}`, 'i').test(template.title));
+      if (!match) return;
+
+      data.name = match.title;
+      data.price = match.price;
+      data.isGain = match.type === 'gain';
+      data.description = match.description;
+      activeCategory.value = match.category;
+      activeCurrency.value = match.currency;
     };
 
     return {
@@ -204,12 +241,14 @@ export default defineComponent({
       data,
       expanded,
       error,
-      submit,
-      toggleExpanded,
       activeCategory,
       activeCurrency,
+      foundTemplate,
       currencies: currencies.value,
       categories: categories.value,
+      submit,
+      toggleExpanded,
+      templateSubmit,
       changeActiveCategory,
     };
   },

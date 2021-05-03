@@ -4,7 +4,7 @@
       <slot name="label">{{ labelText }}</slot>
     </label>
 
-    <div class="form-input_wrapper">
+    <div class="form-input_wrapper" :data-placeholder="fakePlaceholder">
       <slot name="before" />
 
       <input
@@ -117,6 +117,10 @@ export default defineComponent({
       default: 'off',
     },
     placeholder: {
+      type: String,
+      default: '',
+    },
+    fakePlaceholder: {
       type: String,
       default: '',
     },
