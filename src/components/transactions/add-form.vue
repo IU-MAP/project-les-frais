@@ -51,7 +51,9 @@
     <div class="transaction-add-form_wrapper">
       <div class="transaction-add-form_menu">
         <div class="transaction-add-form_menu_top">
-          <DateInput :date="data.date" @change="data.date = $event" />
+          <DateInput v-if="!isTemplate" :date="data.date" @change="data.date = $event" />
+          <div v-else />
+
           <ButtonChoice
             v-model:value="activeCurrency"
             :items="currencies"
@@ -80,6 +82,7 @@
         </div>
 
         <FormInput
+          v-if="!isTemplate"
           v-model:value="data.description"
           type="textarea"
           :label-text="t('add_additional')"
@@ -133,6 +136,10 @@ export default defineComponent({
       type: Object as PropType<Transaction|null>,
       default: null,
     },
+    isTemplate: {
+      type: Boolean,
+      default: false,
+    },
   },
   emits: ['update'],
   setup (props, context) {
@@ -153,6 +160,14 @@ export default defineComponent({
     const error = ref('');
     const expanded = ref(false);
 
+    const toggleExpanded = (val?: boolean) => {
+      if (typeof val === 'undefined') {
+        expanded.value = !expanded.value;
+      } else {
+        expanded.value = val;
+      }
+    };
+
     const clearFields = () => {
       data.isGain = false;
       data.name = '';
@@ -161,6 +176,7 @@ export default defineComponent({
       data.description = '';
       activeCurrency.value = currencies.value?.[0] || null;
       activeCategory.value = categories.value?.[0] || null;
+      toggleExpanded(false);
     };
 
     const submit = async () => {
@@ -168,11 +184,11 @@ export default defineComponent({
         type: (data.isGain ? 'gain' : 'loss') as 'gain'|'loss',
         title: data.name,
         price: data.price,
-        date: data.date,
+        date: props.isTemplate ? null : data.date,
         description: data.description,
         currency: activeCurrency.value.id,
         category: activeCategory.value.id,
-        isTemplate: false,
+        isTemplate: props.isTemplate,
       };
 
       try {
@@ -189,14 +205,6 @@ export default defineComponent({
 
     const changeActiveCategory = (val: CategoryType) => {
       activeCategory.value = val;
-    };
-
-    const toggleExpanded = (val?: boolean) => {
-      if (typeof val === 'undefined') {
-        expanded.value = !expanded.value;
-      } else {
-        expanded.value = val;
-      }
     };
 
     return {

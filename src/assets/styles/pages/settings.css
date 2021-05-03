@@ -60,3 +60,25 @@
 .settings-page .category-settings .category {
   cursor: pointer;
 }
+
+.settings-page .template-settings {
+  padding: 0;
+}
+
+.settings-page .template-settings .transaction-add-form {
+  width: 655px;
+  margin: 0 auto;
+}
+
+.settings-page .template-settings .transactions-list {
+  margin: 2rem auto 0;
+  width: 600px;
+}
+
+.settings-page .template-settings .transactions-list_grid {
+  width: 100%;
+}
+
+.settings-page .template-settings .no-transactions {
+  width: 100%;
+}
