@@ -37,7 +37,7 @@
   color: var(--color-font-secondary);
   white-space: nowrap;
   overflow-x: hidden;
-  opacity: 0.75;
+  opacity: 0.5;
   z-index: 1;
 }
 
