@@ -100,7 +100,8 @@ jobs:
   heroku_push:
     needs: [backend-tests, frontend-e2e_testing, frontend-unit_testing]
     runs-on: ubuntu-latest
-    if: contains(' # push only on DEV or master
+    # push only on DEV or master
+    if: contains('
       refs/heads/DEV
       refs/heads/master
       ', github.ref)
