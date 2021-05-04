@@ -27,6 +27,8 @@
       <Button v-if="isAuthed" :link="{name: 'settings', query: { slug: 'settings_tabs_profile' }}">
         {{ t('settings') }}
       </Button>
+
+      <Button :link="{name: 'help'}" class="help">?</Button>
     </nav>
   </header>
 </template>
