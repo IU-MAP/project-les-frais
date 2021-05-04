@@ -116,7 +116,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/bL16QVq/Screenshot-2021-05-04-at-19-45-16.png",
+        "url": "https://i.ibb.co/vjp9s2b/sign.jpg",
         "caption": {
           "default": ""
         }
@@ -133,7 +133,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/rGdvFy1/Screenshot-2021-05-04-at-19-54-57.png",
+        "url": "https://i.ibb.co/5kGtF97/dash.jpg",
         "caption": {
           "default": ""
         }
@@ -166,7 +166,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/df100WM/Screenshot-2021-05-04-at-20-00-18.png",
+        "url": "https://i.ibb.co/7GZRsRM/prof.jpg",
         "caption": {
           "default": ""
         }
@@ -225,7 +225,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/hfMbykJ/Screenshot-2021-05-04-at-20-21-17.png",
+        "url": "https://i.ibb.co/ZdF62VQ/cat.jpg",
         "caption": {
           "default": ""
         }
@@ -318,7 +318,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/S7ycF1P/Screenshot-2021-05-04-at-21-01-54.png",
+        "url": "https://i.ibb.co/KKM3ZkL/menu.jpg",
         "caption": {
           "default": ""
         }
@@ -335,7 +335,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/GQL5Ch9/Screenshot-2021-05-04-at-21-05-40.png",
+        "url": "https://i.ibb.co/K9d1TrB/selected.jpg",
         "caption": {
           "default": ""
         }
@@ -378,7 +378,7 @@ export default {
     {
       "type": "image",
       "data": {
-        "url": "https://i.ibb.co/ZGwNBy4/Screenshot-2021-05-04-at-21-08-11.png",
+        "url": "https://i.ibb.co/qrtVFxS/templats.jpg",
         "caption": {
           "default": ""
         }
