@@ -2,9 +2,8 @@ name: 'Heroku deploy'
 
 on:
   workflow_run:
-    workflows: [ "frontend", "backend" ]
-    branches:
-      - DEV
+    workflows: [ frontend, backend ]
+    branches: [ DEV ]
     types: [ completed ]
 
 jobs:
