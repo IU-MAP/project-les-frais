@@ -8,6 +8,7 @@
 import '../assets/styles/pages/help.css';
 import { defineComponent } from 'vue';
 import useTranslation from '../utils/useTranslation';
+import userDocs from '../utils/user-docs';
 
 export default defineComponent({
   name: 'HomePage',
@@ -17,6 +18,7 @@ export default defineComponent({
 
     return {
       t,
+      userDocs,
     };
   },
 });
