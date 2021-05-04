@@ -26,3 +26,18 @@ jobs:
       - name: Run Tests
         run: |
           python manage.py test
+
+  heroku_push:
+    needs: django_test
+    runs-on: ubuntu-latest
+    if: contains('
+      refs/heads/DEV
+      refs/heads/master
+      ', github.ref)
+    steps:
+      - uses: actions/checkout@v2
+      - uses: akhileshns/heroku-deploy@v3.12.12
+        with:
+          heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+          heroku_app_name: "project-les-frais"
+          heroku_email: ${{secrets.HEROKU_EMAIL}}

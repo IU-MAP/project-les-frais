@@ -1,8 +1,11 @@
 name: 'frontend'
 
-# need on every push to enable heroku deploy even if no changes to frontend were made
 on:
   push:
+    paths-ignore:
+      - 'backend/**'
+      - 'readme/**'
+      - 'core/**'
 
 jobs:
   lint:
