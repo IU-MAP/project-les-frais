@@ -91,7 +91,7 @@ jobs:
           pip install -r requirements.txt
       - name: Run Tests
         run: |
-          python manage.py test1
+          python manage.py test
 
   heroku_push:
     needs: [backend-tests, frontend-e2e_testing, frontend-unit_testing]
