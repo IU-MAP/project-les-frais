@@ -148,6 +148,9 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
 
 
 class ExcelParcerSerializer(serializers.Serializer):
+    """
+        Used inly to generate swagger schema
+    """
     data = serializers.DictField(
         child=serializers.ListField(
             child=serializers.ListField(

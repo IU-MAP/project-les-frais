@@ -34,6 +34,9 @@ class TransactionFilter(filters.FilterSet):
 
 
 class openpyxl_parcer():
+    """
+        xlss parcer using openpyxl library
+    """
     def __init__(self, data) -> None:
         # data_only = calculate all formulas
         self.wb = openpyxl.load_workbook(filename=BytesIO(data), data_only = True)
@@ -52,6 +55,9 @@ class openpyxl_parcer():
 
 
 class xlrd_parcer():
+    """
+        xls parcer using xlrd library
+    """
     def __init__(self, data) -> None:
         self.wb = xlrd.open_workbook(file_contents=data, formatting_info=True)
 
@@ -73,7 +79,7 @@ class xlrd_parcer():
         return res
 
 def parce_excel(file, filename):
-    
+    #choose parcer depending on file extention
     if (filename.endswith('xlsx')):
         parcer = openpyxl_parcer(file.read())
     elif (filename.endswith('xls')):

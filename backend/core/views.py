@@ -139,18 +139,20 @@ class TransactionObjectView(RetrieveUpdateDestroyAPIView):
         except exceptions.PermissionDenied as e:
             raise exceptions.NotFound
 
-from rest_framework.metadata import SimpleMetadata
-
-
 class ParceExcelView(views.APIView):
     """
         Accepts xls or xlsx file in a body in binary format
         return json representation
+
+        - "data" is double list of string representation of excel table
+        - All formulas are caclulated
+        - Merged cells content moved to top left cell, others are set to null
+        - "merged_cells" is a list of cells coordinates (c1, r1, c2, r2); columns and rows enumerated form 0
     """
 
     parser_classes = [FileUploadParser]
 
-  #  permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA)
     def put(self, request, filename, format=None):
@@ -159,4 +161,5 @@ class ParceExcelView(views.APIView):
             parced = parce_excel(file=file_obj, filename=filename)
             return Response(status=200, data=parced)
         except Exception as e:
+            # TODO: check if this is legal to send str(e)
             return Response(status=500, data={'detail': str(e)})
