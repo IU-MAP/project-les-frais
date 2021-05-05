@@ -1,5 +1,7 @@
 from functools import partial
+from re import M
 from django.db.models import fields
+from openpyxl.workbook import child
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 
@@ -121,7 +123,7 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
         """
         Check that start is before finish.
         """
-
+        # Would be good to move to models or signals
         if ('categoty' in self.validated_data and
                 self.validated_data['category'].owner.id != kwargs['owner'].id):
             raise serializers.ValidationError(
@@ -129,6 +131,7 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
         return super().save(**kwargs)
 
     def validate(self, attrs):
+        # There is attributes that are requered only if isTemplate==False
         if (not self.partial and not attrs['isTemplate']):
             required = {'date', 'description', 'price', 'currency', 'category'}
             message = 'this field is required if isTemplate is false'
@@ -142,3 +145,23 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
         fields = ('id', 'created_at', 'type', 'date', 'title',
                   'description', 'price', 'isTemplate', 'currency', 'category')
         list_serializer_class = BulkListSerializer
+
+
+class ExcelParverSerializer(serializers.Serializer):
+    data = serializers.DictField(
+        child=serializers.ListField(
+            child=serializers.ListField(
+                child=serializers.CharField()
+            )
+        )
+    )
+
+    merged_cells = serializers.DictField(
+        child=serializers.ListField(
+            child=serializers.ListField(
+                child=serializers.IntegerField(),
+                min_length = 4,
+                max_length = 4 
+            )
+        )
+    )

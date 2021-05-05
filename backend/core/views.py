@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import exceptions, mixins, status, views, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
@@ -15,9 +16,10 @@ from rest_framework_bulk import mixins as bulk_mixins
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
 from .serializers import (CategorySerializer, CurrencySerializer,
-                          ShortTransactionSerializer, TransactionSerializer)
+                          ExcelParverSerializer, ShortTransactionSerializer,
+                          TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
-
+from .constants import EXCEL_PARCER_SCHEMA
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -147,6 +149,7 @@ class ParceExcelView(views.APIView):
 
     permission_classes = [IsAuthenticated]
 
+    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA)
     def put(self, request, filename, format=None):
         file_obj = request.data['file']
         try:

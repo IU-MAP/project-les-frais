@@ -11,3 +11,41 @@ DEFAULT_CATEGORUES = [ {'name': {'rus': 'Еда', 'eng': 'Food'}},
             {'name': {'rus': 'Путешествия', 'eng': 'Travels'}},
             {'name': {'rus': 'Развлечения', 'eng': 'Entertainment'}},
             {'name': {'rus': 'Прочее', 'eng': 'Miscellaneous'}}]
+
+from drf_yasg import openapi
+from .serializers import ExcelParverSerializer
+
+EXCEL_PARCER_SCHEMA = {
+    "200": openapi.Response(
+        description='Excel parcer for xls and xlsx (click Example Value on the next line)',
+        schema = ExcelParverSerializer, 
+        examples={
+            "application/json": {
+                    "data": {
+                        "Лист1": [
+                            [
+                                "hello",
+                                "this is merged cell",
+                                None
+                            ],
+                            [
+                                2.0,
+                                None,
+                                None
+                            ]
+                        ]
+                    },
+                "merged_cells": {
+                        "Лист1": [
+                            [
+                                1,
+                                0,
+                                2,
+                                1
+                            ]
+                        ]
+                }
+            }
+        }
+    )
+}
