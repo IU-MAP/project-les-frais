@@ -185,8 +185,8 @@ class ExcelParcerAPIViewTestCase(APITestCase):
             self.assertEqual(200, response.status_code)
 
 
-    def test_xls_file(self):
-        path = os.path.join('backend', 'core', 'test_files', 'test.xls')
-        with open(path, 'rb') as f:
-            response = self.client.put(f'{self.url}fileaneme.xls', {'datafile': f}, format='multipart')
-            self.assertEqual(200, response.status_code)
+    # def test_xls_file(self):
+    #     path = os.path.join('backend', 'core', 'test_files', 'test.xls')
+    #     with open(path, 'rb') as f:
+    #         response = self.client.put(f'{self.url}fileaneme.xls', {'datafile': f}, format='multipart')
+    #         self.assertEqual(200, response.status_code)
