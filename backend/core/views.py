@@ -152,9 +152,6 @@ class ParceExcelView(views.APIView):
 
   #  permission_classes = [IsAuthenticated]
 
-    def get_serializer(self):
-        return ExcelParcerSerializer()
-
     @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA)
     def put(self, request, filename, format=None):
         file_obj = request.data['file']
