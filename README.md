@@ -1,5 +1,5 @@
 # IU MAP-S21 project Les Frais
-
+![example workflow](https://github.com/IU-MAP/project-les-frais/blob/DEV/.github/workflows/main.yaml/badge.svg)
 ## Project objective
 
 The purpose of this project is to develop a web application, an 
