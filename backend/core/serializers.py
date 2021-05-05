@@ -147,7 +147,7 @@ class ShortTransactionSerializer(BulkSerializerMixin, serializers.ModelSerialize
         list_serializer_class = BulkListSerializer
 
 
-class ExcelParverSerializer(serializers.Serializer):
+class ExcelParcerSerializer(serializers.Serializer):
     data = serializers.DictField(
         child=serializers.ListField(
             child=serializers.ListField(

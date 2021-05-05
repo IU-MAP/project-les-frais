@@ -13,12 +13,10 @@ DEFAULT_CATEGORUES = [ {'name': {'rus': 'Еда', 'eng': 'Food'}},
             {'name': {'rus': 'Прочее', 'eng': 'Miscellaneous'}}]
 
 from drf_yasg import openapi
-from .serializers import ExcelParverSerializer
 
 EXCEL_PARCER_SCHEMA = {
     "200": openapi.Response(
         description='Excel parcer for xls and xlsx (click Example Value on the next line)',
-        schema = ExcelParverSerializer, 
         examples={
             "application/json": {
                     "data": {

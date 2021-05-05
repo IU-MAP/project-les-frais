@@ -1,3 +1,4 @@
+import re
 from backend.core.models import Transaction
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
@@ -16,7 +17,7 @@ from rest_framework_bulk import mixins as bulk_mixins
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
 from .serializers import (CategorySerializer, CurrencySerializer,
-                          ExcelParverSerializer, ShortTransactionSerializer,
+                          ExcelParcerSerializer, ShortTransactionSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
 from .constants import EXCEL_PARCER_SCHEMA
@@ -138,6 +139,8 @@ class TransactionObjectView(RetrieveUpdateDestroyAPIView):
         except exceptions.PermissionDenied as e:
             raise exceptions.NotFound
 
+from rest_framework.metadata import SimpleMetadata
+
 
 class ParceExcelView(views.APIView):
     """
@@ -147,7 +150,10 @@ class ParceExcelView(views.APIView):
 
     parser_classes = [FileUploadParser]
 
-    permission_classes = [IsAuthenticated]
+  #  permission_classes = [IsAuthenticated]
+
+    def get_serializer(self):
+        return ExcelParcerSerializer()
 
     @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA)
     def put(self, request, filename, format=None):
