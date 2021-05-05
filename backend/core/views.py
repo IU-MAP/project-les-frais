@@ -1,52 +1,23 @@
-from django.utils.decorators import method_decorator
 from backend.core.models import Transaction
 from django.shortcuts import render
+from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
-from rest_framework import status, viewsets
-from rest_framework.permissions import IsAuthenticated
-from rest_framework.generics import ListAPIView
 from django_filters.rest_framework import DjangoFilterBackend
+from rest_framework import exceptions, mixins, status, views, viewsets
+from rest_framework.decorators import action
+from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.parsers import FileUploadParser, MultiPartParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
+from rest_framework_bulk import mixins as bulk_mixins
 
-from .models import Currency, Transaction, Category
-from .serializers import TransactionSerializer, CurrencySerializer, CategorySerializer, ShortTransactionSerializer
+from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
-from .service import TransactionFilter, CategoryFilter
+from .serializers import (CategorySerializer, CurrencySerializer,
+                          ShortTransactionSerializer, TransactionSerializer)
+from .service import CategoryFilter, TransactionFilter, parce_excel
 
-# Create your views here.
-
-class TransactionViewSet(viewsets.ModelViewSet):
-    """
-    View set for ``Transaction``
-
-    Function:
-        ``list`` 
-        ``retrive``
-        ``update`` 
-        ``partial_update``
-        ``create`` 
-        ``destoy``
-    """
-
-    queryset = Transaction.objects
-
-    filter_backends = [DjangoFilterBackend] 
-    filterset_class = TransactionFilter
-
-    permission_classes = [IsAuthenticated, IsTheOwnerOf]
-    
-    def get_queryset(self):
-        return self.queryset.filter(owner=self.request.user)
-
-    def get_serializer_class(self):
-        if self.request.method in ['GET']:
-            return TransactionSerializer
-        else:
-            return ShortTransactionSerializer
-
-    def perform_create(self, serializer):
-        #if (object)
-        serializer.save(owner=self.request.user)
-    
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -66,9 +37,9 @@ class CategoryViewSet(viewsets.ModelViewSet):
     filter_backends = [DjangoFilterBackend]
     permission_classes = [IsAuthenticated, IsTheOwnerOf]
 
-    filter_backends = [DjangoFilterBackend] 
+    filter_backends = [DjangoFilterBackend]
     filterset_class = CategoryFilter
-    
+
     def get_queryset(self):
         return self.queryset.filter(owner=self.request.user)
 
@@ -91,3 +62,95 @@ class CurrencyView(ListAPIView):
     @method_decorator(cache_page(60*60*2))
     def list(self, request, *args, **kwargs):
         return super().list(request, *args, **kwargs)
+
+
+class TransactionView(
+        ListBulkCreateUpdateDestroyAPIView):
+    """
+    Global View for ``Transaction``
+
+    functions:
+
+    ``get`` -- returns list
+    ``post`` -- accepts both single object or a list
+    ``put``, ``patch`` -- accept list
+    ``delete`` -- will delete all object matching filters (may delete all objects if no filters)
+    """
+    queryset = Transaction.objects
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionFilter
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TransactionSerializer
+        else:
+            return ShortTransactionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(owner=self.request.user)
+
+
+class TransactionObjectView(RetrieveUpdateDestroyAPIView):
+    """
+    Object View for ``Transaction``
+
+    functions:
+
+    ``get``
+    ``post``
+    ``put``,
+    ``patch`` 
+    ``delete``
+    """
+    queryset = Transaction.objects
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionFilter
+
+    permission_classes = [IsAuthenticated, IsTheOwnerOf]
+
+    def get_serializer_class(self):
+        if self.request.method in ['GET']:
+            return TransactionSerializer
+        else:
+            return ShortTransactionSerializer
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def perform_update(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    def permission_denied(self, request, message, code):
+        try:
+            return super().permission_denied(request, message=message, code=code)
+        except exceptions.PermissionDenied as e:
+            raise exceptions.NotFound
+
+
+class ParceExcelView(views.APIView):
+    """
+        Accepts xls or xlsx file in a body in binary format
+        return json representation
+    """
+
+    parser_classes = [FileUploadParser]
+
+    permission_classes = [IsAuthenticated]
+
+    def put(self, request, filename, format=None):
+        file_obj = request.data['file']
+        try:
+            parced = parce_excel(file=file_obj, filename=filename)
+            return Response(status=200, data=parced)
+        except Exception as e:
+            return Response(status=500, data={'detail': str(e)})

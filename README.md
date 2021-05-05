@@ -205,3 +205,18 @@ After this sprint, such user stories are completed fully:
 * [Transactions](https://github.com/IU-MAP/project-les-frais/issues/17)
 * [Categories](https://github.com/IU-MAP/project-les-frais/issues/18)
 * [Interface language switch](https://github.com/IU-MAP/project-les-frais/issues/22)
+
+### Sprint 4
+
+It was a heavy-loaded week, but we succeeded in several User Stories:
+* Finished [Expense templates](https://github.com/IU-MAP/project-les-frais/issues/29) User Story
+* Created [User documentation page](http://project-les-frais.herokuapp.com/help) on the website that explains how to interact with the application
+* Heavily documented code in JSDoc format. [Here's the example](https://github.com/IU-MAP/project-les-frais/blob/master/src/utils/api/auth.ts)
+* Continued working on Data Import feature. Made an endpoint that accepts and .XLS file, parses it and returns JSON to the frontend
+* Implemented Continuous Integration of backend tests
+* Implemented [Continuous Delivery to Heroku](https://github.com/IU-MAP/project-les-frais/actions/runs/811295225) via GitHub actions
+
+So, we mainly improved the value of the project by documenting it more, refining our goals and improving 
+User Experience via expense templates. Also, we improved Developer Experience through better CI/CD.
+
+![](./readme/ci.png)

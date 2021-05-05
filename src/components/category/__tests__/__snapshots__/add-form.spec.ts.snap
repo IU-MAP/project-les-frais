@@ -39,6 +39,7 @@ VueWrapper {
               <!--v-if-->
               <div
                 class="form-input_wrapper"
+                data-placeholder=""
               >
                 
                 
@@ -429,6 +430,7 @@ VueWrapper {
           <!--v-if-->
           <div
             class="form-input_wrapper"
+            data-placeholder=""
           >
             
             

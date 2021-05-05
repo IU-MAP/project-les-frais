@@ -12,6 +12,7 @@
 }
 
 .form-input .form-input_wrapper {
+  position: relative;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -22,7 +23,26 @@
   box-shadow: var(--shadow-button-active);
 }
 
+.form-input .form-input_wrapper::after {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  right: 2rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  content: attr(data-placeholder);
+  pointer-events: none;
+  font: var(--font-regular);
+  color: var(--color-font-secondary);
+  white-space: nowrap;
+  overflow-x: hidden;
+  opacity: 0.5;
+  z-index: 1;
+}
+
 .form-input .form-input_input {
+  position: relative;
   flex-grow: 1;
   height: 100%;
   padding: 0 0.5rem;
@@ -30,10 +50,21 @@
   border: none;
   font: var(--font-regular);
   color: var(--color-font-main);
+  z-index: 2;
 }
 
 .form-input .form-input_input:focus {
   outline: none;
+}
+
+.form-input .form-input_input::-webkit-outer-spin-button,
+.form-input .form-input_input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-input .form-input_input[type=number] {
+  -moz-appearance: textfield;
 }
 
 .form-input textarea.form-input_input {

@@ -71,8 +71,15 @@
         </div>
       </div>
 
-      <div v-else-if="activeTab === 'settings_tabs_templates'" class="card settings">
-        <h1>{{ t('settings_tab_templates') }}</h1>
+      <div v-else-if="activeTab === 'settings_tabs_templates'" class="settings template-settings">
+        <TransactionAddForm is-template @update="updateTemplates" />
+
+        <suspense>
+          <TransactionsList templates :update-val="updateTemplatesVal" />
+          <template #fallback>
+            <div />
+          </template>
+        </suspense>
       </div>
     </transition>
   </section>
@@ -84,22 +91,27 @@ import {
   computed, defineComponent, ref, watchEffect,
 } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import type { Transaction } from '../utils/api/transactions';
+import type { Category as CategoryType } from '../utils/api/categories';
+import { LANGS } from '../utils/constants';
+import useStore from '../store';
+import useTranslation from '../utils/useTranslation';
+import api from '../utils/api';
 import Button from '../components/button/index.vue';
 import Category from '../components/category/index.vue';
-import useStore from '../store';
 import Dropdown from '../components/dropdown/index.vue';
-import useTranslation from '../utils/useTranslation';
-import { LANGS } from '../utils/constants';
 import Tabs from '../components/tabs/index.vue';
 import CategoryAddForm from '../components/category/add-form.vue';
-import type { Category as CategoryType } from '../utils/api/categories';
-import api from '../utils/api';
+import TransactionAddForm from '../components/transactions/add-form.vue';
+import TransactionsList from '../components/transactions/list.vue';
 
 type TabsType = 'settings_tabs_profile'|'settings_tabs_categories'|'settings_tabs_templates';
 const TABS: TabsType[] = ['settings_tabs_profile', 'settings_tabs_categories', 'settings_tabs_templates'];
 
 export default defineComponent({
   components: {
+    TransactionsList,
+    TransactionAddForm,
     CategoryAddForm,
     Tabs,
     Dropdown,
@@ -113,10 +125,11 @@ export default defineComponent({
     const route = useRoute();
     const activeLan = computed(() => store.state.language);
     const categories = computed<CategoryType[]>(() => store.state.categories);
+    const updateTemplatesVal = ref<Transaction|null>(null);
 
-    const initialTab = computed<TabsType>(() => ((route.query.slug) && TABS.includes(route.query.slug as TabsType))
+    const initialTab = computed<TabsType>(() => (((route.query.slug) && TABS.includes(route.query.slug as TabsType))
       ? route.query.slug as TabsType
-      : 'settings_tabs_profile');
+      : 'settings_tabs_profile'));
     const activeTab = ref<TabsType>(initialTab);
 
     const categoryToEdit = ref<CategoryType|null>(null);
@@ -156,6 +169,10 @@ export default defineComponent({
       activeTab.value = initialTab.value;
     });
 
+    const updateTemplates = (val: Transaction) => {
+      updateTemplatesVal.value = val;
+    };
+
     return {
       t,
       activeTab,
@@ -165,11 +182,13 @@ export default defineComponent({
       categories,
       categoryToEdit,
       deleteAccountClicked,
+      updateTemplatesVal,
       changeActive,
       logout,
       selectLan,
       editCategory,
       deleteAccount,
+      updateTemplates,
     };
   },
 });

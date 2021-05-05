@@ -27,6 +27,7 @@ VueWrapper {
         </label>
         <div
           class="form-input_wrapper"
+          data-placeholder=""
         >
           
           
@@ -103,6 +104,7 @@ VueWrapper {
     "autocomplete": "off",
     "disabled": false,
     "error": "",
+    "fakePlaceholder": "",
     "hasOwnProperty": [Function],
     "id": null,
     "input": [Function],
@@ -130,6 +132,7 @@ VueWrapper {
     </label>
     <div
       class="form-input_wrapper"
+      data-placeholder=""
     >
       
       
@@ -174,6 +177,7 @@ VueWrapper {
         </label>
         <div
           class="form-input_wrapper"
+          data-placeholder=""
         >
           
           
@@ -250,6 +254,7 @@ VueWrapper {
     "autocomplete": "off",
     "disabled": false,
     "error": "",
+    "fakePlaceholder": "",
     "hasOwnProperty": [Function],
     "id": null,
     "input": [Function],
@@ -277,6 +282,7 @@ VueWrapper {
     </label>
     <div
       class="form-input_wrapper"
+      data-placeholder=""
     >
       
       
@@ -321,6 +327,7 @@ VueWrapper {
         </label>
         <div
           class="form-input_wrapper"
+          data-placeholder=""
         >
           
           
@@ -397,6 +404,7 @@ VueWrapper {
     "autocomplete": "off",
     "disabled": false,
     "error": "",
+    "fakePlaceholder": "",
     "hasOwnProperty": [Function],
     "id": null,
     "input": [Function],
@@ -424,6 +432,7 @@ VueWrapper {
     </label>
     <div
       class="form-input_wrapper"
+      data-placeholder=""
     >
       
       

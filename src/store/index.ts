@@ -1,9 +1,10 @@
 import { InjectionKey } from 'vue';
 import { createStore, useStore as baseUseStore, Store } from 'vuex';
+import type { Transaction } from '../utils/api/transactions';
+import type { Category } from '../utils/api/categories';
+import type { Currency } from '../utils/api/currency';
 import { LANGS } from '../utils/constants';
-import { Category } from '../utils/api/categories';
 import api from '../utils/api';
-import { Currency } from '../utils/api/currency';
 
 export interface User {
   pk: number,
@@ -16,6 +17,7 @@ interface State {
   user: User|null,
   categories: Category[],
   currencies: Currency[],
+  templates: Transaction[],
 }
 
 /**
@@ -41,6 +43,7 @@ export const store = createStore<State>({
       user: null,
       categories: [],
       currencies: [],
+      templates: [],
     };
   },
 
@@ -70,6 +73,9 @@ export const store = createStore<State>({
     setCurrencies (state, value: Currency[]) {
       state.currencies = value;
     },
+    setTemplates (state, value: Transaction[]) {
+      state.templates = value;
+    },
   },
 
   actions: {
@@ -82,17 +88,23 @@ export const store = createStore<State>({
     changeUser (context, value: User) {
       context.commit('setUser', value);
     },
+    async changeTemplates (context) {
+      const templates = await api.transactions.read({ isTemplate: true });
+      context.commit('setTemplates', templates);
+    },
     async changeCategories (context) {
       const categories = await api.category.read();
       context.commit('setCategories', categories);
     },
     async initStore (context) {
-      const [categories, currencies] = await Promise.all([
+      const [categories, currencies, templates] = await Promise.all([
         api.category.read(),
         api.currencies.read(),
+        api.transactions.read({ isTemplate: true }),
       ]);
       context.commit('setCurrencies', currencies);
       context.commit('setCategories', categories);
+      context.commit('setTemplates', templates);
     },
   },
 });

@@ -13,7 +13,7 @@
       </div>
 
       <MonthPicker
-        v-else
+        v-else-if="!templates"
         v-model:year="year"
         v-model:month="month"
         @update:month="updateList"
@@ -31,7 +31,7 @@
           :key="dayNumber"
           class="transactions-list_day"
         >
-          <p class="transactions-list_day_title">
+          <p v-if="!templates" class="transactions-list_day_title">
             {{ dayNumber }}<component
               :is="getOrdinalTranslation(dayNumber, month).tag"
               v-if="getOrdinalTranslation(dayNumber, month)"
@@ -47,6 +47,7 @@
               :transaction="transaction"
               :class="{selected: selection.includes(transaction.id)}"
               :editing="editingId === transaction.id"
+              :is-template="templates"
               @remove="removeTransaction(transaction.id)"
               @select="toggleSelection(transaction.id)"
               @click="addToSelection(transaction.id)"
@@ -63,6 +64,7 @@
 <script lang="ts">
 import './list.css';
 import {
+  computed,
   defineComponent, PropType, ref, watch,
 } from 'vue';
 import type { Transaction as TransactionType } from '../../utils/api/transactions';
@@ -74,6 +76,7 @@ import MonthPicker from './month-picker.vue';
 import Button from '../button/index.vue';
 import XIcon from '../../assets/icons/x.svg';
 import TrashIcon from '../../assets/icons/trash.svg';
+import useStore from '../../store';
 
 export default defineComponent({
   name: 'TransactionsList',
@@ -89,10 +92,32 @@ export default defineComponent({
       type: Object as PropType<TransactionType>,
       default: null,
     },
+    templates: {
+      type: Boolean,
+      default: false,
+    },
   },
   async setup (props) {
     const t = useTranslation();
-    const transactions = ref<Record<string, TransactionType[]>>({});
+    const store = useStore();
+
+    const items = ref<TransactionType[]>([]);
+    const templateItems = computed<TransactionType[]>(() => store.state.templates);
+    const transactions = computed<Record<string, TransactionType[]>>(() => {
+      if (props.templates) {
+        return { 1: templateItems.value };
+      }
+
+      return items.value.reduce((accum, current) => {
+        const day = new Date(current.date).getDate();
+        if (!accum[day]) {
+          accum[day] = [current];
+        } else {
+          accum[day].push(current);
+        }
+        return accum;
+      }, {} as Record<number, TransactionType[]>);
+    });
 
     const date = new Date();
     const month = ref(date.getMonth() + 1);
@@ -102,20 +127,19 @@ export default defineComponent({
     const editingId = ref<number|null>(null);
 
     const updateList = async () => {
-      const res = await api.transactions.read({
+      const reqData = props.templates ? {
+        isTemplate: true,
+      } : {
         month: month.value,
         year: year.value,
-      });
+        isTemplate: false,
+      };
 
-      transactions.value = res.reduce((accum, current) => {
-        const day = new Date(current.date).getDate();
-        if (!accum[day]) {
-          accum[day] = [current];
-        } else {
-          accum[day].push(current);
-        }
-        return accum;
-      }, {} as Record<number, TransactionType[]>);
+      if (props.templates) {
+        await store.dispatch('changeTemplates');
+      } else {
+        items.value = await api.transactions.read(reqData);
+      }
     };
 
     const removeTransaction = async (id: number) => {
@@ -152,6 +176,11 @@ export default defineComponent({
     };
 
     watch(() => props.updateVal, (newVal: TransactionType) => {
+      if (newVal?.isTemplate) {
+        updateList();
+        return;
+      }
+
       if (!newVal || !newVal.date) return;
 
       const newDate = new Date(newVal.date);
@@ -160,7 +189,9 @@ export default defineComponent({
       }
     });
 
-    await updateList();
+    if (!props.templates) {
+      await updateList();
+    }
 
     return {
       t,

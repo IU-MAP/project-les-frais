@@ -9,6 +9,11 @@ const routes = [
     beforeEnter: () => checkAuth(false),
   },
   {
+    name: 'help',
+    path: '/help',
+    component: () => import('./pages/help.vue'),
+  },
+  {
     name: 'dashboard',
     path: '/dashboard',
     component: () => import('./pages/dashboard.vue'),

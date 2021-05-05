@@ -7,7 +7,7 @@
   >
     <ul class="menu" @click.stop>
       <li @click="edit">{{ t('dashboard_transaction_edit') }}</li>
-      <li @click="select">{{ t('dashboard_transaction_select') }}</li>
+      <li v-if="!isTemplate" @click="select">{{ t('dashboard_transaction_select') }}</li>
       <li class="text-color-error" @click="remove">{{ t('dashboard_transaction_remove') }}</li>
     </ul>
 
@@ -28,6 +28,7 @@
   <TransactionAddForm
     v-else
     :transaction="transaction"
+    :is-template="isTemplate"
     @update="sendUpdate"
   />
 </template>
@@ -56,6 +57,10 @@ export default defineComponent({
       required: true,
     },
     editing: {
+      type: Boolean,
+      default: false,
+    },
+    isTemplate: {
       type: Boolean,
       default: false,
     },
