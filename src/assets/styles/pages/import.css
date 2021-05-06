@@ -1,0 +1,35 @@
+.import-page {
+}
+
+.import-page .import-navigation {
+  display: flex;
+  align-items: center;
+  width: 675px;
+  margin: 0 auto;
+}
+
+.import-page .import-navigation .btn {
+  width: auto;
+  height: 2.25rem;
+}
+
+.import-page .import-navigation > *:not(:last-child) {
+  margin-right: 1rem;
+}
+
+.import-page .import-navigation h1 {
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.import-page .import-info,
+.import-page .import-error {
+  width: 700px;
+  margin: 1rem auto;
+  text-align: left;
+}
+
+.import-page .import-error {
+  text-align: center;
+}
