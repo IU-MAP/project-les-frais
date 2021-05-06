@@ -35,6 +35,15 @@
   height: 1.125rem;
 }
 
+.import-import {
+  width: auto;
+  margin: 0 auto;
+}
+
+.import-import input {
+  display: none;
+}
+
 .import-table {
   display: grid;
   grid-template-columns: repeat(var(--headers-length), minmax(200px, 1fr));

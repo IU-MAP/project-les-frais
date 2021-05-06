@@ -13,6 +13,12 @@
     </nav>
 
     <p class="import-info text-regular">{{ t('import_info') }}</p>
+
+    <Button look="submit" class="import-import" @click.self.prevent="chooseFile">
+      <input ref="fileInput" type="file" accept=".xlx,.xlsx" @change="changeFile">
+      {{ t('import_xls') }}
+    </Button>
+
     <p class="import-error text-regular text-color-error">{{ error }}</p>
 
     <div :style="styles" class="import-table">
@@ -120,6 +126,7 @@ export default defineComponent({
   setup () {
     const t = useTranslation();
     const error = ref<string>('');
+    const fileInput = ref<HTMLInputElement>();
 
     const styles = computed<number>(() => ({
       '--headers-length': HEADERS.length,
@@ -130,14 +137,28 @@ export default defineComponent({
       found.chosen = column;
     };
 
+    const chooseFile = () => {
+      fileInput.value?.click();
+    };
+
+    const changeFile = (e: InputEvent) => {
+      const file = (e.target as HTMLInputElement).files?.[0];
+      if (file) {
+        // TODO: Do something with file
+      }
+    };
+
     return {
       t,
       error,
       styles,
+      fileInput,
       HEADERS,
       ROWS,
       COLUMNS,
       chooseColumn,
+      chooseFile,
+      changeFile,
     };
   },
 });
