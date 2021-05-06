@@ -124,3 +124,57 @@ class TransactionAPIViewTestCase(APITestCase):
         transaction_url = f"{self.url}{self.transaction1.id}/"
         response = self.client.delete(transaction_url)
         self.assertEqual(204, response.status_code)
+        
+    def test_transactions_bulk_create(self):
+        response = self.client.post(self.url, json.dumps([{
+            "type": "loss",
+            "date": "2021-04-20",
+            "title": "string",
+            "description": "string",
+            "price": 100,
+            "isTemplate": False,
+            "currency": self.currency.id,
+            "category": self.category1.id
+        },
+            {
+            "type": "loss",
+            "date": "2021-04-20",
+            "title": "string",
+            "description": "string",
+            "price": 200,
+            "isTemplate": False,
+            "currency": self.currency.id,
+            "category": self.category2.id
+        }
+        ]), content_type='application/json')
+        self.assertEqual(201, response.status_code)
+
+
+
+class ExcelParcerAPIViewTestCase(APITestCase):
+    url = "/api/v1/parce_excel/"
+
+    def setUp(self):
+        self.username = "john@snow.com"
+        self.email = "john@snow.com"
+        self.password = "you_know_nothing"
+        self.user = User.objects.create_user(
+            self.username, self.email, self.password)
+        self.token = Token.objects.create(user=self.user)
+        self.api_authentication()
+
+    def api_authentication(self):
+        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+
+    def test_xlsx_file(self):
+        path = os.path.join('backend', 'core', 'test_files', 'test.xlsx')
+        with open(path, 'rb') as f:
+            response = self.client.put(f'{self.url}fileaneme.xlsx', {'datafile': f}, format='multipart')
+            self.assertEqual(200, response.status_code)
+
+
+    # def test_xls_file(self):
+    #     path = os.path.join('backend', 'core', 'test_files', 'test.xls')
+    #     with open(path, 'rb') as f:
+    #         response = self.client.put(f'{self.url}fileaneme.xls', {'datafile': f}, format='multipart')
+    #         self.assertEqual(200, response.status_code)
