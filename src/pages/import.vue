@@ -119,7 +119,7 @@ export default defineComponent({
   },
   setup () {
     const t = useTranslation();
-    const error = ref<string>('Some error here');
+    const error = ref<string>('');
 
     const styles = computed<number>(() => ({
       '--headers-length': HEADERS.length,
