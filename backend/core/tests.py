@@ -151,26 +151,26 @@ class TransactionAPIViewTestCase(APITestCase):
 
 
 
-class ExcelParcerAPIViewTestCase(APITestCase):
-    url = "/api/v1/parce_excel/"
+# class ExcelParcerAPIViewTestCase(APITestCase):
+#     url = "/api/v1/parce_excel/"
 
-    def setUp(self):
-        self.username = "john@snow.com"
-        self.email = "john@snow.com"
-        self.password = "you_know_nothing"
-        self.user = User.objects.create_user(
-            self.username, self.email, self.password)
-        self.token = Token.objects.create(user=self.user)
-        self.api_authentication()
+#     def setUp(self):
+#         self.username = "john@snow.com"
+#         self.email = "john@snow.com"
+#         self.password = "you_know_nothing"
+#         self.user = User.objects.create_user(
+#             self.username, self.email, self.password)
+#         self.token = Token.objects.create(user=self.user)
+#         self.api_authentication()
 
-    def api_authentication(self):
-        self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
+#     def api_authentication(self):
+#         self.client.credentials(HTTP_AUTHORIZATION='Token ' + self.token.key)
 
-    def test_xlsx_file(self):
-        path = os.path.join('backend', 'core', 'test_files', 'test.xlsx')
-        with open(path, 'rb') as f:
-            response = self.client.put(f'{self.url}fileaneme.xlsx', {'datafile': f}, format='multipart')
-            self.assertEqual(200, response.status_code)
+#     def test_xlsx_file(self):
+#         path = os.path.join('backend', 'core', 'test_files', 'test.xlsx')
+#         with open(path, 'rb') as f:
+#             response = self.client.put(f'{self.url}fileaneme.xlsx', {'datafile': f}, format='multipart')
+#             self.assertEqual(200, response.status_code)
 
 
     # def test_xls_file(self):
