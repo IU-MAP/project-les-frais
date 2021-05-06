@@ -15,10 +15,10 @@
     <p class="import-info text-regular">{{ t('import_info') }}</p>
     <p class="import-error text-regular text-color-error">{{ error }}</p>
 
-    <div class="import-table">
-      <div v-for="(header, i) in HEADERS" :key="i">
-        <div>
-          <h3>{{ header.name }}</h3>
+    <div :style="styles" class="import-table">
+      <div class="import-table_header" v-for="(header, i) in HEADERS" :key="i">
+        <div class="import-table_header_title">
+          <h3 class="text-ellipsis">{{ header.name }}</h3>
           <XIcon />
         </div>
         <Dropdown :items="COLUMNS" @select="chooseColumn(header.name, $event)">
@@ -30,6 +30,20 @@
           </template>
         </Dropdown>
       </div>
+
+      <template v-for="(row, i) in ROWS">
+        <div
+          v-for="(item, j) in row"
+          :key="i.toString() + j"
+          :class="{first: j === 0}"
+          class="import-table_cell"
+        >
+          <XIcon v-if="j === 0" />
+          <span class="text-regular text-ellipsis">
+            {{ item }}
+          </span>
+        </div>
+      </template>
     </div>
   </section>
 </template>
@@ -108,7 +122,7 @@ export default defineComponent({
     const error = ref<string>('Some error here');
 
     const styles = computed<number>(() => ({
-      width: HEADERS.length,
+      '--headers-length': HEADERS.length,
     }));
 
     const chooseColumn = (header: string, column: { slug: string, name: string }) => {

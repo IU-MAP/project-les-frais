@@ -255,7 +255,7 @@ const translations: Record<string, Record<LANGS, string>> = {
     eng: 'In order to properly import your expenses data, the .XLS or .XLSX file should contain 4 columns in any order and naming of your will: Date, Expense name, Category and Price. After importing, the table will appear below to help us understand which column belongs to which data field.',
   },
   import_choose_field: {
-    rus: 'Выберите колонку',
+    rus: 'Выберите',
     eng: 'Choose field',
   },
   import_name: {
