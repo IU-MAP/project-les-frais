@@ -1,3 +1,31 @@
 .statistics-categories {
+}
 
+.statistics-categories_diagram {
+  height: 160px;
+}
+
+.statistics-categories_list {
+
+}
+
+.statistics-categories_list_item {
+  margin-bottom: 0.5rem;
+}
+
+.statistics-categories_list_item .category .text-small {
+  max-width: 7rem;
+}
+
+.statistics-categories_totals_section {
+  border-top: 1px solid rgba(99, 104, 156, 0.65);
+  padding: 0.625rem 0;
+}
+
+.statistics-categories_totals_section .statistic-row:not(:last-child) {
+  margin-bottom: 0.625rem;
+}
+
+.statistics-categories > .btn {
+  margin-top: 1rem;
 }

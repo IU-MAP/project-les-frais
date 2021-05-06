@@ -1,0 +1,11 @@
+.statistic-row {
+  display: flex;
+  align-items: center;
+}
+
+.statistic-row .dots {
+  flex-grow: 1;
+  display: inline-block;
+  margin: 0 0.25rem;
+  border-bottom: 1px dotted var(--color-font-main);
+}
