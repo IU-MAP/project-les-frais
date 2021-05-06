@@ -7,7 +7,7 @@ from rest_framework.test import APITestCase
 from .models import Category
 from .models import Currency
 from .models import Transaction
-
+import os
 
 class CategoryAPIViewTestCase(APITestCase):
     url = "/api/v1/categories/"
