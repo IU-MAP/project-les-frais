@@ -201,7 +201,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # http://whitenoise.evans.io/en/stable/django.html#make-sure-staticfiles-is-configured-correctly
 
 # fix for CI/CD
-if '/app' in env('HOME'):
+if '/app' in env('HOME', default = ''):
     django_heroku.settings(locals())
 
 
