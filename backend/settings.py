@@ -32,7 +32,7 @@ SECRET_KEY = 'lh$z&7m0l8k83v*wtov$042ha3j!qg$o!q&8#5s!l(@uv6wba-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # TODO: read from an environment variable
-DEBUG = env("DEBUG")
+DEBUG = env("DEBUG", default = False)
 
 ALLOWED_HOSTS = [env('HOST')]
 
