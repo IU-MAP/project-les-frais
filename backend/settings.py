@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'drf_yasg',
-    'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
     'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
