@@ -20,7 +20,7 @@ from .serializers import (CategorySerializer, CurrencySerializer,
                           ExcelParcerSerializer, ShortTransactionSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
-from .constants import EXCEL_PARCER_SCHEMA
+from .constants import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -152,13 +152,13 @@ class ParceExcelView(views.APIView):
 
     parser_classes = [FileUploadParser]
 
-    permission_classes = [IsAuthenticated]
-
-    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA)
-    def put(self, request, filename, format=None):
+   # permission_classes = [IsAuthenticated]
+    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters = EXCEL_PARCER_PARAMETERS)
+    def put(self, request, filename,  format=None):
+        fill = self.request.query_params.get('fill', 'null')
         file_obj = request.data['file']
         try:
-            parced = parce_excel(file=file_obj, filename=filename)
+            parced = parce_excel(file=file_obj, filename=filename, fill = fill)
             return Response(status=200, data=parced)
         except Exception as e:
             # TODO: check if this is legal to send str(e)

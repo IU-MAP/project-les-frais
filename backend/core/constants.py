@@ -49,3 +49,13 @@ EXCEL_PARCER_SCHEMA = {
         }
     )
 }
+
+EXCEL_PARCER_PARAMETERS = [
+    openapi.Parameter('fill', openapi.IN_QUERY,
+     description='''merged cells filling, must be either:
+        "null" __to fill empty cells with nulls value
+        "empty" to fill empty cells with empty strings
+        "copy"  _to copy content of merged cell in all subcells''', 
+    type=openapi.TYPE_STRING,
+    reqired = False)
+    ]
