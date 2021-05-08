@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 import django_heroku
+import environ
 import os
 
+env = environ.Env()
+environ.Env.read_env()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -29,9 +32,9 @@ SECRET_KEY = 'lh$z&7m0l8k83v*wtov$042ha3j!qg$o!q&8#5s!l(@uv6wba-'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 # TODO: read from an environment variable
-DEBUG = bool(os.environ.get("DEBUG", False))
+DEBUG = env("DEBUG", default = False)
 
-ALLOWED_HOSTS = [os.environ.get('HOST')]
+ALLOWED_HOSTS = [env('HOST', default = '*')]
 
 
 
@@ -50,7 +53,7 @@ INSTALLED_APPS = [
     
     'rest_framework',
     'drf_yasg',
-    'whitenoise.runserver_nostatic',
+    'whitenoise.runserver_nostatic',  # < Per Whitenoise, to disable built in
     'rest_framework.authtoken',
     'rest_auth',
     'django.contrib.sites',
@@ -198,7 +201,7 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 # http://whitenoise.evans.io/en/stable/django.html#make-sure-staticfiles-is-configured-correctly
 
 # fix for CI/CD
-if '/app' in os.environ['HOME']:
+if '/app' in env('HOME', default = ''):
     django_heroku.settings(locals())
 
 
