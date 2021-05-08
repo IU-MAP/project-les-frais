@@ -16,11 +16,11 @@ from rest_framework_bulk import mixins as bulk_mixins
 
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
-from .serializers import (CategorySerializer, CurrencySerializer,
-                          ExcelParcerSerializer, ShortTransactionSerializer,
+from .serializers import (CategorySerializer, CurrencySerializer, ShortTransactionSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
-from .constants import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS
+from .swagger_schemas import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS
+
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -101,6 +101,18 @@ class TransactionView(
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
 
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
+
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def patch(self, request, *args, **kwargs):
+        return super().patch(request, *args, **kwargs)
+
 
 class TransactionObjectView(RetrieveUpdateDestroyAPIView):
     """
@@ -139,6 +151,7 @@ class TransactionObjectView(RetrieveUpdateDestroyAPIView):
         except exceptions.PermissionDenied as e:
             raise exceptions.NotFound
 
+
 class ParceExcelView(views.APIView):
     """
         Accepts xls or xlsx file in a body in binary format
@@ -153,12 +166,12 @@ class ParceExcelView(views.APIView):
     parser_classes = [FileUploadParser]
 
    # permission_classes = [IsAuthenticated]
-    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters = EXCEL_PARCER_PARAMETERS)
+    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters=EXCEL_PARCER_PARAMETERS)
     def put(self, request, filename,  format=None):
         fill = self.request.query_params.get('fill', 'null')
         file_obj = request.data['file']
         try:
-            parced = parce_excel(file=file_obj, filename=filename, fill = fill)
+            parced = parce_excel(file=file_obj, filename=filename, fill=fill)
             return Response(status=200, data=parced)
         except Exception as e:
             # TODO: check if this is legal to send str(e)
