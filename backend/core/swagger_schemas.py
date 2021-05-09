@@ -12,7 +12,7 @@ def excel_parcer_schema_responce_example():
         with open(path, 'rb') as f:
             EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_ = parce_excel(
                 f, 'test.xls', 'null')
-        return EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_
+    return EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_
 
 
 EXCEL_PARCER_SCHEMA = {
@@ -28,7 +28,7 @@ EXCEL_PARCER_SCHEMA = {
 EXCEL_PARCER_PARAMETERS = [
     openapi.Parameter('fill', openapi.IN_QUERY,
                       description='''merged cells filling, must be either:
-        "null" __to fill empty cells with nulls value
+        "null" __to fill empty cells with nulls value; default
         "empty" to fill empty cells with empty strings
         "copy"  _to copy content of merged cell in all subcells''',
                       type=openapi.TYPE_STRING,

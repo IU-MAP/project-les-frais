@@ -165,7 +165,7 @@ class ParceExcelView(views.APIView):
 
     parser_classes = [FileUploadParser]
 
-   # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
     @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters=EXCEL_PARCER_PARAMETERS)
     def put(self, request, filename,  format=None):
         fill = self.request.query_params.get('fill', 'null')
