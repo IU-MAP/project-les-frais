@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.urls import reverse
 import os
 import io
+from rest_framework import serializers
 
 from rest_framework.authtoken.models import Token
 from rest_framework.test import APITestCase
@@ -190,3 +191,13 @@ class TransactionAPIViewTestCase(APITestCase):
     #     with open(path, 'rb') as f:
     #         response = self.client.put(f'{self.url}fileaneme.xls', {'datafile': f}, format='multipart')
     #         self.assertEqual(200, response.status_code)
+
+class SwaggerDataViewTestCase(APITestCase):
+    def test_excel_parcer_example_data(self):
+        from .serializers import ExcelParcerSerializer
+        from .swagger_schemas import excel_parcer_schema_responce_example
+        serializer = ExcelParcerSerializer(data = excel_parcer_schema_responce_example())
+        if not serializer.is_valid():
+            print(serializer.errors)
+        self.assertTrue(serializer.is_valid())
+        

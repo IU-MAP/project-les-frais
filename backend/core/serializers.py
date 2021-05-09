@@ -1,9 +1,11 @@
 from functools import partial
+from os import name
 from re import M
 from django.db.models import fields
 from openpyxl.workbook import child
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
+from xlrd import sheet
 
 from .models import Transaction, Currency, Category
 from rest_framework_bulk import (
@@ -151,20 +153,33 @@ class ExcelParcerSerializer(serializers.Serializer):
     """
         Used inly to generate swagger schema
     """
-    data = serializers.DictField(
-        child=serializers.ListField(
+    class Sheet_Object(serializers.Serializer):
+        data = serializers.ListField(
             child=serializers.ListField(
-                child=serializers.CharField()
-            )
+                child=serializers.CharField(allow_null=True, required=False),
+                required=False,
+                min_length = 0
+            ),
+             min_length = 0
         )
-    )
 
-    merged_cells = serializers.DictField(
-        child=serializers.ListField(
-            child=serializers.ListField(
-                child=serializers.IntegerField(),
-                min_length = 4,
-                max_length = 4 
-            )
+        headers = serializers.ListField(
+            child=serializers.CharField(allow_null=True, required=False),
+            min_length = 0
         )
+
+        merged_cells = serializers.ListField(
+            child=serializers.ListField(
+                child=serializers.CharField(allow_null=True, required=False),
+                required=False,
+                min_length = 0
+            ),
+             min_length = 0
+        )
+
+
+    sheets = serializers.DictField(
+        help_text='sheet name: sheet object',
+        label='sheets',
+        child=Sheet_Object(label = 'sheet object')
     )
