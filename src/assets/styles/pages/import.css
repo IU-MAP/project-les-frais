@@ -1,4 +1,5 @@
 .import-page {
+  padding-bottom: 2rem;
 }
 
 .import-page .import-navigation {
@@ -60,6 +61,7 @@
 .import-table_header {
   position: relative;
   padding-bottom: 1rem;
+  max-width: 300px;
 }
 
 .import-table_header_title {

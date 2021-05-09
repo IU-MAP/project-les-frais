@@ -1,7 +1,12 @@
 import { http } from './helpers/api';
 
-interface ImportResponse {
-  data: Record<string, any>,
+export interface ImportSheet {
+  data: (string|number|null)[][],
+  headers: string[],
+}
+
+export interface ImportResponse {
+  sheets: Record<string, ImportSheet>,
 }
 
 /**
