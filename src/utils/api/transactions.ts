@@ -10,7 +10,7 @@ export interface Transaction {
   type: 'loss'|'gain',
   date: Date,
   title: string,
-  price: number,
+  price: number|string,
   currency: Currency,
   category: Category,
   description: string,

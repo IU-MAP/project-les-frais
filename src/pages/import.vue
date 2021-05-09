@@ -4,24 +4,24 @@
       <Button :link="{ name: 'settings', query: { slug: 'settings_tabs_profile' }}">
         <BackIcon />
       </Button>
-      <Button look="with-icon">
+      <Button v-if="imported" look="with-icon">
         {{ t('import_update_file') }}
         <FileIcon />
       </Button>
       <h1>{{ t('import_h1') }}</h1>
-      <Button look="submit">{{ t('import_import') }}</Button>
+      <Button v-if="imported" look="submit">{{ t('import_import') }}</Button>
     </nav>
 
     <p class="import-info text-regular">{{ t('import_info') }}</p>
 
-    <Button look="submit" class="import-import" @click.self.prevent="chooseFile">
+    <Button v-if="!imported" look="submit" class="import-import" @click.self.prevent="chooseFile">
       <input ref="fileInput" type="file" accept=".xlx,.xlsx" @change="changeFile">
       {{ t('import_xls') }}
     </Button>
 
     <p class="import-error text-regular text-color-error">{{ error }}</p>
 
-    <div :style="styles" class="import-table">
+    <div v-if="imported" :style="styles" class="import-table">
       <div class="import-table_header" v-for="(header, i) in HEADERS" :key="i">
         <div class="import-table_header_title">
           <h3 class="text-ellipsis">{{ header.name }}</h3>
@@ -65,6 +65,7 @@ import BackIcon from '../assets/icons/back.svg';
 import FileIcon from '../assets/icons/file.svg';
 import XIcon from '../assets/icons/x.svg';
 import Dropdown from '../components/dropdown/index.vue';
+import api from '../utils/api';
 
 const HEADERS: { name: string, chosen: { slug: string, name: string }|null }[] = [
   {
@@ -127,13 +128,16 @@ export default defineComponent({
     const t = useTranslation();
     const error = ref<string>('');
     const fileInput = ref<HTMLInputElement>();
+    const imported = ref(null);
 
-    const styles = computed<number>(() => ({
+    const styles = computed(() => ({
       '--headers-length': HEADERS.length,
     }));
 
     const chooseColumn = (header: string, column: { slug: string, name: string }) => {
       const found = HEADERS.find((item) => item.name === header);
+      if (!found) return;
+
       found.chosen = column;
     };
 
@@ -141,10 +145,20 @@ export default defineComponent({
       fileInput.value?.click();
     };
 
-    const changeFile = (e: InputEvent) => {
+    const changeFile = async (e: InputEvent) => {
+      error.value = '';
+
       const file = (e.target as HTMLInputElement).files?.[0];
       if (file) {
-        // TODO: Do something with file
+        const res = await api.import.parseXLS(file);
+        if (typeof res === 'string') {
+          error.value = res;
+          return;
+        }
+
+        console.log(res);
+        // TODO: Do something with data from file
+        imported.value = res.data;
       }
     };
 
@@ -153,6 +167,7 @@ export default defineComponent({
       error,
       styles,
       fileInput,
+      imported,
       HEADERS,
       ROWS,
       COLUMNS,

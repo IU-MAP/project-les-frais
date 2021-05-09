@@ -20,7 +20,7 @@ export default defineComponent({
       default: '',
     },
     price: {
-      type: String,
+      type: [String, Number],
       required: true,
     },
     isGain: {
