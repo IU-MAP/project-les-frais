@@ -1,6 +1,9 @@
 <template>
   <div class="statistics-categories">
-    <div class="statistics-categories_diagram"></div>
+    <div class="statistics-categories_diagram">
+      <DonutChart :values="CATEGORIES" />
+    </div>
+
     <div class="statistics-categories_list">
       <StatisticRow
         v-for="(category, i) in CATEGORIES"
@@ -32,6 +35,7 @@ import { defineComponent } from 'vue';
 import Category from '../category/index.vue';
 import StatisticRow from './statistic-row.vue';
 import Button from '../button/index.vue';
+import DonutChart from './donut.vue';
 
 const CATEGORIES = [
   {
@@ -78,7 +82,12 @@ const CATEGORIES = [
 
 export default defineComponent({
   name: 'StatisticsCategories',
-  components: {Button, StatisticRow, Category },
+  components: {
+    DonutChart,
+    Button,
+    StatisticRow,
+    Category,
+  },
   props: {},
   setup () {
     return {
