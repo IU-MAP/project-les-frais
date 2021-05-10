@@ -1,13 +1,18 @@
 <template>
   <div class="donut-chart">
-    <div
-      v-for="(item, i) in extendedValues"
-      :key="i"
-      :style="{'clip-path': `polygon(${item.angle})`, transform: `rotate(${item.rotate}deg)`}"
-      :class="'color-number-' + item.color"
-      class="donut-chart_piece"
-    />
-    <div class="donut-chart_center" />
+    <div class="donut-chart_wrapper">
+      <div
+        v-for="(item, i) in extendedValues"
+        :key="i"
+        :style="{'clip-path': `polygon(${item.angle})`, transform: `rotate(${45 + item.rotate}deg)`}"
+        :class="'color-number-' + item.color"
+        class="donut-chart_piece"
+      />
+
+      <div class="donut-chart_center">
+        <p class="text-small">{{ truncateMoney(totalAmount) }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,6 +21,7 @@ import './donut.css';
 import {
   computed, defineComponent, PropType,
 } from 'vue';
+import { truncateMoney } from '../../utils/format-money';
 
 interface ValueType {
   name: string,
@@ -57,8 +63,8 @@ export default defineComponent({
     };
 
     const extendedValues = computed(() => {
-      /** Persist previous angle (45deg is initial) */
-      let rotate = 45;
+      /** Persist previous angle (45deg is initial, written in template) */
+      let rotate = 0;
 
       const sorted = [...props.values].sort((a, b) => b.price - a.price);
       return sorted.map((val) => {
@@ -67,7 +73,6 @@ export default defineComponent({
           ...val,
           percent: `${percent * 100}%`,
           angle: drawClipPath(percent * 360),
-          angleee: percent * 360,
           rotate,
         };
 
@@ -79,6 +84,7 @@ export default defineComponent({
     return {
       totalAmount,
       extendedValues,
+      truncateMoney,
     };
   },
 });

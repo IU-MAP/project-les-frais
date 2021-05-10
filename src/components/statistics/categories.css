@@ -2,7 +2,14 @@
 }
 
 .statistics-categories_diagram {
-  height: 160px;
+  margin-top: 2rem;
+  margin-bottom: 1rem;
+}
+
+.statistics-categories_diagram .donut-chart {
+  height: 128px;
+  width: 128px;
+  margin: 0 auto;
 }
 
 .statistics-categories_list {
