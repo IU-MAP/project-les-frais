@@ -24,7 +24,7 @@ interface GetTransactionArgs {
   isTemplate: boolean,
 }
 
-interface AddTransactionBody {
+export interface AddTransactionBody {
   type: 'loss'|'gain',
   date: string,
   title: string,

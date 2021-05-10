@@ -4,18 +4,18 @@
       <Button :link="{ name: 'settings', query: { slug: 'settings_tabs_profile' }}">
         <BackIcon />
       </Button>
-      <Button v-if="isImported" look="with-icon">
+      <Button v-if="isImported" look="with-icon" @click="chooseFile">
         {{ t('import_update_file') }}
         <FileIcon />
       </Button>
       <h1>{{ t('import_h1') }}</h1>
-      <Button v-if="isImported" look="submit">{{ t('import_import') }}</Button>
+      <Button v-if="isImported" look="submit" @click.prevent="finalImport">{{ t('import_import') }}</Button>
     </nav>
 
     <p class="import-info text-regular">{{ t('import_info') }}</p>
 
     <Button
-      v-if="!isImported"
+      v-show="!isImported"
       look="submit"
       class="import-import"
       @click.self.prevent="chooseFile"
@@ -37,7 +37,7 @@
           <h3 class="text-ellipsis">{{ header.name }}</h3>
           <XIcon @click="removeColumn(i)" />
         </div>
-        <Dropdown :items="COLUMNS" @select="chooseColumn(header.name, $event)">
+        <Dropdown :items="filteredColumns" @select="chooseColumn(header.name, $event)">
           <template #default>
             {{ header.chosen ? t(header.chosen.name) : t('import_choose_field') }}
           </template>
@@ -70,6 +70,7 @@ import {
   computed, defineComponent, reactive, ref,
 } from 'vue';
 import type { ImportResponse, ImportSheet } from '../utils/api/import';
+import type { AddTransactionBody } from '../utils/api/transactions';
 import useTranslation from '../utils/useTranslation';
 import api from '../utils/api';
 import Dropdown from '../components/dropdown/index.vue';
@@ -78,13 +79,18 @@ import BackIcon from '../assets/icons/back.svg';
 import FileIcon from '../assets/icons/file.svg';
 import XIcon from '../assets/icons/x.svg';
 
-const COLUMNS = [
+type ColumnType = {slug: string|null, name: string};
+const COLUMNS: ColumnType[] = [
+  {
+    slug: null,
+    name: 'import_choose_field',
+  },
   {
     slug: 'date',
     name: 'import_date', // Is taken from the translations like t('import_date')
   },
   {
-    slug: 'name',
+    slug: 'title',
     name: 'import_name',
   },
   {
@@ -97,7 +103,14 @@ const COLUMNS = [
   },
 ];
 
-type HeadersType = { name: string, chosen: { slug: string, name: string }|null }[];
+const REQUIRED_COLUMNS = [
+  'date',
+  'title',
+  'price',
+  'category',
+];
+
+type HeadersType = { name: string, chosen: ColumnType|null }[];
 type RowsType = (string|number|null)[][];
 interface DataType {
   all: ImportResponse|null,
@@ -135,11 +148,18 @@ export default defineComponent({
 
     const isImported = computed<boolean>(() => !!data.sheet);
 
-    const chooseColumn = (header: string, column: { slug: string, name: string }) => {
+    const chosenColumns = computed<string[]>(() => data.headers
+      .map((header) => (header.chosen ? header.chosen.slug : null))
+      .filter((slug) => !!slug) as string[]);
+
+    const filteredColumns = computed<{slug: string|null, name: string}[]>(() => COLUMNS
+      .filter((column) => (!column.slug ? false : !chosenColumns.value.includes(column.slug))));
+
+    const chooseColumn = (header: string, column: ColumnType) => {
       const found = data.headers.find((item) => item.name === header);
       if (!found) return;
 
-      found.chosen = column;
+      found.chosen = column.slug === null ? null : column;
     };
 
     const updateData = (importResponse: ImportResponse) => {
@@ -182,9 +202,61 @@ export default defineComponent({
 
     const removeColumn = (index: number) => {
       data.headers = data.headers.filter((_, i) => i !== index);
-      for (const row of data.rows) {
+      for (const row of data.rows) { // eslint-disable-line no-restricted-syntax
         row.splice(index, 1);
       }
+    };
+
+    const checkColumns = (): boolean => {
+      const difference = REQUIRED_COLUMNS.filter((item) => chosenColumns.value.indexOf(item) < 0);
+      return !difference.length;
+    };
+
+    const finalImport = async (): Promise<void> => {
+      if (!data.sheet || !checkColumns()) return;
+
+      // Place header slugs into an array with indexes that properly correspond with rows
+      const headerIndexes: (string|null)[] = [];
+      data.headers.forEach((column) => {
+        headerIndexes.push(column.chosen?.slug || null);
+      });
+
+      // Make data rows become a transaction by connecting them with chosen headers
+      const constructRow = ((row: (string | number | null)[]) => {
+        const rowData: AddTransactionBody = {
+          type: 'loss',
+          title: '',
+          price: '',
+          category: '',
+          currency: '',
+          description: '',
+          isTemplate: false,
+        };
+
+        headerIndexes.forEach((col: keyof AddTransactionBody|string|null, i) => {
+          if (col) {
+            // @ts-ignore
+            rowData[col] = row[i];
+          }
+        });
+
+        return rowData;
+      });
+
+      // Group assigned transactions into packs of 10
+      const rowGroups: AddTransactionBody[][] = [];
+      data.rows.forEach((row, i) => {
+        if (i % 10 === 0) {
+          rowGroups.push([constructRow(row)]);
+        } else {
+          const lastGroup = rowGroups[rowGroups.length - 1];
+          lastGroup.push(constructRow(row));
+        }
+      });
+
+      const requests = rowGroups.map((group) => api.import.create(group));
+      const responses = await Promise.all(requests);
+      console.log(responses);
     };
 
     return {
@@ -194,12 +266,14 @@ export default defineComponent({
       fileInput,
       isImported,
       data,
+      filteredColumns,
       COLUMNS,
       chooseColumn,
       chooseFile,
       changeFile,
       removeRow,
       removeColumn,
+      finalImport,
     };
   },
 });

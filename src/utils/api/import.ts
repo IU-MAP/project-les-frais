@@ -1,4 +1,5 @@
-import { http } from './helpers/api';
+import request, { http } from './helpers/api';
+import { AddTransactionBody, Transaction } from './transactions';
 
 export interface ImportSheet {
   data: (string|number|null)[][],
@@ -23,6 +24,15 @@ const importApi = {
     } catch (e) {
       console.error(e);
       return e?.data?.detail || '';
+    }
+  },
+
+  create: async (body: AddTransactionBody[]): Promise<Transaction[]|null> => {
+    try {
+      return await request.post<AddTransactionBody[], Transaction[]>('api/v1/transactions/', body);
+    } catch (e) {
+      console.error(e);
+      return null;
     }
   },
 };
