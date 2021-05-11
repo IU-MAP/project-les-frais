@@ -1,7 +1,9 @@
 from io import BytesIO
+import re
 import xlrd
 import openpyxl
 import django_filters.rest_framework as filters
+import datetime
 
 from .constants import DEFAULT_CURRENCY
 from .models import Category, Currency, Transaction
@@ -47,7 +49,15 @@ class openpyxl_parcer():
         return self.wb.sheetnames
 
     def get_data(self, sheet_name):
-        return [list(e) for e in self.wb[sheet_name].values]
+
+        def parce(obj):
+            #Parce each cell
+            # If datetime, remove time
+            if (isinstance(obj, datetime.datetime)):
+                return obj.date()
+            else: return obj
+        
+        return [list([parce(e) for e in row]) for row in self.wb[sheet_name].values]
 
     def get_merged(self, sheet_name=None):
         sheet = self.wb[sheet_name]
@@ -69,7 +79,23 @@ class xlrd_parcer():
     def get_data(self, sheet_name):
         sheet = self.wb.sheet_by_name(sheet_name)
         # https://xlrd.readthedocs.io/en/latest/api.html#xlrd.sheet.Cell
-        return [[e.value if e.ctype != 6 else None for e in sheet.row(i)] for i in range(sheet.nrows)]
+        res = []
+        for i in range(sheet.nrows):
+            res.append([])
+            for e in sheet.row(i):
+                if (e.ctype == 6):
+                    # If Empty Cell
+                    res[-1].append(None)
+                elif (e.ctype == 3):
+                    # If Date
+                    year, month, day, hour, minute, nearest_second = xlrd.xldate_as_tuple(e.value, 0)
+                    if (year == month == day == 0):
+                        res[-1].append(datetime.time(hour, minute, nearest_second))
+                    else:
+                        res[-1].append(datetime.date(year, month, day))
+                else: res[-1].append(e.value)
+
+        return res
 
     def get_merged(self, sheet_name):
         sheet = self.wb.sheet_by_name(sheet_name)
@@ -94,7 +120,6 @@ def parce_excel(file, filename, fill):
             res[sheet_name]['headers'] = res[sheet_name]['data'].pop(0)
         except IndexError:
             res[sheet_name]['headers'] = []
-        
         res[sheet_name]['merged_cells'] = parcer.get_merged(sheet_name)
 
 
@@ -113,10 +138,6 @@ def parce_excel(file, filename, fill):
         except IndexError:
             # only if arrays are empty
             pass
-    
-    
-    # if res[sheet_name]['data'] == []:
-    #     res[sheet_name]['data'] = [[]]
 
     # Apply filling
     if (fill == 'empty'):
