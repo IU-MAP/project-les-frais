@@ -74,14 +74,6 @@ class CategoryStatisticView(ListAPIView):
             filter_param['transactions__date'] = date
         return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price', filter=Q(**filter_param)))
 
-    def filter_queryset(self, queryset):
-        return queryset
-
-    def get_serializer(self, *args, **kwargs):
-        return self.get_serializer_class()(*args, **kwargs)
-
-    
-    
 
 
 
