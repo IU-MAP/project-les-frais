@@ -34,3 +34,12 @@ EXCEL_PARCER_PARAMETERS = [
                       type=openapi.TYPE_STRING,
                       reqired=False)
 ]
+
+CATEGORY_STATISTIC_PARAMETERS = [
+    openapi.Parameter('date__lt', openapi.IN_QUERY,
+                      type=openapi.TYPE_STRING,
+                      reqired=False),
+    openapi.Parameter('date__gt', openapi.IN_QUERY,
+                      type=openapi.TYPE_STRING,
+                      reqired=False),
+]

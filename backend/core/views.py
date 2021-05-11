@@ -19,7 +19,7 @@ from .permissions import IsTheOwnerOf
 from .serializers import (CategorySerializer, CategoryStatisticsSerializer, CurrencySerializer, ShortTransactionSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
-from .swagger_schemas import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS
+from .swagger_schemas import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS, CATEGORY_STATISTIC_PARAMETERS
 from django.db.models import Sum
 from django.db.models import Q, F
 
@@ -74,6 +74,10 @@ class CategoryStatisticView(ListAPIView):
         if (date):
             filter_param['transactions__date'] = date
         return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price', filter=Q(**filter_param)))
+
+    @swagger_auto_schema(manual_parameters=CATEGORY_STATISTIC_PARAMETERS)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
 
 
 
