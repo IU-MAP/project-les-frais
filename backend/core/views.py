@@ -16,11 +16,12 @@ from rest_framework_bulk import mixins as bulk_mixins
 
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
-from .serializers import (CategorySerializer, CurrencySerializer, ShortTransactionSerializer,
+from .serializers import (CategorySerializer, CategoryStatisticsSerializer, CurrencySerializer, ShortTransactionSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
 from .swagger_schemas import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS
-
+from django.db.models import Sum
+from django.db.models import Q, F
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -48,6 +49,42 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class CategoryStatisticView(ListAPIView):
+    """
+    Function:
+        ``list``
+    """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategoryStatisticsSerializer
+    queryset = Category.objects
+
+    def get_queryset(self):
+        """
+        filter_param = {}
+        date__lt = self.request.query_params.get('date__lt', None)
+        if (date__lt):
+            filter_param['transactions__date__lt'] = date__lt
+        date__gt = self.request.query_params.get('date__gt', None)
+        if (date__gt):
+            filter_param['transactions__date__gt'] = date__gt
+        date = self.request.query_params.get('date', None)
+        if (date):
+            filter_param['transactions__date'] = date
+        """
+        return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price'))
+
+    def filter_queryset(self, queryset):
+        return queryset
+
+    def get_serializer(self, *args, **kwargs):
+        return self.get_serializer_class()(*args, **kwargs)
+
+    
+    
+
 
 
 class CurrencyView(ListAPIView):
@@ -166,6 +203,7 @@ class ParceExcelView(views.APIView):
     parser_classes = [FileUploadParser]
 
     permission_classes = [IsAuthenticated]
+
     @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters=EXCEL_PARCER_PARAMETERS)
     def put(self, request, filename,  format=None):
         fill = self.request.query_params.get('fill', 'null')

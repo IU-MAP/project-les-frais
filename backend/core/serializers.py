@@ -51,6 +51,24 @@ class CategorySerializer(serializers.ModelSerializer):
         model = Category
         fields = ('id', 'created_at', 'name', 'color')
 
+class CategoryStatisticsSerializer(serializers.ModelSerializer):
+    """
+    Model serializer for Category
+
+    Fields:
+    ``id``
+    ``created_at``
+    ``slug``
+    ``name``
+    ``color``
+    ``transactions_sum``
+    """
+
+    transactions_sum = serializers.IntegerField()
+    
+    class Meta:
+        model = Category
+        fields = ('id', 'created_at', 'name', 'color', 'transactions_sum')
 
 class CurrencySerializer(serializers.ModelSerializer):
     """
