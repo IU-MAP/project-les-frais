@@ -1,6 +1,7 @@
 from django.contrib.auth.models import User
 from django.db import models
-
+from random import randint
+from .constants import CATEGORY_COLORS_RANGE
 
 class Currency(models.Model):
     """
@@ -34,12 +35,18 @@ class Category(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     name = models.CharField(max_length=30)
     # stored in format #rrggbb
-    color = models.CharField(max_length=7)
+    color = models.SmallIntegerField(blank=True)
 #    isShown = models.BooleanField()
 
     # we delete all transactions when user is deleted
     owner = models.ForeignKey(
         User, verbose_name='Owner', on_delete=models.CASCADE)
+
+    def save(self, *args, **kwargs):
+        if (self.color is None):
+            self.color = randint(*CATEGORY_COLORS_RANGE)
+        return super().save(*args, **kwargs)
+
 
     def __str__(self) -> str:
         return self.name
