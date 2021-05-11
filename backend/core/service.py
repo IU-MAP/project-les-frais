@@ -1,7 +1,9 @@
 from io import BytesIO
+import re
 import xlrd
 import openpyxl
 import django_filters.rest_framework as filters
+import datetime
 
 from .constants import DEFAULT_CURRENCY
 from .models import Category, Currency, Transaction
@@ -47,7 +49,12 @@ class openpyxl_parcer():
         return self.wb.sheetnames
 
     def get_data(self, sheet_name):
-        return [list(e) for e in self.wb[sheet_name].values]
+        def parce(obj):
+            if (isinstance(obj, datetime.datetime)):
+                return obj.date()
+            else: return obj
+        
+        return [list([parce(e) for e in row]) for row in self.wb[sheet_name].values]
 
     def get_merged(self, sheet_name=None):
         sheet = self.wb[sheet_name]
@@ -69,7 +76,22 @@ class xlrd_parcer():
     def get_data(self, sheet_name):
         sheet = self.wb.sheet_by_name(sheet_name)
         # https://xlrd.readthedocs.io/en/latest/api.html#xlrd.sheet.Cell
-        return [[e.value if e.ctype != 6 else None for e in sheet.row(i)] for i in range(sheet.nrows)]
+        res = []
+        for i in range(sheet.nrows):
+            res.append([])
+            for e in sheet.row(i):
+                if (e.ctype == 6):
+                    res[-1].append(None)
+                elif (e.ctype == 3):
+                    year, month, day, hour, minute, nearest_second = xlrd.xldate_as_tuple(e.value, 0)
+                    if (year == month == day == 0):
+                        res[-1].append(datetime.time(hour, minute, nearest_second))
+                    else:
+                        res[-1].append(datetime.date(year, month, day))
+                else: res[-1].append(e.value)
+
+        return res
+        #return [[e.value if e.ctype != 6 else None for e in sheet.row(i)] for i in range(sheet.nrows)]
 
     def get_merged(self, sheet_name):
         sheet = self.wb.sheet_by_name(sheet_name)
@@ -132,5 +154,16 @@ def parce_excel(file, filename, fill):
                         res[sheet]['data'][i][j] = res[sheet]['data'][x1][y1]
     else:
         assert fill == 'null', f"Uncknown fill value: '{fill}'"
+    
+    # Change date format
+    # for sheet in res:
+    #     for row in res[sheet]['data']:
+    #         for i, _ in enumerate(row):
+    #             if (row[i] is str):
+    #                 try:
+    #                     row[i]= str(parse_date(row[i]).date())
+    #                 except ValueError:
+    #                     pass
+
 
     return {'sheets': res}
