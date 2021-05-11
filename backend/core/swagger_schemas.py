@@ -35,6 +35,12 @@ EXCEL_PARCER_PARAMETERS = [
                       reqired=False)
 ]
 
+def generate_parameters(l):
+        return [openapi.Parameter(name, openapi.IN_QUERY,
+                        type=openapi.TYPE_STRING,
+                        reqired=False) for name in l]
+       
+
 CATEGORY_STATISTIC_PARAMETERS = [
     openapi.Parameter('date__lt', openapi.IN_QUERY,
                       type=openapi.TYPE_STRING,
