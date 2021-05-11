@@ -29,16 +29,16 @@ class CategoryAPIViewTestCase(APITestCase):
 
     def test_user_category_creating(self):
         response = self.client.post(
-            self.url, {"name": "transport", "color": "red"})
+            self.url, {"name": "transport", "color": 10})
         self.assertEqual(201, response.status_code)
 
     def test_user_category_get(self):
         new_user = User.objects.create_user(
             "new@user.com", "new@user.com", "newpass")
-        Category.objects.create(owner=new_user, name="cookies", color="brown")
-        Category.objects.create(owner=new_user, name="tea", color="white")
+        Category.objects.create(owner=new_user, name="cookies", color=11)
+        Category.objects.create(owner=new_user, name="tea", color=12)
 
-        Category.objects.create(owner=self.user, name="transport", color="red")
+        Category.objects.create(owner=self.user, name="transport", color=13)
         response = self.client.get(self.url)
         self.assertTrue(len(json.loads(response.content)) ==
                         Category.objects.filter(owner=self.user).count())
@@ -55,9 +55,9 @@ class TransactionAPIViewTestCase(APITestCase):
             self.username, self.email, self.password)
         self.currency = Currency.objects.get(slug="rur")
         self.category1 = Category.objects.create(
-            owner=self.user, name="cookies", color="brown")
+            owner=self.user, name="cookies", color=14)
         self.category2 = Category.objects.create(
-            owner=self.user, name="tea", color="white")
+            owner=self.user, name="tea", color=1)
         self.transaction1 = Transaction.objects.create(type="ls",
                                                        date="2021-04-20",
                                                        owner=self.user,

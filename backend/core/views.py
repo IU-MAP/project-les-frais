@@ -62,7 +62,6 @@ class CategoryStatisticView(ListAPIView):
     queryset = Category.objects
 
     def get_queryset(self):
-        """
         filter_param = {}
         date__lt = self.request.query_params.get('date__lt', None)
         if (date__lt):
@@ -73,8 +72,7 @@ class CategoryStatisticView(ListAPIView):
         date = self.request.query_params.get('date', None)
         if (date):
             filter_param['transactions__date'] = date
-        """
-        return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price'))
+        return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price', filter=Q(**filter_param)))
 
     def filter_queryset(self, queryset):
         return queryset
