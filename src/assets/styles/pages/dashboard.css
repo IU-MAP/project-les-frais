@@ -5,11 +5,11 @@
 }
 
 .dashboard-page_list {
-  margin-right: 1.5rem;
+  margin-right: 2.5rem;
 }
 
 .dashboard-page_statistics {
-  width: 10rem;
+  width: 250px;
 }
 
 .dashboard-page .transaction-add-form {
