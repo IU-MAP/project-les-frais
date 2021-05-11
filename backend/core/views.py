@@ -9,13 +9,13 @@ from django_filters.rest_framework import DjangoFilterBackend
 from drf_yasg.utils import swagger_auto_schema
 from rest_framework import exceptions, mixins, status, views, viewsets
 from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
 from rest_framework_bulk import mixins as bulk_mixins
-from rest_framework.exceptions import ValidationError
 
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
@@ -24,7 +24,7 @@ from .serializers import (CategorySerializer, CategoryStatisticsSerializer,
                           TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
 from .swagger_schemas import (EXCEL_PARCER_PARAMETERS, EXCEL_PARCER_SCHEMA,
-                              generate_parameters)
+                              generate_swagger_parameters)
 
 
 class CategoryViewSet(viewsets.ModelViewSet):
@@ -54,7 +54,11 @@ class CategoryViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
 
-CategoryStatisticView__filter_againts = ['date', 'date__lt', 'date__gt', 'type', 'price__gt', 'currency', 'title', 'title__contains']
+
+CategoryStatisticView__filter_againts = [
+    'date', 'date__lt', 'date__gt', 'type', 'price__gt', 'currency', 'title', 'title__contains']
+
+
 class CategoryStatisticView(ListAPIView):
     """
     Function:
@@ -64,24 +68,23 @@ class CategoryStatisticView(ListAPIView):
     permission_classes = [IsAuthenticated]
     serializer_class = CategoryStatisticsSerializer
     queryset = Category.objects
-    
 
     def get_queryset(self):
         filter_param = {}
         filter_againts = CategoryStatisticView__filter_againts
         unknown = set(self.request.query_params) - set(filter_againts)
         if (unknown):
-            raise ValidationError(f"unknown query parameter(s):{self.request.query_params}, expected one of {filter_againts}")
+            raise ValidationError(
+                f"unknown query parameter(s):{self.request.query_params}, expected one of {filter_againts}")
 
-        filter_param = {"transactions__" + k: v for k, v in self.request.query_params.items()}
+        filter_param = {"transactions__" + k: v for k,
+                        v in self.request.query_params.items()}
         filter_param['transactions__isTemplate'] = False
         return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price', filter=Q(**filter_param)))
 
-    @swagger_auto_schema(manual_parameters=generate_parameters(CategoryStatisticView__filter_againts))
+    @swagger_auto_schema(manual_parameters=generate_swagger_parameters(CategoryStatisticView__filter_againts))
     def get(self, request, *args, **kwargs):
         return super().get(request, *args, **kwargs)
-
-
 
 
 class CurrencyView(ListAPIView):
