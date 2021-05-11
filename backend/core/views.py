@@ -63,6 +63,7 @@ class CategoryStatisticView(ListAPIView):
 
     def get_queryset(self):
         filter_param = {}
+        filter_param['transactions__isTemplate'] = False
         date__lt = self.request.query_params.get('date__lt', None)
         if (date__lt):
             filter_param['transactions__date__lt'] = date__lt
