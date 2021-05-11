@@ -49,7 +49,10 @@ class openpyxl_parcer():
         return self.wb.sheetnames
 
     def get_data(self, sheet_name):
+
         def parce(obj):
+            #Parce each cell
+            # If datetime, remove time
             if (isinstance(obj, datetime.datetime)):
                 return obj.date()
             else: return obj
@@ -81,8 +84,10 @@ class xlrd_parcer():
             res.append([])
             for e in sheet.row(i):
                 if (e.ctype == 6):
+                    # If Empty Cell
                     res[-1].append(None)
                 elif (e.ctype == 3):
+                    # If Date
                     year, month, day, hour, minute, nearest_second = xlrd.xldate_as_tuple(e.value, 0)
                     if (year == month == day == 0):
                         res[-1].append(datetime.time(hour, minute, nearest_second))
@@ -91,7 +96,6 @@ class xlrd_parcer():
                 else: res[-1].append(e.value)
 
         return res
-        #return [[e.value if e.ctype != 6 else None for e in sheet.row(i)] for i in range(sheet.nrows)]
 
     def get_merged(self, sheet_name):
         sheet = self.wb.sheet_by_name(sheet_name)
@@ -116,7 +120,6 @@ def parce_excel(file, filename, fill):
             res[sheet_name]['headers'] = res[sheet_name]['data'].pop(0)
         except IndexError:
             res[sheet_name]['headers'] = []
-        
         res[sheet_name]['merged_cells'] = parcer.get_merged(sheet_name)
 
 
@@ -135,10 +138,6 @@ def parce_excel(file, filename, fill):
         except IndexError:
             # only if arrays are empty
             pass
-    
-    
-    # if res[sheet_name]['data'] == []:
-    #     res[sheet_name]['data'] = [[]]
 
     # Apply filling
     if (fill == 'empty'):
@@ -154,16 +153,5 @@ def parce_excel(file, filename, fill):
                         res[sheet]['data'][i][j] = res[sheet]['data'][x1][y1]
     else:
         assert fill == 'null', f"Uncknown fill value: '{fill}'"
-    
-    # Change date format
-    # for sheet in res:
-    #     for row in res[sheet]['data']:
-    #         for i, _ in enumerate(row):
-    #             if (row[i] is str):
-    #                 try:
-    #                     row[i]= str(parse_date(row[i]).date())
-    #                 except ValueError:
-    #                     pass
-
 
     return {'sheets': res}
