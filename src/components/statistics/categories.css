@@ -2,14 +2,15 @@
 }
 
 .statistics-categories_diagram {
-  margin-top: 2rem;
+  margin-top: 3rem;
   margin-bottom: 1rem;
 }
 
 .statistics-categories_diagram .donut-chart {
   height: 128px;
   width: 128px;
-  margin: 0 auto;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .statistics-categories_list {

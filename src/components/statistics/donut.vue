@@ -7,11 +7,18 @@
         :style="{'clip-path': `polygon(${item.angle})`, transform: `rotate(${45 + item.rotate}deg)`}"
         :class="'color-number-' + item.color"
         class="donut-chart_piece"
+        @mouseenter="hovered = item"
+        @mouseleave="hovered = null"
       />
 
       <div class="donut-chart_center">
         <p class="text-small">{{ truncateMoney(totalAmount) }}</p>
       </div>
+    </div>
+
+    <div v-if="hovered" class="donut-chart_info">
+      <Dot :number="hovered.color" />
+      <span class="text-small text-ellipsis">{{ hovered.name }}</span>
     </div>
   </div>
 </template>
@@ -19,9 +26,10 @@
 <script lang="ts">
 import './donut.css';
 import {
-  computed, defineComponent, PropType,
+  computed, defineComponent, PropType, ref,
 } from 'vue';
 import { truncateMoney } from '../../utils/format-money';
+import Dot from '../dot/index.vue';
 
 interface ValueType {
   name: string,
@@ -31,6 +39,7 @@ interface ValueType {
 
 export default defineComponent({
   name: 'DonutChart',
+  components: { Dot },
   props: {
     values: {
       type: Array as PropType<ValueType[]>,
@@ -38,6 +47,8 @@ export default defineComponent({
     },
   },
   setup (props) {
+    const hovered = ref<ValueType|null>(null);
+
     const totalAmount = computed<number>(() => props.values
       .reduce((accum, currentValue) => {
         accum += currentValue.transactions_sum;
@@ -82,6 +93,7 @@ export default defineComponent({
     });
 
     return {
+      hovered,
       totalAmount,
       extendedValues,
       truncateMoney,
