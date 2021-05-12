@@ -2,6 +2,7 @@ import auth from './auth';
 import category from './categories';
 import transactions from './transactions';
 import currencies from './currency';
+import statistics from './statistics';
 import importApi from './import';
 
 const api = {
@@ -9,6 +10,7 @@ const api = {
   category,
   transactions,
   currencies,
+  statistics,
   import: importApi,
 };
 

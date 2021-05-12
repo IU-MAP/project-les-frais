@@ -25,7 +25,7 @@ import { truncateMoney } from '../../utils/format-money';
 
 interface ValueType {
   name: string,
-  price: number,
+  transactions_sum: number,
   color: number,
 }
 
@@ -40,7 +40,7 @@ export default defineComponent({
   setup (props) {
     const totalAmount = computed<number>(() => props.values
       .reduce((accum, currentValue) => {
-        accum += currentValue.price;
+        accum += currentValue.transactions_sum;
         return accum;
       }, 0));
 
@@ -66,9 +66,9 @@ export default defineComponent({
       /** Persist previous angle (45deg is initial, written in template) */
       let rotate = 0;
 
-      const sorted = [...props.values].sort((a, b) => b.price - a.price);
+      const sorted = [...props.values].sort((a, b) => b.transactions_sum - a.transactions_sum);
       return sorted.map((val) => {
-        const percent = val.price / totalAmount.value;
+        const percent = val.transactions_sum / totalAmount.value;
         const item = {
           ...val,
           percent: `${percent * 100}%`,
