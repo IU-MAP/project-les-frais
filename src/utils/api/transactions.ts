@@ -10,7 +10,7 @@ export interface Transaction {
   type: 'loss'|'gain',
   date: Date,
   title: string,
-  price: number,
+  price: number|string,
   currency: Currency,
   category: Category,
   description: string,
@@ -24,7 +24,7 @@ interface GetTransactionArgs {
   isTemplate: boolean,
 }
 
-interface AddTransactionBody {
+export interface AddTransactionBody {
   type: 'loss'|'gain',
   date: string,
   title: string,

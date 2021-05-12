@@ -65,7 +65,11 @@
 import './list.css';
 import {
   computed,
-  defineComponent, PropType, ref, watch,
+  defineComponent,
+  PropType,
+  ref,
+  watch,
+  onMounted,
 } from 'vue';
 import type { Transaction as TransactionType } from '../../utils/api/transactions';
 import useTranslation from '../../utils/useTranslation';
@@ -97,7 +101,8 @@ export default defineComponent({
       default: false,
     },
   },
-  async setup (props) {
+  emits: ['update:date'],
+  async setup (props, context) {
     const t = useTranslation();
     const store = useStore();
 
@@ -135,6 +140,7 @@ export default defineComponent({
         isTemplate: false,
       };
 
+      context.emit('update:date', { month: month.value, year: year.value });
       if (props.templates) {
         await store.dispatch('changeTemplates');
       } else {
@@ -187,6 +193,10 @@ export default defineComponent({
       if (newDate.getMonth() + 1 === month.value && newDate.getFullYear() === year.value) {
         updateList();
       }
+    });
+
+    onMounted(() => {
+      context.emit('update:date', { month: month.value, year: year.value });
     });
 
     if (!props.templates) {

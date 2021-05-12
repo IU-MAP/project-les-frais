@@ -11,3 +11,5 @@ DEFAULT_CATEGORUES = [ {'name': {'rus': 'Еда', 'eng': 'Food'}},
             {'name': {'rus': 'Путешествия', 'eng': 'Travels'}},
             {'name': {'rus': 'Развлечения', 'eng': 'Entertainment'}},
             {'name': {'rus': 'Прочее', 'eng': 'Miscellaneous'}}]
+
+CATEGORY_COLORS_RANGE = [1,26]

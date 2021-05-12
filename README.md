@@ -1,5 +1,5 @@
 # IU MAP-S21 project Les Frais
-
+![build](https://github.com/IU-MAP/project-les-frais/actions/workflows/main.yaml/badge.svg)
 ## Project objective
 
 The purpose of this project is to develop a web application, an 
@@ -16,6 +16,8 @@ Useful links:
 * [Figma designs](https://www.figma.com/file/qP2zLO26bEDAWH35ssGUjB/Les-Frais)
 * [Swagger documentation](https://project-les-frais.herokuapp.com/swagger/)
 * [E2E test videos](https://drive.google.com/drive/folders/1rxUNc_9MaX99J5Va_ujMm0L9ZTkovlXY?usp=sharing)
+* [CI/CD](https://github.com/IU-MAP/project-les-frais/actions)
+* [User documentation page](http://project-les-frais.herokuapp.com/help)
 
 ## Initial product backlog
 
@@ -220,3 +222,13 @@ So, we mainly improved the value of the project by documenting it more, refining
 User Experience via expense templates. Also, we improved Developer Experience through better CI/CD.
 
 ![](./readme/ci.png)
+
+
+### Sprint 5
+
+Sprint full of features!
+* Implemented [Data Import](https://github.com/IU-MAP/project-les-frais/issues/12) user story.
+* Implemented [Category Statistics](https://github.com/IU-MAP/project-les-frais/issues/39) in the dashboard.
+* Tested it all!
+
+![](./readme/dashboard.png)

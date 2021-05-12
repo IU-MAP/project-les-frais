@@ -1,8 +1,10 @@
+import re
 from backend.core.models import Transaction
 from django.shortcuts import render
 from django.utils.decorators import method_decorator
 from django.views.decorators.cache import cache_page
 from django_filters.rest_framework import DjangoFilterBackend
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import exceptions, mixins, status, views, viewsets
 from rest_framework.decorators import action
 from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
@@ -14,10 +16,12 @@ from rest_framework_bulk import mixins as bulk_mixins
 
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
-from .serializers import (CategorySerializer, CurrencySerializer,
-                          ShortTransactionSerializer, TransactionSerializer)
+from .serializers import (CategorySerializer, CategoryStatisticsSerializer, CurrencySerializer, ShortTransactionSerializer,
+                          TransactionSerializer)
 from .service import CategoryFilter, TransactionFilter, parce_excel
-
+from .swagger_schemas import EXCEL_PARCER_SCHEMA, EXCEL_PARCER_PARAMETERS, CATEGORY_STATISTIC_PARAMETERS
+from django.db.models import Sum
+from django.db.models import Q, F
 
 class CategoryViewSet(viewsets.ModelViewSet):
     """
@@ -45,6 +49,37 @@ class CategoryViewSet(viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(owner=self.request.user)
+
+
+class CategoryStatisticView(ListAPIView):
+    """
+    Function:
+        ``list``
+    """
+
+    permission_classes = [IsAuthenticated]
+    serializer_class = CategoryStatisticsSerializer
+    queryset = Category.objects
+
+    def get_queryset(self):
+        filter_param = {}
+        filter_param['transactions__isTemplate'] = False
+        date__lt = self.request.query_params.get('date__lt', None)
+        if (date__lt):
+            filter_param['transactions__date__lt'] = date__lt
+        date__gt = self.request.query_params.get('date__gt', None)
+        if (date__gt):
+            filter_param['transactions__date__gt'] = date__gt
+        date = self.request.query_params.get('date', None)
+        if (date):
+            filter_param['transactions__date'] = date
+        return self.queryset.filter(owner=self.request.user).annotate(transactions_sum=Sum('transactions__price', filter=Q(**filter_param)))
+
+    @swagger_auto_schema(manual_parameters=CATEGORY_STATISTIC_PARAMETERS)
+    def get(self, request, *args, **kwargs):
+        return super().get(request, *args, **kwargs)
+
+
 
 
 class CurrencyView(ListAPIView):
@@ -98,6 +133,18 @@ class TransactionView(
     def perform_update(self, serializer):
         serializer.save(owner=self.request.user)
 
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
+
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def put(self, request, *args, **kwargs):
+        return super().put(request, *args, **kwargs)
+
+    @swagger_auto_schema(request_body=ShortTransactionSerializer(many=True))
+    def patch(self, request, *args, **kwargs):
+        return super().patch(request, *args, **kwargs)
+
 
 class TransactionObjectView(RetrieveUpdateDestroyAPIView):
     """
@@ -141,16 +188,24 @@ class ParceExcelView(views.APIView):
     """
         Accepts xls or xlsx file in a body in binary format
         return json representation
+
+        - "data" is double list of string representation of excel table
+        - All formulas are caclulated
+        - Merged cells content moved to top left cell, others are set to null
+        - "merged_cells" is a list of cells coordinates (c1, r1, c2, r2); columns and rows enumerated form 0
     """
 
     parser_classes = [FileUploadParser]
 
     permission_classes = [IsAuthenticated]
 
-    def put(self, request, filename, format=None):
+    @swagger_auto_schema(responses=EXCEL_PARCER_SCHEMA, manual_parameters=EXCEL_PARCER_PARAMETERS)
+    def put(self, request, filename,  format=None):
+        fill = self.request.query_params.get('fill', 'null')
         file_obj = request.data['file']
         try:
-            parced = parce_excel(file=file_obj, filename=filename)
+            parced = parce_excel(file=file_obj, filename=filename, fill=fill)
             return Response(status=200, data=parced)
         except Exception as e:
+            # TODO: check if this is legal to send str(e)
             return Response(status=500, data={'detail': str(e)})

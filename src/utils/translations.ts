@@ -238,6 +238,47 @@ const translations: Record<string, Record<LANGS, string>> = {
     eng: 'Edit',
   },
 
+  import_update_file: {
+    rus: 'Обновить файл',
+    eng: 'Update file',
+  },
+  import_h1: {
+    rus: 'Импорт данных',
+    eng: 'Data Import',
+  },
+  import_import: {
+    rus: 'Импорт',
+    eng: 'Import',
+  },
+  import_xls: {
+    rus: 'Импортировать .XLS',
+    eng: 'Import .XLS',
+  },
+  import_info: {
+    rus: 'Чтобы избежать ошибок при импорте ваших расходов, .XLS или .XLSX файл должен содержать 4 колонки в любом порядке и с любым название, лишь бы были: дата, название расхода, категория и цена. После импорта, ниже появится таблица, которая поможет приложению понять, что означает каждая из колонок.',
+    eng: 'In order to properly import your expenses data, the .XLS or .XLSX file should contain 4 columns in any order and naming of your will: Date, Expense name, Category and Price. After importing, the table will appear below to help us understand which column belongs to which data field.',
+  },
+  import_choose_field: {
+    rus: 'Выберите',
+    eng: 'Choose field',
+  },
+  import_name: {
+    rus: 'Название',
+    eng: 'Name',
+  },
+  import_date: {
+    rus: 'Дата',
+    eng: 'Date',
+  },
+  import_category: {
+    rus: 'Категория',
+    eng: 'Category',
+  },
+  import_price: {
+    rus: 'Цена',
+    eng: 'Price',
+  },
+
   empty: {
     rus: '',
     eng: '',

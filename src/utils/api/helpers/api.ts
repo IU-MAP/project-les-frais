@@ -22,7 +22,7 @@ function getCookie (name: string): string|null {
  * @param path – URL of the endpoint relative to the API host environmental constant
  * @param config – additional fetch configuration.
  */
-const http = async <T>(path: string, config: RequestInit): Promise<T> => {
+export const http = async <T>(path: string, config: RequestInit): Promise<T> => {
   const csrftoken = getCookie('csrftoken');
 
   const headers: HeadersInit = {
@@ -87,7 +87,7 @@ const request = {
    * PATCH-request. Use it to update entity instances
    */
   patch: <T, U>(path: string, body: T, config?: RequestInit): Promise<U> => {
-    const init = { method: 'patch', body: JSON.stringify(body), ...config };
+    const init = { method: 'PATCH', body: JSON.stringify(body), ...config };
     return http<U>(path, init);
   },
 

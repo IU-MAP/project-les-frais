@@ -102,10 +102,12 @@
 
 <script lang="ts">
 import './add-form.css';
-import {computed, defineComponent, PropType, reactive, ref,} from 'vue';
-import type {Transaction} from '../../utils/api/transactions';
-import type {Category as CategoryType} from '../../utils/api/categories';
-import type {Currency as CurrencyType} from '../../utils/api/currency';
+import {
+  computed, defineComponent, PropType, reactive, ref, 
+} from 'vue';
+import type { Transaction } from '../../utils/api/transactions';
+import type { Category as CategoryType } from '../../utils/api/categories';
+import type { Currency as CurrencyType } from '../../utils/api/currency';
 import useTranslation from '../../utils/useTranslation';
 import useStore from '../../store';
 import Toggle from '../form/toggle.vue';
