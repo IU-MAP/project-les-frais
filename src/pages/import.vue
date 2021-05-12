@@ -256,7 +256,6 @@ export default defineComponent({
 
       const requests = rowGroups.map((group) => api.import.create(group));
       const responses = await Promise.all(requests);
-      console.log(responses);
     };
 
     return {
