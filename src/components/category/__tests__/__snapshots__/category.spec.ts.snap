@@ -24,7 +24,7 @@ VueWrapper {
           <!--v-if-->
         </span>
         <span
-          class="text-small"
+          class="text-small text-ellipsis"
         >
           test
         </span>
@@ -100,7 +100,7 @@ VueWrapper {
       <!--v-if-->
     </span>
     <span
-      class="text-small"
+      class="text-small text-ellipsis"
     >
       test
     </span>
