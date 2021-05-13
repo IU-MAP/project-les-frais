@@ -1,7 +1,7 @@
 <template>
   <div class="category">
     <Dot :number="color" />
-    <span class="text-small">{{ name }}</span>
+    <span class="text-small text-ellipsis">{{ name }}</span>
   </div>
 </template>
 

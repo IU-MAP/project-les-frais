@@ -27,7 +27,7 @@
         </div>
         <div class="row">
           <p class="text-regular">{{ t('settings_import') }}</p>
-          <Button>{{ t('settings_import_btn') }}</Button>
+          <Button :link="{ name: 'import' }">{{ t('settings_import_btn') }}</Button>
         </div>
         <div class="row">
           <p class="text-regular">{{ t('settings_export') }}</p>

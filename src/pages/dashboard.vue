@@ -4,14 +4,14 @@
       <TransactionAddForm @update="update" />
 
       <suspense>
-        <TransactionsList :update-val="updateVal" />
+        <TransactionsList :update-val="updateVal" @update:date="changeDate" />
         <template #fallback>
           <div />
         </template>
       </suspense>
     </div>
     <div class="dashboard-page_statistics">
-      <StatisticsCategories />
+      <StatisticsCategories :date="date" :update-val="updateVal" />
     </div>
   </section>
 </template>
@@ -32,14 +32,21 @@ export default defineComponent({
   },
   setup () {
     const updateVal = ref<Transaction|null>(null);
+    const date = ref<({ year: number, month: number })|null>(null);
+
+    const changeDate = (newDate: { year: number, month: number }) => {
+      date.value = newDate;
+    };
 
     const update = (val: Transaction) => {
       updateVal.value = val;
     };
 
     return {
-      update,
+      date,
       updateVal,
+      update,
+      changeDate,
     };
   },
 });

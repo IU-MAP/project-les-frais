@@ -22,7 +22,7 @@ function getCookie (name: string): string|null {
  * @param path – URL of the endpoint relative to the API host environmental constant
  * @param config – additional fetch configuration.
  */
-const http = async <T>(path: string, config: RequestInit): Promise<T> => {
+export const http = async <T>(path: string, config: RequestInit): Promise<T> => {
   const csrftoken = getCookie('csrftoken');
 
   const headers: HeadersInit = {

@@ -27,7 +27,7 @@
 
         <template v-if="block.type === 'image'">
           <figure :key="i">
-            <img :src="block.data.url" alt="" />
+            <img :src="block.data.url" alt="">
             <figcaption v-html="translate(block.data.caption)" />
           </figure>
         </template>

@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Category component matches the snapshot 1`] = `
+exports[`Tabs matches the shapshot 1`] = `
 VueWrapper {
   "__app": Object {
     "_component": Object {
@@ -16,18 +16,26 @@ VueWrapper {
       data-v-app=""
     >
       <div
-        class="category"
+        class="card tabs-nav"
       >
-        <span
-          class="dot color-number-1"
+        
+        <button
+          class="active tab"
+          type="button"
         >
-          <!--v-if-->
-        </span>
-        <span
-          class="text-small text-ellipsis"
+          
+          item1
+          
+        </button>
+        <button
+          class="tab"
+          type="button"
         >
-          test
-        </span>
+          
+          item2
+          
+        </button>
+        
       </div>
     </div>,
     "_context": Object {
@@ -86,24 +94,37 @@ VueWrapper {
   },
   "__setProps": [Function],
   "componentVM": Object {
-    "color": 1,
+    "active": "item1",
+    "changeActive": [Function],
     "hasOwnProperty": [Function],
-    "name": "test",
+    "initial": "item1",
+    "items": Array [
+      "item1",
+      "item2",
+    ],
   },
   "rootVM": Object {},
   "wrapperElement": <div
-    class="category"
+    class="card tabs-nav"
   >
-    <span
-      class="dot color-number-1"
+    
+    <button
+      class="active tab"
+      type="button"
     >
-      <!--v-if-->
-    </span>
-    <span
-      class="text-small text-ellipsis"
+      
+      item1
+      
+    </button>
+    <button
+      class="tab"
+      type="button"
     >
-      test
-    </span>
+      
+      item2
+      
+    </button>
+    
   </div>,
 }
 `;

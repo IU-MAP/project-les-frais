@@ -38,6 +38,12 @@ const routes = [
     beforeEnter: () => checkAuth(true),
   },
   {
+    name: 'import',
+    path: '/import',
+    component: () => import('./pages/import.vue'),
+    beforeEnter: () => checkAuth(true),
+  },
+  {
     name: 'error',
     path: '/:pathMatch(.*)*',
     component: () => import('./pages/error.vue'),
