@@ -6,6 +6,7 @@ from openpyxl.workbook import child
 from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from xlrd import sheet
+from django.core.exceptions import MultipleObjectsReturned, ObjectDoesNotExist
 
 from .models import Transaction, Currency, Category
 from rest_framework_bulk import (
@@ -201,3 +202,74 @@ class ExcelParcerSerializer(serializers.Serializer):
         label='sheets',
         child=Sheet_Object(label = 'sheet object')
     )
+
+
+class CategoryNestedSerializer(serializers.ModelSerializer):
+    """
+    Model serializer for Category
+
+    Fields:
+    ``id``
+    ``created_at``
+    ``slug``
+    ``name``
+    ``color``
+
+    """
+    id = serializers.IntegerField(required = False)
+    name = serializers.CharField(required = False)
+    color = serializers.IntegerField(required = False)
+
+    class Meta:
+        model = Category
+        fields = ('id', 'created_at', 'name', 'color')
+
+class TransactionSerializer2(BulkSerializerMixin, serializers.ModelSerializer):
+    """
+    Model serializer for Transactions
+
+    Fields:
+    ``id``
+    ``created_at`` 
+    ``type`` 
+    ``date`` 
+    ``title``
+    ``description``
+    ``price`` 
+    ``isTemplate`` 
+    ``currency`` -- nested
+    ``category`` -- nested
+    """
+
+    category = CategoryNestedSerializer()
+
+    type = MyChoiseField(enum_=Transaction.Type)
+
+    def get_category(self, validated_data,  **kwargs):
+        if ('id' in validated_data['category']):
+            try:
+                # Do not create object if user specified id
+                # will throw an error more or less than 1 category found
+                cat = Category.objects.get(owner = kwargs['owner'], **validated_data['category'])
+            except MultipleObjectsReturned:
+                raise ValidationError({'category': 'multiple categories exist with this fields'})
+            except ObjectDoesNotExist:
+                raise ValidationError({'category': 'no categories exist with this fields'})
+        else:
+            try:
+                # Get or create a category
+                # will throw an error more or less than 1 category found
+                cat, created = Category.objects.get_or_create(owner = kwargs['owner'], **validated_data['category'])
+            except MultipleObjectsReturned:
+                raise ValidationError({'category': 'multiple categories exist with this fields'})
+        return cat
+
+    def save(self,  **kwargs):
+        super().save(category = self.get_category(self.validated_data, **kwargs), **kwargs)
+    
+
+    class Meta:
+        model = Transaction
+        fields = ('id', 'created_at', 'type', 'date', 'title',
+                  'description', 'price', 'isTemplate', 'currency', 'category')
+        list_serializer_class = BulkListSerializer

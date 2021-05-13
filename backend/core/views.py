@@ -14,14 +14,14 @@ from rest_framework.generics import ListAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.parsers import FileUploadParser, MultiPartParser
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
-from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView
+from rest_framework_bulk import ListBulkCreateUpdateDestroyAPIView, ListBulkCreateDestroyAPIView
 from rest_framework_bulk import mixins as bulk_mixins
 
 from .models import Category, Currency, Transaction
 from .permissions import IsTheOwnerOf
 from .serializers import (CategorySerializer, CategoryStatisticsSerializer,
                           CurrencySerializer, ShortTransactionSerializer,
-                          TransactionSerializer)
+                          TransactionSerializer, TransactionSerializer2)
 from .service import CategoryFilter, TransactionFilter, parce_excel
 from .swagger_schemas import (EXCEL_PARCER_PARAMETERS, EXCEL_PARCER_SCHEMA,
                               generate_swagger_parameters)
@@ -214,3 +214,34 @@ class ParceExcelView(views.APIView):
         except Exception as e:
             # TODO: check if this is legal to send str(e)
             return Response(status=500, data={'detail': str(e)})
+
+class TransactionView2(
+        ListBulkCreateDestroyAPIView):
+    """
+    Global View for ``Transaction``
+
+    functions:
+
+    ``get`` -- returns list
+    ``post`` -- accepts both single object or a list
+    ``delete`` -- will delete all object matching filters (may delete all objects if no filters)
+    """
+    queryset = Transaction.objects
+
+    filter_backends = [DjangoFilterBackend]
+    filterset_class = TransactionFilter
+
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return self.queryset.filter(owner=self.request.user)
+
+    def get_serializer_class(self):
+        return TransactionSerializer2
+
+    def perform_create(self, serializer):
+        serializer.save(owner=self.request.user)
+
+    @swagger_auto_schema(request_body=TransactionSerializer2(many=True))
+    def post(self, request, *args, **kwargs):
+        return super().post(request, *args, **kwargs)
