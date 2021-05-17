@@ -57,7 +57,7 @@ class openpyxl_parcer():
                 return obj.date()
             else: return obj
         
-        return [list([parce(e) for e in row]) for row in self.wb[sheet_name].values]
+        return [[parce(e) for e in row] for row in self.wb[sheet_name].values]
 
     def get_merged(self, sheet_name=None):
         sheet = self.wb[sheet_name]

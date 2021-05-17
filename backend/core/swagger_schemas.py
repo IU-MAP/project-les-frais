@@ -1,14 +1,17 @@
-from drf_yasg import openapi
-from .serializers import ExcelParcerSerializer
-from .service import parce_excel
 import os
 
+from drf_yasg import openapi
+
+from .serializers import ExcelParcerSerializer
+from .service import parce_excel
+
 EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_ = None
+
 
 def excel_parcer_schema_responce_example():
     global EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_
     if (not EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_):
-        path = os.path.join('backend','core','test_files','test.xls')
+        path = os.path.join('backend', 'core', 'test_files', 'test.xls')
         with open(path, 'rb') as f:
             EXCEL_PARCER_SCHEMA_RESPONCE_EXAMPLE_ = parce_excel(
                 f, 'test.xls', 'null')
@@ -35,11 +38,8 @@ EXCEL_PARCER_PARAMETERS = [
                       reqired=False)
 ]
 
-CATEGORY_STATISTIC_PARAMETERS = [
-    openapi.Parameter('date__lt', openapi.IN_QUERY,
-                      type=openapi.TYPE_STRING,
-                      reqired=False),
-    openapi.Parameter('date__gt', openapi.IN_QUERY,
-                      type=openapi.TYPE_STRING,
-                      reqired=False),
-]
+
+def generate_swagger_parameters(l):
+    return [openapi.Parameter(name, openapi.IN_QUERY,
+                              type=openapi.TYPE_STRING,
+                              reqired=False) for name in l]
