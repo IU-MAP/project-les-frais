@@ -10,6 +10,8 @@ Main objectives of the Service are the control and accounting
 of incomes and expenses, view statistics on all transactions in any
 language and currency.
 
+[Final report](https://github.com/IU-MAP/project-les-frais/blob/master/readme/final_report.pdf)
+
 Useful links:
 * [Project backlog](https://github.com/IU-MAP/project-les-frais/projects/1)
 * [Application deployed to Heroku](https://project-les-frais.herokuapp.com) (might require ~10-30s to warm up)
