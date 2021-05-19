@@ -1,0 +1,14 @@
+.idea
+.DS_Store
+.vs_code
+.vscode
+venv/
+__pycache__/
+db.sqlite3
+dist
+staticfiles
+node_modules
+cypress
+.env
+coverage
+.secrets

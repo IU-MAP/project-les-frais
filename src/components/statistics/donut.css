@@ -1,0 +1,71 @@
+.donut-chart {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  margin-top: 2rem;
+}
+
+.donut-chart_wrapper {
+  height: 100%;
+  box-shadow: var(--shadow-button-active);
+  border-radius: 50%;
+  padding: 8px;
+}
+
+.donut-chart_piece {
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  width: calc(100% - 1rem);
+  height: calc(100% - 1rem);
+  border-radius: 50%;
+  transition: clip-path .3s;
+}
+
+.donut-chart_center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 65%;
+  height: 65%;
+  margin: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--color-background);
+  border-radius: 50%;
+}
+
+.donut-chart_center p {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80%;
+  height: 80%;
+  margin: 0;
+  border-radius: 50%;
+  background-color: var(--color-background);
+  box-shadow: var(--shadow-button);
+}
+
+.donut-chart_info {
+  position: absolute;
+  left: 40%;
+  bottom: calc(100% + 0.25rem);
+  display: inline-block;
+  width: auto;
+  height: 1.75rem;
+  max-width: 250px;
+  margin-left: 0.5rem;
+  padding: 0.25rem 0.5rem;
+  white-space: nowrap;
+  transform: translateX(-50%);
+  box-shadow: var(--shadow-button-active);
+  border-radius: var(--border-radius-button);
+}
+
+.donut-chart_info .dot {
+  margin-right: 0.25rem;
+}

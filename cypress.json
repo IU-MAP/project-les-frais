@@ -1,0 +1,10 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "integrationFolder": "src/tests/e2e",
+  "supportFile": "src/tests/support.ts",
+  "fixturesFolder": "src/tests/fixtures",
+  "pluginsFile": false,
+  "video": true,
+  "viewportWidth": 1440,
+  "viewportHeight": 800
+}

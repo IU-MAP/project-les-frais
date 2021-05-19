@@ -1,0 +1,109 @@
+.form-input {
+  display: block;
+  width: 100%;
+}
+
+.form-input .form-input_label {
+  display: block;
+  width: 100%;
+  margin: 0 0 0.1rem;
+  font: var(--font-small);
+  color: var(--color-font-main);
+}
+
+.form-input .form-input_wrapper {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.5rem;
+  background-color: var(--color-background);
+  border: 1px solid var(--color-border);
+  border-radius: var(--border-radius-button);
+  box-shadow: var(--shadow-button-active);
+}
+
+.form-input .form-input_wrapper::after {
+  position: absolute;
+  left: 1rem;
+  top: 0;
+  right: 2rem;
+  height: 2.5rem;
+  display: flex;
+  align-items: center;
+  content: attr(data-placeholder);
+  pointer-events: none;
+  font: var(--font-regular);
+  color: var(--color-font-secondary);
+  white-space: nowrap;
+  overflow-x: hidden;
+  opacity: 0.5;
+  z-index: 1;
+}
+
+.form-input .form-input_input {
+  position: relative;
+  flex-grow: 1;
+  height: 100%;
+  padding: 0 0.5rem;
+  background: transparent;
+  border: none;
+  font: var(--font-regular);
+  color: var(--color-font-main);
+  z-index: 2;
+}
+
+.form-input .form-input_input:focus {
+  outline: none;
+}
+
+.form-input .form-input_input::-webkit-outer-spin-button,
+.form-input .form-input_input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.form-input .form-input_input[type=number] {
+  -moz-appearance: textfield;
+}
+
+.form-input textarea.form-input_input {
+  padding: 0.75rem;
+  height: 5rem;
+  resize: none;
+}
+
+.form-input textarea.form-input_input::placeholder {
+  color: var(--color-font-secondary);
+}
+
+.form-input.error .form-input_wrapper {
+  border: 1px solid var(--color-error);
+}
+
+.form-input.error .form-input_input:not(:focus) {
+  color: var(--color-error);
+}
+
+.form-input .form-input_error {
+  margin-top: 0.1rem;
+  font: var(--font-small);
+  color: var(--color-error);
+}
+
+.form-input .form-input_icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2.25rem;
+  height: 100%;
+  border-left: 1px solid var(--color-border);
+}
+
+.form-input .form-input_input:-webkit-autofill,
+.form-input .form-input_input:-webkit-autofill:hover,
+.form-input .form-input_input:-webkit-autofill:focus {
+  -webkit-text-fill-color: black;
+  -webkit-box-shadow: var(--shadow-button-active);
+  border-radius: var(--border-radius-button);
+}

@@ -7,72 +7,63 @@ assignees: ''
 
 ---
 
->Choisissez entre Français et Anglais pour décrire l'issue et tenez-vous à une seule langue. 
->N'hésitez pas à adapter le patron des issues en fonction de vos choix. 
-
-**Titre/Title :** En quelques mots, résumez l'objectif de l'US par exemple _Ajout d'un produit dans le panier_.
+**Title :** In a few words, summarize the objective of the US for example _Add a product in the cart_.
 
 
 **Description :**
 
 **As a** [type of user], **I want** [an action] **so that** [a benefit/a value]<br>
-**En tant que** [type of user], **Je veux** [an action] **afin de** [a benefit/a value]
+
+**Priority:** This is the priority in the client's expectations, what is important is that the whole team agrees on the scale, you can also choose the stars, of numbers or follow the scale given below. Update the assignee when the team has made a choice.
+
+Scale proposal, the [MoSCoW method] (https://paper-leaf.com/insights/prioritize-user-stories/)
+1. _**Must have:** the first release of this product absolutely requires this feature - it is critical to the success of the product._
+2. _**Should Have**: Ideally, the first version of this product has this feature, but it is not absolutely necessary. They can be as important, but not as critical in terms of time, as the "Must Have" ._
+3. _**Could have**: The user's story is valuable and desirable, but ultimately not necessary._
+4. _**Won't have**: the user's story is considered to be one of the least critical or least useful._
 
 
-**Priorité/Priority :** C'est la priorité dans les attentes du client, ce qui est important c'est que toute l'équipe soit d'accord sur l'échelle, vous pouvez aussi faire le choix d'étoiles, de chiffres ou suivre l'échelle donnée ci-dessous. Mettez à jour le patron quand l'équipe a fait un choix.
+**Estimate:** Specify the effort required to implement the US.
+For example, you can choose to evaluate it in man / hour.
 
-Proposition d'échelle, la [méthode MoSCoW](https://paper-leaf.com/insights/prioritize-user-stories/)
-  1. _**Must have/Doit avoir :** la première version de ce produit nécessite absolument cette fonctionnalité - elle est essentielle au succès du produit._
-  2. _**Should Have/Devrait avoir** : l'idéal serait que la première version de ce produit dispose de cette fonctionnalité, mais elle n'est pas absolument nécessaire. Elles peuvent être aussi importantes, mais pas aussi critiques en termes de temps, que les "Must Have"._
-  3. _**Could have/Aurait pu**: l'histoire de l'utilisateur a de la valeur et est souhaitable, mais en fin de compte, elle n'est pas nécessaire._
-  4. _**Won't have/N'aura pas** : l'histoire de l'utilisateur est considérée comme étant parmi les moins critiques ou les moins utiles._
-  
-  
-**Estimation/Estimate :** Préciser l'effort requis pour mettre en œuvre la US.
-Vous pouvez par exemple faire le choix de l'évaluer en homme/heure. 
+**Business rules:**
+Specify here the essential business rules for the development of this user-story.
 
+_Here is an example below on an e-commerce site basket:_
 
-**Règle métier /Business rules :**
-Précisez ici les règles métiers essentielles pour le développement de cette user-story. 
+`` ``
+when I add an element of a product in my
+basket.
+- if quantity > stock then error "not enough stock available"
+- if quantity < stock then we add +1 to the quantity
+`` ``
 
-Ces règles sont écrites en français ou en anglais avec comme objectif de très facilement comprendre le travail à effectuer. 
+**Acceptance criteria**
+Specify all the conditions that the story must meet to be considered complete and complete.
 
+More specifically describe a set of scenarios that will become acceptance tests. Specify the associated data as you see in the example scenarios given below.
 
-_Voici un exemple ci-dessous sur un panier d’un site e-commerce :_
-```
-lorsque je rajoute un élément supplémentaire d'un produit dans mon 
-panier.
-    - si quantité > stock alors erreur "pas assez de stock 
-      disponible"
-    - si quantité < stock alors on ajoute +1 à la quantité_
-```
-  
-**Critère d'acceptation/Acceptance criteria**
-Précisez l'ensemble des conditions que la story doit satisfaire pour être considérée comme complète et terminée.
-
-Plus spécifiquement décrivez un ensemble de scénario qui deviendront des tests d'acceptation. Précisez bien les données associées comme vous le voyez dans les scénarios d'exemples données ci-dessous. 
-
-**Given** some context<br>
-**When** some action is carried out<br>
+**Given** some context <br>
+**When** some action is carried out <br>
 **Then** a set of observable outcomes should occur <br>
-  
-_Voici quelques exemples_<br>
-_**Scénario:**_
-```
-     Etant donné que je suis sur mon panier 
-     Et que j'ai un produit d'id "1234" en quantité "1"
-     Et que le stock restant sur ce produit est de "0"
-     Quand j'ajoute "1" quantité sur mon produit
-     Alors mon panier affichera une erreur
-```
 
-_**Scénario:**_<br>
-```
-    Etant donné que je suis sur mon panier 
-    Et que j'ai un produit d'id "1235" en quantité "1" <br>
-    Et que le stock restant sur ce produit est de "10"
-    Quand j'ajoute "1" quantité de mon produit
-    Alors mon produit aura "2" quantités
-```
+_Here are some examples_ <br>
+_**Scenario:**_
+`` ``
+Since I'm on my shopping cart
+And that I have a product of id "1234" in quantity "1"
+And that the remaining stock on this product is "0"
+When I add "1" quantity to my product
+Then my cart will display an error
+`` ``
 
-> Ce texte et ces exemples s'inspirent de  : https://blog.myagilepartner.fr/index.php/2017/03/18/story-a4/
+_**Scenario:**_ <br>
+`` ``
+Since I'm on my shopping cart
+And that I have a product of id "1235" in quantity "1" <br>
+And that the remaining stock on this product is "10"
+When I add "1" quantity of my product
+Then my product will have "2" quantities
+`` ``
+
+> This text and these examples are inspired by: https://blog.myagilepartner.fr/index.php/2017/03/18/story-a4/

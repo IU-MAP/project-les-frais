@@ -1,0 +1,301 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Nav when user is logged in matches the snapshot 1`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <header
+        class="header container"
+      >
+        <router-link
+          class="logo"
+          to="[object Object]"
+        >
+          <img
+            alt="expenses"
+          />
+        </router-link>
+        <nav>
+          <!--v-if-->
+          <!--v-if-->
+          <router-link
+            class="btn default"
+            to="[object Object]"
+          >
+            
+            settings mock translation
+            
+          </router-link>
+          <router-link
+            class="btn default help"
+            to="[object Object]"
+          >
+            
+            ?
+            
+          </router-link>
+        </nav>
+      </header>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 0,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "activeLan": "eng",
+    "hasOwnProperty": [Function],
+    "isAuthed": true,
+    "items": Array [
+      "eng",
+      "rus",
+    ],
+    "selectLan": [Function],
+    "t": [Function],
+  },
+  "rootVM": Object {},
+  "wrapperElement": <header
+    class="header container"
+  >
+    <router-link
+      class="logo"
+      to="[object Object]"
+    >
+      <img
+        alt="expenses"
+      />
+    </router-link>
+    <nav>
+      <!--v-if-->
+      <!--v-if-->
+      <router-link
+        class="btn default"
+        to="[object Object]"
+      >
+        
+        settings mock translation
+        
+      </router-link>
+      <router-link
+        class="btn default help"
+        to="[object Object]"
+      >
+        
+        ?
+        
+      </router-link>
+    </nav>
+  </header>,
+}
+`;
+
+exports[`Nav when user is not logged in matches the snapshot 1`] = `
+VueWrapper {
+  "__app": Object {
+    "_component": Object {
+      "__emits": null,
+      "__props": Array [
+        Object {},
+        Array [],
+      ],
+      "name": "VTU_ROOT",
+      "render": [Function],
+    },
+    "_container": <div
+      data-v-app=""
+    >
+      <header
+        class="header container"
+      >
+        <router-link
+          class="logo"
+          to="[object Object]"
+        >
+          <img
+            alt="expenses"
+          />
+        </router-link>
+        <nav>
+          <!--v-if-->
+          <!--v-if-->
+          <router-link
+            class="btn default"
+            to="[object Object]"
+          >
+            
+            settings mock translation
+            
+          </router-link>
+          <router-link
+            class="btn default help"
+            to="[object Object]"
+          >
+            
+            ?
+            
+          </router-link>
+        </nav>
+      </header>
+    </div>,
+    "_context": Object {
+      "app": [Circular],
+      "components": Object {
+        "transition": Object {
+          "name": "transition",
+          "props": undefined,
+          "render": [Function],
+        },
+        "transition-group": Object {
+          "name": "transition-group",
+          "props": undefined,
+          "render": [Function],
+        },
+      },
+      "config": Object {
+        "errorHandler": undefined,
+        "globalProperties": Object {},
+        "isCustomElement": [Function],
+        "isNativeTag": [Function],
+        "optionMergeStrategies": Object {},
+        "performance": false,
+        "warnHandler": undefined,
+      },
+      "directives": Object {},
+      "mixins": Array [
+        Object {
+          "__emits": null,
+          "__props": Array [],
+          "beforeCreate": [Function],
+        },
+      ],
+      "provides": Object {},
+      "reload": [Function],
+    },
+    "_props": null,
+    "_uid": 1,
+    "component": [Function],
+    "config": Object {
+      "errorHandler": undefined,
+      "globalProperties": Object {},
+      "isCustomElement": [Function],
+      "isNativeTag": [Function],
+      "optionMergeStrategies": Object {},
+      "performance": false,
+      "warnHandler": undefined,
+    },
+    "directive": [Function],
+    "mixin": [Function],
+    "mount": [Function],
+    "provide": [Function],
+    "unmount": [Function],
+    "use": [Function],
+    "version": "3.0.11",
+  },
+  "__setProps": [Function],
+  "componentVM": Object {
+    "activeLan": "eng",
+    "hasOwnProperty": [Function],
+    "isAuthed": true,
+    "items": Array [
+      "eng",
+      "rus",
+    ],
+    "selectLan": [Function],
+    "t": [Function],
+  },
+  "rootVM": Object {},
+  "wrapperElement": <header
+    class="header container"
+  >
+    <router-link
+      class="logo"
+      to="[object Object]"
+    >
+      <img
+        alt="expenses"
+      />
+    </router-link>
+    <nav>
+      <!--v-if-->
+      <!--v-if-->
+      <router-link
+        class="btn default"
+        to="[object Object]"
+      >
+        
+        settings mock translation
+        
+      </router-link>
+      <router-link
+        class="btn default help"
+        to="[object Object]"
+      >
+        
+        ?
+        
+      </router-link>
+    </nav>
+  </header>,
+}
+`;
